@@ -1,0 +1,5 @@
+# 관계 유형별 하이퍼엣지 수와 최대·평균 arity — 어떤 Linux 관계가 이항이고 어떤 것이 n항인가
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?type (COUNT(?e) AS ?edges) (MAX(?a) AS ?maxArity) (AVG(?a) AS ?meanArity) WHERE {
+  ?e a chu:Hyperedge ; chu:relationType ?type ; chu:arity ?a .
+} GROUP BY ?type ORDER BY DESC(?maxArity) ?type

@@ -1,0 +1,218 @@
+@prefix chu: <https://github.com/gj3447/CHU/vocab#> .
+@prefix plan: <https://github.com/gj3447/CHU/plan#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix r: <https://github.com/gj3447/CHU/research/linux_os#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+r:L01 a chu:Lesson ;
+    rdfs:label "Linux VFS는 이미 정체성(inode)과 이름(dentry/path)을 분리한다. 하드링크 = 한 대상 여러 이름. 단 inode 정체성은 파일시스템 국소이며 복사에서 살아남지 못한다."@ko ;
+    prov:wasDerivedFrom <https://docs.kernel.org/filesystems/vfs.html>,
+        <https://man7.org/linux/man-pages/man2/link.2.html> ;
+    chu:supportsDecision r:D01 .
+
+r:L02 a chu:Lesson ;
+    rdfs:label "디렉터리 하드링크 금지(순환·fsck·`..`) — 하이퍼엣지는 파일시스템 링크로 표현하면 안 되고 CHU 자체 층에 있어야 한다."@ko ;
+    prov:wasDerivedFrom <https://man7.org/linux/man-pages/man2/link.2.html> ;
+    chu:supportsDecision r:D02 .
+
+r:L03 a chu:Lesson ;
+    rdfs:label "실측: 여러 dpkg 패키지가 함께 소유한 경로 593개 중 591개가 디렉터리, 최대 1,004개 패키지가 한 경로를 공유 — 폴더는 이미 다중 소속 그룹 하이퍼엣지처럼 쓰인다."@ko ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/linux_os/public_summary.json> ;
+    chu:supportsDecision r:D02 .
+
+r:L04 a chu:Lesson ;
+    rdfs:label "실측: dpkg 관계 절 4,360개 중 80개(1.8%)가 `a | b` 대안 = 이항 분해 불가능한 n항 하이퍼엣지(최대 대안 8개). systemd 관계는 전부 이항."@ko ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/linux_os/public_summary.json>,
+        <https://www.debian.org/doc/debian-policy/ch-relationships.html> ;
+    chu:supportsDecision r:D03 .
+
+r:L05 a chu:Lesson ;
+    rdfs:label "살아남은 시맨틱 파일 시스템(Spotlight·Baloo·Haiku)은 평범한 파일을 진실로 두고 재구축 가능한 색인을 얹었다. 단일 중앙 의미 저장소를 유일 진실로 둔 WinFS·Nepomuk은 실패했다."@ko ;
+    prov:wasDerivedFrom <https://learn.microsoft.com/en-us/archive/blogs/winfs/update-to-the-update>,
+        <https://lwn.net/Articles/637195/>,
+        <https://www.haiku-os.org/docs/userguide/en/queries.html> ;
+    chu:supportsDecision r:D04 .
+
+r:L06 a chu:Lesson ;
+    rdfs:label "OS를 대체하려던 시도(WinFS, DBOS-as-OS, Fuchsia 범용화)는 후퇴했다. DBOS는 라이브러리로 살아남았다 — 오버레이/라이브러리 먼저."@ko ;
+    prov:wasDerivedFrom <https://9to5google.com/2023/01/21/fuchsia-area-120-google-layoffs/>,
+        <https://mast.stanford.edu/pubs/dbos_three_years_later>,
+        <https://vldb.org/pvldb/vol15/p21-skiadopoulos.pdf> ;
+    chu:supportsDecision r:D04 .
+
+r:L07 a chu:Lesson ;
+    rdfs:label "가상 디렉터리 = 질의(Semantic File Systems 1991, TMSU) 는 수정 없는 앱 호환을 주지만 색인 지연·rename 비용이 따른다. BeFS 라이브 질의가 체감 품질을 정한다."@ko ;
+    prov:wasDerivedFrom <https://github.com/oniony/TMSU/wiki/FAQ>,
+        <https://web.mit.edu/6.826/archive/S97/13-Gifford-Semantic-file-systems-paper.pdf> ;
+    chu:supportsDecision r:D05 .
+
+r:L08 a chu:Lesson ;
+    rdfs:label "실측: 이 호스트는 Proxmox LXC(Debian 13)이며 /dev/fuse 가 없다. Proxmox는 컨테이너 FUSE를 freezer 교착 때문에 비권장, 호스트 마운트+bind 권장."@ko ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/linux_os/public_summary.json>,
+        <https://pve.proxmox.com/wiki/Linux_Container> ;
+    chu:supportsDecision r:D05 .
+
+r:L09 a chu:Lesson ;
+    rdfs:label "CID 인코딩(해시·청킹·코덱)을 고정하지 않으면 같은 내용이 여러 CID를 갖는다(IPFS). 이동+수정에 살아남으려면 안정 노드 ID와 버전별 CID를 분리해야 한다(TMSU 실패 사례). Unison: 해시=정체성, 이름=가변 포인터."@ko ;
+    prov:wasDerivedFrom <https://docs.ipfs.tech/concepts/content-addressing/>,
+        <https://github.com/oniony/TMSU/wiki/FAQ>,
+        <https://www.unison-lang.org/docs/the-big-idea/> ;
+    chu:supportsDecision r:D06 .
+
+r:L10 a chu:Lesson ;
+    rdfs:label "실측: CHU·HSWM·USL tracked 파일 5,489개 중 434개가 중복 사본(1.83 MB), 저장소 간 중복 7건(LICENSE, 사용자 원문 등) — 트리는 사본을, CID는 노드 1개 + 소속 k개를."@ko ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/linux_os/public_summary.json> ;
+    chu:supportsDecision r:D06 .
+
+r:L11 a chu:Lesson ;
+    rdfs:label "Git·OSTree는 사용자 공간 Merkle 객체 저장소 + 분기 이력이 Linux에서 실용적임을 보였다. Btrfs/ZFS 스냅숏은 분기는 주지만 CID·merge는 없다. Dolt는 multiway 이력에 GC가 필수임을 보였다."@ko ;
+    prov:wasDerivedFrom <https://git-scm.com/book/en/v2/Git-Internals-Git-Objects>,
+        <https://lwn.net/Articles/1068864/>,
+        <https://ostreedev.github.io/ostree/introduction/> ;
+    chu:supportsDecision r:D07 .
+
+r:L12 a chu:Lesson ;
+    rdfs:label "커널 샌드박스(Landlock·seccomp)는 추가만 가능하고 해제 불가 — 철회는 프로세스 트리 종료로만. 만료를 기본 지원하는 것은 sudoers NOTAFTER, polkit 임시 인가, systemd RuntimeMaxSec 정도."@ko ;
+    prov:wasDerivedFrom <https://docs.kernel.org/userspace-api/landlock.html>,
+        <https://man7.org/linux/man-pages/man1/systemd-run.1.html>,
+        <https://man7.org/linux/man-pages/man5/sudoers.5.html> ;
+    chu:supportsDecision r:D08 .
+
+r:L13 a chu:Lesson ;
+    rdfs:label "능력(capability) 모델: seL4 파생 트리의 Revoke는 파생된 능력 전체를 끊고, Fuchsia는 use/offer/expose로 능력을 라우팅하며, snap plug/slot/interface는 역할 있는 명시적·철회 가능한 연결이다(만료는 없음)."@ko ;
+    prov:wasDerivedFrom <https://fuchsia.dev/fuchsia-src/concepts/components/v2/capabilities>,
+        <https://sel4.systems/Info/Docs/seL4-manual-latest.pdf>,
+        <https://snapcraft.io/docs/explanation/interfaces/all-about-interfaces/> ;
+    chu:supportsDecision r:D08 .
+
+r:L14 a chu:Lesson ;
+    rdfs:label "역할 이름 있는 n항 관계에는 타입·스키마 층이 필요하다(TypeDB 3.x). 타입 없는 하이퍼그래프(HypergraphDB)는 채택이 낮다. 교환 형식은 incidence 인코딩(W3C n-ary 패턴)으로 RDF/GQL과 호환."@ko ;
+    prov:wasDerivedFrom <https://typedb.com/fundamentals/conceptual-data-model>,
+        <https://www.iso.org/standard/76120.html>,
+        <https://www.w3.org/TR/swbp-n-aryRelations/> ;
+    chu:supportsDecision r:D09 .
+
+r:L15 a chu:Lesson ;
+    rdfs:label "그래프 전역 매칭은 확장되지 않는다. GP2 rooted rule·MORK trie zipper처럼 재작성은 국소로 제한돼야 한다. 실측에서도 rdflib 질의는 필터를 먼저 걸도록 재작성하자 370초→수 초."@ko ;
+    prov:wasDerivedFrom <https://arxiv.org/abs/2010.03993>,
+        <https://github.com/gj3447/CHU/blob/main/research/linux_os/public_summary.json>,
+        <https://github.com/trueagi-io/MORK> ;
+    chu:supportsDecision r:D10 .
+
+r:L16 a chu:Lesson ;
+    rdfs:label "Hyperon(AtomSpace+MeTTa)은 같은 비전을 5년 넘게 추구했지만 아직 1.0 이전 — 커널을 작게, 상호운용은 표준 교환 형식으로."@ko ;
+    prov:wasDerivedFrom <https://github.com/trueagi-io/hyperon-experimental>,
+        <https://hyperon.opencog.org/> ;
+    chu:supportsDecision r:D09 .
+
+<https://9to5google.com/2023/01/21/fuchsia-area-120-google-layoffs/> chu:evidenceKind "literature" .
+
+<https://arxiv.org/abs/2010.03993> chu:evidenceKind "literature" .
+
+<https://docs.ipfs.tech/concepts/content-addressing/> chu:evidenceKind "literature" .
+
+<https://docs.kernel.org/filesystems/vfs.html> chu:evidenceKind "literature" .
+
+<https://docs.kernel.org/userspace-api/landlock.html> chu:evidenceKind "literature" .
+
+<https://fuchsia.dev/fuchsia-src/concepts/components/v2/capabilities> chu:evidenceKind "literature" .
+
+<https://git-scm.com/book/en/v2/Git-Internals-Git-Objects> chu:evidenceKind "literature" .
+
+r:D01 a chu:DesignDecision ;
+    rdfs:label "정체성 계층: 파일시스템 inode가 아니라 CHU CID를 정체성으로 둔다. inode/경로는 표현(representation)으로 바인딩한다."@ko ;
+    chu:informsPlanNode plan:T02 .
+
+r:D03 a chu:DesignDecision ;
+    rdfs:label "관계 모델 = 역할 있는 절(clause). 대안(OR) 집합을 1급 하이퍼엣지로; 요구/순서처럼 의미가 다른 관계는 별도 유형으로 분리."@ko ;
+    chu:informsPlanNode plan:T01,
+        plan:T03 .
+
+r:D07 a chu:DesignDecision ;
+    rdfs:label "영속 store = Git식 Merkle 객체 + 추가 전용 로그. multiway 가지에는 처음부터 가지치기·GC 정책."@ko ;
+    chu:informsPlanNode plan:T12,
+        plan:T13,
+        plan:T14 .
+
+r:D10 a chu:DesignDecision ;
+    rdfs:label "재작성·질의는 국소성 제한(rooted/anchored) 필수. 질의 엔진은 선택도 높은 조건을 먼저 적용."@ko ;
+    chu:informsPlanNode plan:T13,
+        plan:T20 .
+
+<https://github.com/trueagi-io/MORK> chu:evidenceKind "literature" .
+
+<https://github.com/trueagi-io/hyperon-experimental> chu:evidenceKind "literature" .
+
+<https://hyperon.opencog.org/> chu:evidenceKind "literature" .
+
+<https://learn.microsoft.com/en-us/archive/blogs/winfs/update-to-the-update> chu:evidenceKind "literature" .
+
+<https://lwn.net/Articles/1068864/> chu:evidenceKind "literature" .
+
+<https://lwn.net/Articles/637195/> chu:evidenceKind "literature" .
+
+<https://man7.org/linux/man-pages/man1/systemd-run.1.html> chu:evidenceKind "literature" .
+
+<https://man7.org/linux/man-pages/man5/sudoers.5.html> chu:evidenceKind "literature" .
+
+<https://mast.stanford.edu/pubs/dbos_three_years_later> chu:evidenceKind "literature" .
+
+<https://ostreedev.github.io/ostree/introduction/> chu:evidenceKind "literature" .
+
+<https://pve.proxmox.com/wiki/Linux_Container> chu:evidenceKind "literature" .
+
+<https://sel4.systems/Info/Docs/seL4-manual-latest.pdf> chu:evidenceKind "literature" .
+
+<https://snapcraft.io/docs/explanation/interfaces/all-about-interfaces/> chu:evidenceKind "literature" .
+
+<https://typedb.com/fundamentals/conceptual-data-model> chu:evidenceKind "literature" .
+
+<https://vldb.org/pvldb/vol15/p21-skiadopoulos.pdf> chu:evidenceKind "literature" .
+
+<https://web.mit.edu/6.826/archive/S97/13-Gifford-Semantic-file-systems-paper.pdf> chu:evidenceKind "literature" .
+
+<https://www.debian.org/doc/debian-policy/ch-relationships.html> chu:evidenceKind "literature" .
+
+<https://www.haiku-os.org/docs/userguide/en/queries.html> chu:evidenceKind "literature" .
+
+<https://www.iso.org/standard/76120.html> chu:evidenceKind "literature" .
+
+<https://www.unison-lang.org/docs/the-big-idea/> chu:evidenceKind "literature" .
+
+<https://www.w3.org/TR/swbp-n-aryRelations/> chu:evidenceKind "literature" .
+
+r:D02 a chu:DesignDecision ;
+    rdfs:label "폴더 = 그룹 하이퍼엣지(다중 소속). 파일시스템 링크로 하이퍼엣지를 흉내 내지 않는다. 생성하는 경로 뷰는 반드시 비순환."@ko ;
+    chu:informsPlanNode plan:T01,
+        plan:T04 .
+
+r:D04 a chu:DesignDecision ;
+    rdfs:label "CHU OS는 Linux 위 사용자 공간 오버레이/라이브러리로 시작한다. 하이퍼그래프가 정본이되, 파일 본문은 일반 도구로 읽히는 blob로 남기고 색인은 재구축 가능하게."@ko ;
+    chu:informsPlanNode plan:T11,
+        plan:T12 .
+
+r:D05 a chu:DesignDecision ;
+    rdfs:label "경로 뷰는 daemon/API가 먼저, FUSE는 선택. LXC에서는 호스트·VM에서 FUSE를 제공하고 bind한다. 뷰 지연(변경→색인→뷰)을 처음부터 측정."@ko ;
+    chu:informsPlanNode plan:T33,
+        plan:T40 .
+
+r:D06 a chu:DesignDecision ;
+    rdfs:label "CID 인코딩 고정(sha256, 무청킹 raw bytes, 코덱 명시) + 안정 노드 ID(버전 체인)와 버전별 CID 분리. 이름은 가변 포인터."@ko ;
+    chu:informsPlanNode plan:T02,
+        plan:T11 .
+
+r:D08 a chu:DesignDecision ;
+    rdfs:label "권한 = grant 하이퍼엣지 {grantor, grantee, capability, scope, not_after, derived_from}. 집행은 systemd transient unit(RuntimeMaxSec)+Landlock/seccomp, 철회는 unit 정지/cgroup.kill + 파생 grant 연쇄 철회. MetaHumotonic Covenant L0–L4와 대응."@ko ;
+    chu:informsPlanNode plan:T15 .
+
+r:D09 a chu:DesignDecision ;
+    rdfs:label "타입 스키마 층 + incidence 인코딩 표준 교환(RDF 1.1/JSON-LD + SHACL, 이후 RDF 1.2·GQL). 커널은 작게 유지."@ko ;
+    chu:informsPlanNode plan:T01,
+        plan:T22 .
+
+<https://github.com/oniony/TMSU/wiki/FAQ> chu:evidenceKind "literature" .
+
+<https://man7.org/linux/man-pages/man2/link.2.html> chu:evidenceKind "literature" .
+
+<https://github.com/gj3447/CHU/blob/main/research/linux_os/public_summary.json> chu:evidenceKind "measurement" .
+

@@ -1,0 +1,33 @@
+# CHU hyperedge SHACL shapes — W3C n-ary relation pattern (relation node + role-bearing incidences).
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix chu:  <https://github.com/gj3447/CHU/vocab#> .
+
+chu:HyperedgeShape a sh:NodeShape ;
+    sh:targetClass chu:Hyperedge ;
+    sh:property [ sh:path chu:relationType ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path chu:arity ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 2 ] ;
+    sh:property [ sh:path chu:hasIncidence ; sh:minCount 2 ; sh:node chu:IncidenceShape ] .
+
+chu:IncidenceShape a sh:NodeShape ;
+    sh:targetClass chu:Incidence ;
+    sh:property [ sh:path chu:role ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path chu:node ; sh:minCount 1 ; sh:maxCount 1 ; sh:class chu:Node ] ;
+    sh:property [ sh:path chu:ordinal ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ] .
+
+# arity must equal the number of incidences.
+# 전역 SPARQL 타깃이 불일치 하이퍼엣지만 한 번에 고르고(집계 1회), 고른 대상은 무조건 위반으로 보고한다.
+chu:ArityConsistencyShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:prefixes chu: ;
+        sh:select """
+            SELECT ?this WHERE {
+              { SELECT ?this (COUNT(?i) AS ?n) WHERE { ?this a chu:Hyperedge ; chu:hasIncidence ?i } GROUP BY ?this }
+              ?this chu:arity ?a .
+              FILTER (?a != ?n)
+            }""" ] ;
+    sh:property [ sh:path chu:arity ; sh:maxCount 0 ;
+                  sh:message "chu:arity differs from the number of chu:hasIncidence" ] .
+
+chu: sh:declare [ sh:prefix "chu" ; sh:namespace "https://github.com/gj3447/CHU/vocab#"^^xsd:anyURI ] .

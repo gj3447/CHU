@@ -1,0 +1,7 @@
+# 같은 내용(CID) 하나가 여러 경로에 있는 경우 — 트리는 사본을, CHU는 노드 1개 + 소속 k개를
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?cid ?bytes ?arity (GROUP_CONCAT(?loc; SEPARATOR=" , ") AS ?paths) WHERE {
+  { SELECT ?e ?arity WHERE { ?e chu:relationType "content:SameBytes" ; chu:arity ?arity } }
+  ?e chu:hasIncidence ?c . ?c chu:role "content" ; chu:node ?cn . ?cn chu:label ?cid ; chu:bytes ?bytes .
+  ?e chu:hasIncidence ?l . ?l chu:role "location" ; chu:node ?ln . ?ln chu:label ?loc .
+} GROUP BY ?cid ?bytes ?arity ORDER BY DESC(?bytes)

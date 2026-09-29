@@ -23,6 +23,16 @@
       "verify": "HSWM 세 철학 Lean 14모듈 + CHU Lean 11개 컴파일, sorry 0"
     },
     {
+      "id": "T09",
+      "milestone": "M1",
+      "layer": "research",
+      "effort": 2,
+      "status": "done",
+      "title": "Linux/Ubuntu OS 연구: 호스트 그래프 실측(dpkg·systemd·fs·내용 중복) + 문헌 3축 → 설계 결정 D01–D10",
+      "deliverable": "research/LINUX_OS_RESEARCH_2026-09-29.md, research/linux_os/",
+      "verify": "RDF 205,750 트리플 SHACL 적합 + 음성 대조군 거부, findings.ttl SHACL 적합"
+    },
+    {
       "id": "T01",
       "milestone": "M1",
       "layer": "spec",
@@ -38,7 +48,7 @@
       "effort": 1,
       "title": "정체성 명세: CID(내용 주소) + 라벨(가변 이름)",
       "deliverable": "spec/IDENTITY.md",
-      "verify": "strict CID / univalent 동일시 경계 명시"
+      "verify": "strict CID / univalent 동일시 경계 명시; D06: CID 인코딩 고정(sha256 raw bytes) + 안정 노드 ID/버전 CID 분리"
     },
     {
       "id": "T03",
@@ -122,13 +132,22 @@
       "verify": "두 가지에서 같은 결과 -> identified()=true"
     },
     {
+      "id": "T15",
+      "milestone": "M2",
+      "layer": "kernel",
+      "effort": 3,
+      "title": "권한 grant 하이퍼엣지 {grantor, grantee, capability, scope, not_after, derived_from} + 집행(systemd transient unit·Landlock) + 연쇄 철회",
+      "deliverable": "kernel::grant",
+      "verify": "만료 시 unit 자동 종료, 부모 grant 철회 시 파생 grant 전부 무효, Covenant L0–L4 매핑 테스트"
+    },
+    {
       "id": "T20",
       "milestone": "M3",
       "layer": "query",
       "effort": 3,
       "title": "패턴 질의: 규칙 LHS 매처를 질의 엔진으로 일반화",
       "deliverable": "kernel::query",
-      "verify": "type/속성/이웃 조건 질의 골든 테스트"
+      "verify": "type/속성/이웃 조건 질의 골든 테스트; D10: 국소성 제한(rooted) + 선택도 높은 조건 먼저"
     },
     {
       "id": "T21",
@@ -138,6 +157,15 @@
       "title": "질의 언어(최소 텍스트 문법)",
       "deliverable": "spec/QUERY.md + parser",
       "verify": "왕복(parse->print) 테스트"
+    },
+    {
+      "id": "T22",
+      "milestone": "M3",
+      "layer": "query",
+      "effort": 1,
+      "title": "표준 교환: incidence 인코딩 RDF/JSON-LD export + SHACL shapes (research/linux_os 파이프라인 승격)",
+      "deliverable": "chu export --rdf",
+      "verify": "SHACL 적합 + 음성 대조군 거부, 왕복(export→import) 동형"
     },
     {
       "id": "T30",
@@ -171,9 +199,18 @@
       "milestone": "M4",
       "layer": "compat",
       "effort": 4,
-      "title": "FUSE 마운트: 질의 뷰를 가상 디렉터리로 노출",
+      "title": "FUSE 마운트(선택): 질의 뷰를 가상 디렉터리로 노출 — LXC에선 호스트/VM에서 제공 후 bind (D05)",
       "deliverable": "chu mount",
       "verify": "ls/cat/편집이 txn으로 기록"
+    },
+    {
+      "id": "T34",
+      "milestone": "M4",
+      "layer": "compat",
+      "effort": 2,
+      "title": "Linux 시스템 그래프 ingest: dpkg 절(대안=n항)·Provides·공동 소유·systemd 관계·sysfs를 CHU 노드로",
+      "deliverable": "chu ingest --linux",
+      "verify": "research/linux_os 통계와 일치(절 수·n항 절 수·공동 소유 경로 수)"
     },
     {
       "id": "T06",
@@ -470,6 +507,70 @@
       ],
       "head": [
         "T06"
+      ]
+    },
+    {
+      "id": "E22",
+      "type": "requires",
+      "tail": [
+        "T08"
+      ],
+      "head": [
+        "T09"
+      ]
+    },
+    {
+      "id": "E23",
+      "type": "requires",
+      "tail": [
+        "T09"
+      ],
+      "head": [
+        "T01",
+        "T02"
+      ]
+    },
+    {
+      "id": "E24",
+      "type": "requires",
+      "tail": [
+        "T13",
+        "T02"
+      ],
+      "head": [
+        "T15"
+      ]
+    },
+    {
+      "id": "E25",
+      "type": "requires",
+      "tail": [
+        "T20",
+        "T01"
+      ],
+      "head": [
+        "T22"
+      ]
+    },
+    {
+      "id": "E26",
+      "type": "requires",
+      "tail": [
+        "T30",
+        "T09"
+      ],
+      "head": [
+        "T34"
+      ]
+    },
+    {
+      "id": "E27",
+      "type": "requires",
+      "tail": [
+        "T15"
+      ],
+      "head": [
+        "T42"
       ]
     }
   ]

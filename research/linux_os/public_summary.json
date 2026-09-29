@@ -1,0 +1,199 @@
+{
+  "schema": "chu-linux-host-graph-rdf-summary/v1",
+  "triples": 205750,
+  "shacl_conforms": true,
+  "shacl_negative_control_rejected": true,
+  "arity_profile": [
+    {
+      "type": "dpkg:SharedOwnership",
+      "edges": 593,
+      "maxArity": 1005,
+      "meanArity": "21.95784148397976391231028668"
+    },
+    {
+      "type": "content:SameBytes",
+      "edges": 130,
+      "maxArity": 37,
+      "meanArity": "5.338461538461538461538461538"
+    },
+    {
+      "type": "dpkg:Depends",
+      "edges": 2811,
+      "maxArity": 9,
+      "meanArity": "2.017075773745997865528281750"
+    },
+    {
+      "type": "dpkg:Recommends",
+      "edges": 193,
+      "maxArity": 9,
+      "meanArity": "2.207253886010362694300518135"
+    },
+    {
+      "type": "dpkg:Suggests",
+      "edges": 357,
+      "maxArity": 9,
+      "meanArity": "2.120448179271708683473389356"
+    },
+    {
+      "type": "dpkg:Pre-Depends",
+      "edges": 94,
+      "maxArity": 3,
+      "meanArity": "2.021276595744680851063829787"
+    },
+    {
+      "type": "fs:HardLinkNames",
+      "edges": 5,
+      "maxArity": 3,
+      "meanArity": "3"
+    },
+    {
+      "type": "dpkg:Breaks",
+      "edges": 779,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "dpkg:Conflicts",
+      "edges": 106,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "dpkg:Enhances",
+      "edges": 20,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "dpkg:Provides",
+      "edges": 1494,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:After",
+      "edges": 1306,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:Before",
+      "edges": 1306,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:BindsTo",
+      "edges": 2,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:Conflicts",
+      "edges": 219,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:PartOf",
+      "edges": 6,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:Requires",
+      "edges": 297,
+      "maxArity": 2,
+      "meanArity": "2"
+    },
+    {
+      "type": "systemd:Wants",
+      "edges": 226,
+      "maxArity": 2,
+      "meanArity": "2"
+    }
+  ],
+  "multi_membership": [
+    {
+      "kind": "Package",
+      "nodes": 3190,
+      "maxMemberships": 593,
+      "meanMemberships": "7.606269592476489028213166144"
+    },
+    {
+      "kind": "SystemdUnit",
+      "nodes": 278,
+      "maxMemberships": 514,
+      "meanMemberships": "24.18705035971223021582733813"
+    },
+    {
+      "kind": "Path",
+      "nodes": 1167,
+      "maxMemberships": 1,
+      "meanMemberships": "1"
+    },
+    {
+      "kind": "Inode",
+      "nodes": 5,
+      "maxMemberships": 1,
+      "meanMemberships": "1"
+    },
+    {
+      "kind": "Content",
+      "nodes": 130,
+      "maxMemberships": 1,
+      "meanMemberships": "1"
+    }
+  ],
+  "nary_alternatives_count_arity_ge_4": 19,
+  "content_identity_top": [
+    {
+      "cid": "sha256:f792f6887032b3ebc673dd2bd2931d616b90979a62a319ecaacc1483ebcc96f4",
+      "bytes": 311005,
+      "arity": 3,
+      "paths": "HSWM/_research/prom9_runs/f1-2wiki-dev-r6-live/run.log , HSWM/_research/prom9_runs/f1-2wiki-dev-r6-live/suite.json"
+    },
+    {
+      "cid": "sha256:86c03fdaa17f983fa0288e856c212b408ad1a2de47c867847cdb82d5a9c240ee",
+      "bytes": 107009,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_semantic_learning_v1/attempts/v2/source-pins.v2.json , HSWM/_research/dgx_semantic_learning_v1/source-pins.v2.json"
+    },
+    {
+      "cid": "sha256:fad99c73f0bfa4c3fb8cf7098a9bc5a330b898bf9a8bb28b69af2c6ddf68a7a8",
+      "bytes": 106819,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_semantic_learning_v1/attempts/v1/source-pins.v1.json , HSWM/_research/dgx_semantic_learning_v1/source-pins.v1.json"
+    },
+    {
+      "cid": "sha256:d877d69a49b9b46526f30226e095290a9497e5c9dbdf5f96076269a5fb346761",
+      "bytes": 80532,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-2026-08-29/provenance/source_ci_receipt_sha256.json , HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-2026-08-29/provenance/verifier_ci_receipt_sha256.json"
+    },
+    {
+      "cid": "sha256:11eb542d57ad5240a4ee7b521ddf45a07393617bf90b920dc16f1f1f0186b8ca",
+      "bytes": 80492,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-closure-v2-2026-08-29/provenance/source_ci_receipt_sha256.json , HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-closure-v2-2026-08-29/provenance/verifier_ci_receipt_sha256.json"
+    },
+    {
+      "cid": "sha256:766494ce20254a9ec0d02fb72fb3eacc6d02b74b85c2dee04a1be9227910c7ce",
+      "bytes": 80492,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-usage-v3-2026-08-29/provenance/source_ci_receipt_sha256.json , HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-usage-v3-2026-08-29/provenance/verifier_ci_receipt_sha256.json"
+    },
+    {
+      "cid": "sha256:ff1d2610032892a0f9d2648152216acd379df9d9120158b524fb48db51aa7160",
+      "bytes": 80484,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-content-v4-2026-08-29/provenance/source_ci_receipt_sha256.json , HSWM/_research/dgx_mi/preregistrations/hswm-dnrd5-qcase024-mi-1-content-v4-2026-08-29/provenance/verifier_ci_receipt_sha256.json"
+    },
+    {
+      "cid": "sha256:a00a54c8ddbaada90060a26799ba6335353d043e0716f1e0d0a059f96c0a63a6",
+      "bytes": 64696,
+      "arity": 3,
+      "paths": "HSWM/_research/dgx_mi2/preregistrations/hswm-dnrd5-qcase024-mi-2-launch-crossed-v1-2026-08-29/provenance/source_ci_receipt_sha256.json , HSWM/_research/dgx_mi2/preregistrations/hswm-dnrd5-qcase024-mi-2-launch-crossed-v1-2026-08-29/provenance/verifier_ci_receipt_sha256.json"
+    }
+  ]
+}

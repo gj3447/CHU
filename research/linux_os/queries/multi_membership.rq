@@ -1,0 +1,6 @@
+# 한 노드가 몇 개의 하이퍼엣지에 동시에 속하는가 (트리라면 부모 1개)
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?kind (COUNT(?n) AS ?nodes) (MAX(?m) AS ?maxMemberships) (AVG(?m) AS ?meanMemberships) WHERE {
+  { SELECT ?n (COUNT(DISTINCT ?e) AS ?m) WHERE { ?e chu:hasIncidence/chu:node ?n } GROUP BY ?n }
+  ?n chu:kind ?kind .
+} GROUP BY ?kind ORDER BY DESC(?maxMemberships)

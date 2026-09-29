@@ -1,0 +1,9 @@
+# dpkg 관계 절 가운데 대안이 3개 이상인 진짜 n항 하이퍼엣지 (먼저 엣지를 좁히고 나서 참여자를 조인)
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?type ?arity (GROUP_CONCAT(?label; SEPARATOR=" | ") AS ?alternatives) WHERE {
+  { SELECT ?e ?type ?arity WHERE {
+      ?e chu:arity ?arity . FILTER (?arity >= 4)
+      ?e chu:relationType ?type . FILTER (STRSTARTS(?type, "dpkg:") && ?type != "dpkg:SharedOwnership")
+  } }
+  ?e chu:hasIncidence ?i . ?i chu:role "alternative" ; chu:node ?n . ?n chu:label ?label .
+} GROUP BY ?e ?type ?arity ORDER BY DESC(?arity) ?type

@@ -36,29 +36,30 @@
 | M | 이름 | 종료 조건 (게이트) | effort |
 |---|---|---|---|
 | M0 ✓ | 정체성 고정 + 3대원칙 수입 | AGENTS.md 정전, 3대원칙·WHY_HYPERGRAPH, CHU Lean 11개 수입·재검증 | 1.5일 |
-| M1 | 명세 | 5개 spec 문서 + Lean 매핑, 신규 axiom 0, 수렴진화 검증 설계(T07) | 8.5일 |
-| M2 | 커널 | 영속 store + txn + 분기, `cargo test` green | 10일 |
-| M3 | 질의 | 패턴 질의 + 최소 문법, 골든 테스트 | 5일 |
-| M4 | 호환 | CHU 저장소 ingest→export 왕복 diff 0, FUSE 마운트, 트리 vs 하이퍼그래프 비용 측정(T06) | 11일 |
+| M1 | 명세 + Linux 연구 | 5개 spec 문서 + Lean 매핑, 신규 axiom 0, 수렴진화 검증 설계(T07), Linux OS 연구 ✓(T09) | 10.5일 |
+| M2 | 커널 | 영속 store + txn + 분기 + 권한 grant(T15), `cargo test` green | 13일 |
+| M3 | 질의 | 패턴 질의 + 최소 문법 + RDF/SHACL 표준 교환(T22), 골든 테스트 | 6일 |
+| M4 | 호환 | CHU 저장소 ingest→export 왕복 diff 0, FUSE(선택), Linux 시스템 그래프 ingest(T34), 트리 vs 하이퍼그래프 비용 측정(T06) | 13일 |
 | M5 | 셸 | CLI e2e, UI·에이전트가 같은 txn 로그 생성 | 8일 |
 | M6 | 셀프호스팅/분산 | 이 계획 그래프까지 CHU 노드로 적재, 333 2-피어 동기화 | 8일 |
 
-총 52 작업일(추정, 완료 1.5 / 남은 50.5). **임계 경로 21.5일**:
-`T00 → T08 → T02 → T11 → T12 → T20 → T21 → T40 → T50 → T52`
+총 60 작업일(추정, 완료 3.5 / 남은 56.5). **임계 경로 23.5일**:
+`T00 → T08 → T09 → T02 → T11 → T12 → T20 → T21 → T40 → T50 → T52`
 
 ## 3. 위상 레이어 (같은 줄 = 병렬 가능)
 
 ```
 L0: T00
 L1: T08, T10
-L2: T01, T02, T03, T04, T07
-L3: T05, T11
-L4: T12
-L5: T13, T20
-L6: T14, T21, T30
-L7: T31, T32, T40
-L8: T06, T33, T41, T42, T50
-L9: T51, T52
+L2: T03, T04, T07, T09
+L3: T01, T02
+L4: T05, T11
+L5: T12
+L6: T13, T20
+L7: T14, T15, T21, T22, T30
+L8: T31, T32, T34, T40
+L9: T06, T33, T41, T42, T50
+L10: T51, T52
 ```
 
 ## 4. 의존 하이퍼그래프
@@ -69,6 +70,7 @@ L9: T51, T52
 flowchart LR
   T00["T00 ✓ CHU=하이퍼그래프 OS 정체성 고정"]
   T08["T08 ✓ AI native 3대원칙 + 왜 하이퍼그래프(Wo"]
+  T09["T09 ✓ Linux/Ubuntu OS 연구: 호스트 그래프 "]
   T01["T01 데이터 모델 명세: Node/Hyperedge/Ty"]
   T02["T02 정체성 명세: CID(내용 주소) + 라벨(가변 이"]
   T03["T03 연산 명세: 모든 변경 = 재작성 규칙 H1->H2"]
@@ -80,12 +82,15 @@ flowchart LR
   T12["T12 영속 하이퍼그래프 store: append-only"]
   T13["T13 트랜잭션 = 규칙 적용 1회, 로그 = multiw"]
   T14["T14 분기/병합: multiway 가지 + Univale"]
+  T15["T15 권한 grant 하이퍼엣지 {grantor, gra"]
   T20["T20 패턴 질의: 규칙 LHS 매처를 질의 엔진으로 일반"]
   T21["T21 질의 언어(최소 텍스트 문법)"]
+  T22["T22 표준 교환: incidence 인코딩 RDF/JSO"]
   T30["T30 ingest: 디렉터리 트리 -> 하이퍼그래프 (폴"]
   T31["T31 링크 추출: md 링크/JSON 참조를 하이퍼엣지로"]
   T32["T32 export: 뷰 -> 트리 물질화(호환용, 정본 "]
-  T33["T33 FUSE 마운트: 질의 뷰를 가상 디렉터리로 노출"]
+  T33["T33 FUSE 마운트(선택): 질의 뷰를 가상 디렉터리로"]
+  T34["T34 Linux 시스템 그래프 ingest: dpkg 절"]
   T06["T06 비용 측정: CHU 저장소를 폴더 트리 vs 하이퍼"]
   T40["T40 CLI: add/link/find/view/log/"]
   T41["T41 그래프 작업공간 UI(노드/하이퍼엣지 탐색·편집)"]
@@ -114,6 +119,12 @@ flowchart LR
   T00 --> T08
   T08 --> T07
   T30 & T31 & T07 --> T06
+  T08 --> T09
+  T09 --> T01 & T02
+  T13 & T02 --> T15
+  T20 & T01 --> T22
+  T30 & T09 --> T34
+  T15 --> T42
 ```
 
 ## 5. 운영 규칙 (표준 그래프 엔지니어링)
@@ -126,6 +137,6 @@ flowchart LR
 
 ## 6. 열린 결정 (사용자 확인 필요)
 
-- OS의 범위: 사용자 공간 작업환경 OS(현재 가정) vs 부트 가능한 커널 수준.
+- OS의 범위: 사용자 공간 작업환경 OS(현재 가정 — [Linux 연구](../research/LINUX_OS_RESEARCH_2026-09-29.md) D04가 근거를 보강) vs 부트 가능한 커널 수준.
 - 영속 백엔드: 자체 append-only 로그(현재 가정) vs SQLite/RocksDB 같은 임베디드 DB 위에 구현.
 - 정본 소유: SYMPOSIUM/THEORY/CHU와 이 저장소 중 어느 쪽이 정본인지 (Provenance 참조).
