@@ -19,6 +19,8 @@
 > [왜 하이퍼그래프인가](WHY_HYPERGRAPH.md) · 작업계획 [plan/CHU_OS_PLAN.md](plan/CHU_OS_PLAN.md).
 > 아래 타입 시스템은 이 OS의 커널 이론이다.
 > 생태계: [CHU · HSWM · USL](ECOSYSTEM.md) — CHU ⊇ HSWM(LLM AI), USL = n항 의미 연결 문법.
+> 작업환경 참여(“우리는 하나의 존재다”)는 저장소 사용과 분리된 opt-in 약정으로 제안 중:
+> [MetaHumotonic Covenant — MHP-0001 (DRAFT)](https://github.com/gj3447/metahumotonic-foundation/pull/1). 이 저장소를 쓰는 것만으로는 작업환경 권한이 넘어가지 않는다.
 
 ---
 
