@@ -1,0 +1,10 @@
+# CQ4 원문/해석 분리 위반: 사용자 발화가 사용자 외에 귀속되거나, AI 주장이 agent 외에 귀속되거나, 둘을 겸한 노드
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+PREFIX s: <https://github.com/gj3447/CHU/journal/2026-09-29#>
+SELECT ?node ?why WHERE {
+  { ?node a chu:UserUtterance ; prov:wasAttributedTo ?who . FILTER(?who != s:user) BIND("utterance not by user" AS ?why) }
+  UNION { ?node a chu:AIClaim ; prov:wasAttributedTo ?who . FILTER(?who != s:claude) BIND("claim not by agent" AS ?why) }
+  UNION { ?node a chu:AIClaim , chu:UserUtterance . BIND("claim typed as utterance" AS ?why) }
+}

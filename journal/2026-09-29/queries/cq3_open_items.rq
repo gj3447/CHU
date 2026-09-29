@@ -1,0 +1,8 @@
+# CQ3 아직 열린 항목과 차단 요인
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?item ?title ?blocker ?next WHERE {
+  ?o a chu:OpenItem ; chu:status "OPEN" ; rdfs:label ?title ; chu:blocker ?blocker ; chu:nextStep ?next .
+  BIND(STRAFTER(STR(?o), "#") AS ?item)
+} ORDER BY ?item

@@ -14,6 +14,7 @@
 - [`canon/sources/`](canon/sources/) — 사용자 원문
 - [`ECOSYSTEM.md`](ECOSYSTEM.md) — CHU · HSWM · USL 관계와 연결 지점
 - [`research/LINUX_OS_RESEARCH_2026-09-29.md`](research/LINUX_OS_RESEARCH_2026-09-29.md) — Linux/Ubuntu OS 연구: 호스트 그래프 실측(RDF·SHACL·SPARQL) + 문헌 3축 → 설계 결정 D01–D10
+- [`journal/2026-09-29/SESSION.md`](journal/2026-09-29/SESSION.md) — 오늘 작업 정리 (PROV-O 그래프, SHACL·질문 5개 검증, KG 변경안)
 
 ## 자료집 구조
 

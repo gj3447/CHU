@@ -1,0 +1,8 @@
+# CQ2 각 작업의 검증과 결과
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?activity ?check ?result WHERE {
+  ?v a chu:Verification ; prov:wasGeneratedBy ?a ; rdfs:label ?check ; chu:result ?result .
+  BIND(STRAFTER(STR(?a), "#") AS ?activity)
+} ORDER BY ?activity ?check

@@ -1,0 +1,192 @@
+{
+  "cq1_utterance_to_commits": [
+    {
+      "activity": "A1",
+      "title": "CHU = 하이퍼그래프 OS 정체성 고정 + 하이퍼그래프 작업계획",
+      "utterances": "U1",
+      "repos": "gj3447/CHU",
+      "commits": "1"
+    },
+    {
+      "activity": "A2",
+      "title": "AI native 3대원칙·왜 하이퍼그래프 수입 + CHU Lean 11개 수입",
+      "utterances": "U2,U3",
+      "repos": "gj3447/CHU",
+      "commits": "1"
+    },
+    {
+      "activity": "A3",
+      "title": "독립 저장소 gj3447/CHU 생성·push",
+      "utterances": "U4",
+      "repos": "gj3447/CHU",
+      "commits": "1"
+    },
+    {
+      "activity": "A4",
+      "title": "HSWM·USL과 같은 AGPL-3.0-or-later + 상용 이중 라이선스, public 전환",
+      "utterances": "U5",
+      "repos": "gj3447/CHU",
+      "commits": "1"
+    },
+    {
+      "activity": "A5",
+      "title": "CHU · HSWM · USL 긴밀 연결 + SYMPOSIUM 사본 이전 안내",
+      "utterances": "U6",
+      "repos": "gj3447/CHU,gj3447/USL,gj3447/HSWM,gj3447/symposium",
+      "commits": "5"
+    },
+    {
+      "activity": "A6",
+      "title": "sudo 전권 라이선스 요청 거절 → opt-in MetaHumotonic Covenant (MHP-0001) 초안",
+      "utterances": "U7,U8",
+      "repos": "gj3447/metahumotonic-foundation,gj3447/CHU",
+      "commits": "2"
+    },
+    {
+      "activity": "A7",
+      "title": "Linux/Ubuntu OS 연구: 호스트 그래프 실측(RDF·SHACL·SPARQL) + 문헌 3축 → D01–D10",
+      "utterances": "U9",
+      "repos": "gj3447/CHU,gj3447/USL",
+      "commits": "2"
+    }
+  ],
+  "cq2_verification": [
+    {
+      "activity": "A1",
+      "check": "chu_core.rs 빌드·실행 ALL ASSERTS PASS",
+      "result": "PASS"
+    },
+    {
+      "activity": "A1",
+      "check": "plan/check_plan.py: 비순환·고아 0·임계 경로",
+      "result": "PASS"
+    },
+    {
+      "activity": "A2",
+      "check": "CHU Lean 11/11 exit 0 (2개 simp drift 보강)",
+      "result": "PASS"
+    },
+    {
+      "activity": "A2",
+      "check": "HSWM 세 철학 Lean 14모듈 컴파일, sorry 0",
+      "result": "PASS"
+    },
+    {
+      "activity": "A3",
+      "check": "local main = origin/main readback",
+      "result": "PASS"
+    },
+    {
+      "activity": "A4",
+      "check": "GitHub licenseInfo = agpl-3.0, visibility PUBLIC",
+      "result": "PASS"
+    },
+    {
+      "activity": "A4",
+      "check": "커밋 이력 secret 스캔",
+      "result": "PASS"
+    },
+    {
+      "activity": "A5",
+      "check": "SYMPOSIUM session_writer finish: origin/github readback",
+      "result": "PASS"
+    },
+    {
+      "activity": "A5",
+      "check": "USL example:chu SELECTED_CONTENT_PINS_MATCH 11/11",
+      "result": "PASS"
+    },
+    {
+      "activity": "A5",
+      "check": "USL npm test 303/303, typecheck",
+      "result": "PASS"
+    },
+    {
+      "activity": "A6",
+      "check": "COVENANT.md 내부 링크 8/8",
+      "result": "PASS"
+    },
+    {
+      "activity": "A6",
+      "check": "재단 MHP 절차상 결정",
+      "result": "PENDING"
+    },
+    {
+      "activity": "A7",
+      "check": "RDF 205,750 트리플 SHACL 적합 + 음성 대조군 거부",
+      "result": "PASS"
+    },
+    {
+      "activity": "A7",
+      "check": "findings.ttl SHACL 적합, 결정→계획 노드 누락 0",
+      "result": "PASS"
+    }
+  ],
+  "cq3_open_items": [
+    {
+      "item": "O1",
+      "title": "MHP-0001 Covenant 공개 검토·결정",
+      "blocker": "재단 절차: 최소 7일(권고 30일, ~2026-10-29) + 인간 공개 review, Steward 2인 미만이라 PROVISIONAL",
+      "next": "PR #1 review"
+    },
+    {
+      "item": "O2",
+      "title": "재단 PROJECTS.md 갱신 (CHU·USL 추가, HSWM 이중 라이선스 반영)",
+      "blocker": "PROJECT 제안 필요(사용자 확인 대기)",
+      "next": "PROJECT 제안 작성"
+    },
+    {
+      "item": "O3",
+      "title": "첫 커밋 798f9f9 이력에 남은 이전 작성자 이메일",
+      "blocker": "이력 재작성 + force push는 사용자 결정 필요",
+      "next": "사용자 결정"
+    },
+    {
+      "item": "O4",
+      "title": "SYMPOSIUM/THEORY/CHU 사본과 gj3447/CHU 정본 소유 확정",
+      "blocker": "사용자 결정 필요",
+      "next": "사용자 결정"
+    },
+    {
+      "item": "O5",
+      "title": "CHU OS 명세 단계 착수 (T01 데이터 모델, T02 정체성)",
+      "blocker": "없음 — 다음 작업",
+      "next": "T01/T02 착수"
+    },
+    {
+      "item": "O6",
+      "title": "공유 KG 반영: CHU 저장소·USL·재단 노드와 관계",
+      "blocker": "공유 KG에 authorized writer 없음 (읽기 도구 4개만)",
+      "next": "kg_changeset.proposed.json 검토 후 owner publisher로 반영"
+    },
+    {
+      "item": "O7",
+      "title": "FUSE 뷰 (T33)",
+      "blocker": "dev-01은 LXC라 /dev/fuse 없음",
+      "next": "호스트/VM에서 제공 또는 선택 기능으로 유지"
+    }
+  ],
+  "cq4_attribution_violations": [],
+  "cq5_kg_links": [
+    {
+      "kgSubject": "urn:symposium-kg:sym:AbstractNode:metahumotonic",
+      "activities": "A6"
+    },
+    {
+      "kgSubject": "urn:symposium-kg:sym:Concept:computable_hyper_universe_(chu)",
+      "activities": "A1,A2,A7"
+    },
+    {
+      "kgSubject": "urn:symposium-kg:sym:Concept:hswm",
+      "activities": "A2,A5"
+    },
+    {
+      "kgSubject": "urn:symposium-kg:sym:Concept:usl",
+      "activities": "A5"
+    },
+    {
+      "kgSubject": "urn:symposium-kg:sym:Repository:hswm",
+      "activities": "A5"
+    }
+  ]
+}

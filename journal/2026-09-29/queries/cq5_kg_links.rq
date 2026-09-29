@@ -1,0 +1,7 @@
+# CQ5 오늘 작업이 이어지는 공유 KG의 기존 UID
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?kgSubject (GROUP_CONCAT(?activity; SEPARATOR=",") AS ?activities) WHERE {
+  ?a chu:relatesToKgSubject ?kgSubject . BIND(STRAFTER(STR(?a), "#") AS ?activity)
+} GROUP BY ?kgSubject ORDER BY ?kgSubject

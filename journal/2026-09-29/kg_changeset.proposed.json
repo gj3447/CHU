@@ -1,0 +1,157 @@
+{
+  "schema": "kg-changeset-proposal/v1",
+  "status": "PROPOSED_NOT_APPLIED",
+  "prepared_at": "2026-09-29",
+  "prepared_by": "agent(claude-code/claude-opus-5-5) on behalf of Ra Gyeongjun (gj3447)",
+  "blocker": "The shared KG runtime exposes read-only ontology_search/get/neighbors/claim_history only; no authorized publisher was available in this session. Apply through the KG owner's publisher after review.",
+  "resolution_evidence": {
+    "queries": [
+      "CHU",
+      "Computable Hyperuniverse",
+      "HSWM",
+      "USL",
+      "usl (include_preliminary)",
+      "metahumotonic",
+      "metahumotonic-foundation (include_preliminary)"
+    ],
+    "reused_uids": {
+      "sym:Concept:computable_hyper_universe_(chu)": "authority UNSPECIFIED, lifecycle UNKNOWN — needs owner review before linking as canon",
+      "sym:Directory:chu": "legacy Directory node (SYMPOSIUM/THEORY/CHU), authority UNSPECIFIED",
+      "sym:Concept:hswm": "USER_PRIMARY / USER_RATIFIED_CANON / ACTIVE",
+      "sym:Repository:hswm": "SYSTEM_DERIVED / CANONICAL / ACTIVE",
+      "sym:Concept:usl": "USER_PRIMARY / USER_RATIFIED_CANON / ACTIVE",
+      "sym:AbstractNode:metahumotonic": "authority UNSPECIFIED"
+    },
+    "not_found": [
+      "Repository record for gj3447/CHU",
+      "Repository record for gj3447/USL",
+      "any record for metahumotonic-foundation"
+    ]
+  },
+  "nodes": [
+    {
+      "proposed_uid": "sym:Repository:chu",
+      "labels_to_resolve": [
+        "Repository",
+        "InfraAsset"
+      ],
+      "canonical_name": "CHU repository (gj3447/CHU)",
+      "title": "CHU git 저장소 — dev-01:/home/lagyeongjun/CD/CHU",
+      "ontology_kind": "ENTITY",
+      "ontology_plane": "WORLD",
+      "ontology_domain": "OPERATIONS",
+      "authority_class": "SYSTEM_DERIVED",
+      "source": "https://github.com/gj3447/CHU",
+      "observed": {
+        "visibility": "PUBLIC",
+        "license": "AGPL-3.0-or-later OR commercial",
+        "head": "752d127d146200632082bb38496ef3f5f08d1fe8",
+        "github_id": 1394029753
+      }
+    },
+    {
+      "proposed_uid": "sym:Repository:usl",
+      "labels_to_resolve": [
+        "Repository",
+        "InfraAsset"
+      ],
+      "canonical_name": "USL repository (gj3447/USL)",
+      "ontology_kind": "ENTITY",
+      "ontology_plane": "WORLD",
+      "ontology_domain": "OPERATIONS",
+      "authority_class": "SYSTEM_DERIVED",
+      "source": "https://github.com/gj3447/USL",
+      "observed": {
+        "head": "f7528609a2d3ee4b8bdb5fb5cde85a5671c851b6",
+        "github_id": 1369458368
+      }
+    },
+    {
+      "proposed_uid": "sym:Repository:metahumotonic-foundation",
+      "labels_to_resolve": [
+        "Repository",
+        "InfraAsset"
+      ],
+      "canonical_name": "metahumotonic-foundation repository",
+      "ontology_kind": "ENTITY",
+      "ontology_plane": "WORLD",
+      "ontology_domain": "OPERATIONS",
+      "authority_class": "SYSTEM_DERIVED",
+      "source": "https://github.com/gj3447/metahumotonic-foundation"
+    },
+    {
+      "proposed_uid": "sym:UserCanonicalUtterance:chu-hypergraph-os-2026-09-29",
+      "labels_to_resolve": [
+        "UserVerdict",
+        "UserCanonicalUtterance"
+      ],
+      "ontology_kind": "STATEMENT",
+      "ontology_plane": "GOVERNANCE",
+      "authority_class": "USER_PRIMARY",
+      "canonical_scope": "USER_RATIFIED_CANON",
+      "utterance_verbatim_source": {
+        "path": "CHU/canon/sources/USER_PRIMARY_CHU_HYPERGRAPH_OS_2026-09-29.txt",
+        "sha256": "sha256:7d3d6e3f4ed358275fda93b84abff1796f5214bd6f5173dafd72c736f1787f53",
+        "repo_commit": "752d127d146200632082bb38496ef3f5f08d1fe8"
+      },
+      "note": "Verbatim text lives in the source file; the KG title must not paraphrase it as a user quote."
+    },
+    {
+      "proposed_uid": "sym:Proposal:mhp-0001-metahumotonic-covenant",
+      "labels_to_resolve": [
+        "Proposal"
+      ],
+      "ontology_kind": "STATEMENT",
+      "ontology_plane": "GOVERNANCE",
+      "authority_class": "SECONDARY_AI",
+      "record_lifecycle": "PENDING",
+      "source": "https://github.com/gj3447/metahumotonic-foundation/pull/1",
+      "note": "Draft by agent; not ratified. Foundation MHP procedure governs its decision."
+    }
+  ],
+  "relationships": [
+    {
+      "from": "sym:Concept:computable_hyper_universe_(chu)",
+      "predicate_to_resolve": "realized-in / has-repository",
+      "to": "sym:Repository:chu",
+      "status": "PROPOSED",
+      "evidence": "CHU/AGENTS.md identity section; utterance chu-hypergraph-os-2026-09-29"
+    },
+    {
+      "from": "sym:UserCanonicalUtterance:chu-hypergraph-os-2026-09-29",
+      "predicate_to_resolve": "defines / about",
+      "to": "sym:Concept:computable_hyper_universe_(chu)",
+      "status": "PROPOSED"
+    },
+    {
+      "from": "sym:Concept:computable_hyper_universe_(chu)",
+      "predicate_to_resolve": "conceptually-contains",
+      "to": "sym:Concept:hswm",
+      "status": "PROPOSED",
+      "evidence": "HSWM/docs/canon/sources/USER_PRIMARY_CHU_HSWM_SCOPE_2026-09-27.txt (USER_PRIMARY)"
+    },
+    {
+      "from": "sym:Concept:usl",
+      "predicate_to_resolve": "link-grammar-for (SECONDARY_AI mapping)",
+      "to": "sym:Concept:computable_hyper_universe_(chu)",
+      "status": "PROPOSED",
+      "evidence": "CHU/ECOSYSTEM.md; USL/docs/CHU_CONNECTION.md"
+    },
+    {
+      "from": "sym:Concept:usl",
+      "predicate_to_resolve": "has-repository",
+      "to": "sym:Repository:usl",
+      "status": "PROPOSED"
+    },
+    {
+      "from": "sym:Proposal:mhp-0001-metahumotonic-covenant",
+      "predicate_to_resolve": "proposed-in",
+      "to": "sym:Repository:metahumotonic-foundation",
+      "status": "PROPOSED"
+    }
+  ],
+  "not_proposed": [
+    "Routine commits, test runs and research statistics stay in Git (journal/2026-09-29/session.ttl, research/linux_os/) — not copied into the KG.",
+    "No change to existing HSWM/USL canon records."
+  ]
+}
