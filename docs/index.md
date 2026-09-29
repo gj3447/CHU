@@ -50,7 +50,7 @@ See [`USERGUIDE.md#type-primitives`](USERGUIDE.md#type-primitives) for the full 
 
 ## Lean Formalization
 
-11 verified Lean 4 files in `/Users/lagyeongjun/CD/MIND/lean_formalization/`:
+11 verified Lean 4 files in [`../lean/`](../lean/) (Lean 4.34.1, 2026-09-29 재검증):
 
 | File | Role |
 |------|------|

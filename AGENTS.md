@@ -11,6 +11,18 @@
 - 기존 이론 자산(`axiom CHU : Type`, JaebaeMan, `chu_core.rs`의 4 포트·StateStore·Univalent)은
   이 OS의 **커널 이론/프로토타입**으로 재배치한다. 작업계획: [`plan/CHU_OS_PLAN.md`](plan/CHU_OS_PLAN.md).
 
+## AI native 3대원칙 (사용자 원문 2026-09-27, 정본: [`canon/AI_NATIVE_THREE_PRINCIPLES.md`](canon/AI_NATIVE_THREE_PRINCIPLES.md))
+
+1. **AI는 양파껍질 최외각의 우주 시뮬레이터다** — 어느 층에서 시작해도 되고, 층 사이는 M = Map.
+2. **하이퍼그래프는 우주를 기술하는 최소 비용 체계다** — Wolfram 우주 모형·ZFC 수학 기초·Transformer가
+   모두 하이퍼그래프로 모인 이유 ([`WHY_HYPERGRAPH.md`](WHY_HYPERGRAPH.md)).
+3. **AI는 근본적으로 소프트웨어다** — LLM = ROM(실행 단위), CHU = 거대한 메모리, Semantic Weight = 프로그램.
+
+- 범위: **HSWM은 LLM 전용**, **CHU는 월드모델과 HSWM을 모두 포함하는 더 큰 개념**, CHU OS는 그 작업환경 구현.
+- 사용자 원문은 [`canon/sources/`](canon/sources/)에 그대로 보존한다. 원문을 축소·재정의하지 말고,
+  증명된 범위와 가설을 구분해 적는다(HSWM의 `USER_PRIMARY` / `SECONDARY_AI` 표기 관례를 따른다).
+- CHU Lean 정본 사본은 [`lean/`](lean/) (검증: `cd lean && for f in *.lean; do lean $f; done`).
+
 # Working preferences
 
 - Match effort to the request: take the direct path, and expand investigation only when necessary to complete the requested outcome.
@@ -25,3 +37,6 @@
 - CHU 밖을 가리키던 상대 링크는 `~/CD` 기준 새 위치(`../SYMPOSIUM/...`, `../MIND/...`)로 다시 썼다.
   원본에서도 끊겨 있던 링크 3개(`INDEX.md` CHU_WolframRewrite.lean, `docs/STATUS.md` THEORY/CLAUDE.md,
   `docs/USERGUIDE.md` ../APT/README.md)는 그대로 둔다.
+- 2026-09-29: CHU Lean 11개를 [`lean/`](lean/)으로 가져왔다(10개 `MIND/lean_formalization/`, `CHU_WolframRewrite.lean`은
+  `_mac_wip_snapshot_2026-08-10/`에만 남아 있었음). 원본 쪽 파일은 그대로 둔다. 이로써 `INDEX.md`의
+  CHU_WolframRewrite.lean 끊긴 링크는 해소됐다. HSWM 사용자 원문 5개를 [`canon/sources/`](canon/sources/)로 복사했다(HSWM `3ebb780`).

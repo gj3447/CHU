@@ -1,54 +1,476 @@
 {
   "schema": "chu-plan/v1",
-  "about": "CHU OS 작업계획. 계획 자체가 방향 하이퍼그래프(B-graph): hyperedge.tail 전부 완료 -> head 착수 가능. effort 단위 = 작업일(추정).",
+  "about": "CHU OS 작업계획. 계획 자체가 방향 하이퍼그래프(B-graph): hyperedge.tail 전부 완료 -> head 착수 가능. effort 단위 = 작업일(추정). status=done 인 노드는 완료.",
   "nodes": [
-    {"id": "T00", "milestone": "M0", "layer": "canon",  "effort": 0.5, "title": "CHU=하이퍼그래프 OS 정체성 고정", "deliverable": "AGENTS.md 정체성 섹션", "verify": "문서 리뷰"},
-    {"id": "T01", "milestone": "M1", "layer": "spec",   "effort": 2, "title": "데이터 모델 명세: Node/Hyperedge/Type", "deliverable": "spec/DATA_MODEL.md", "verify": "모든 기존 파일 종류(md/json/rs/py/lean)를 모델로 표현하는 예시 5개"},
-    {"id": "T02", "milestone": "M1", "layer": "spec",   "effort": 1, "title": "정체성 명세: CID(내용 주소) + 라벨(가변 이름)", "deliverable": "spec/IDENTITY.md", "verify": "strict CID / univalent 동일시 경계 명시"},
-    {"id": "T03", "milestone": "M1", "layer": "spec",   "effort": 1, "title": "연산 명세: 모든 변경 = 재작성 규칙 H1->H2", "deliverable": "spec/OPERATIONS.md", "verify": "create/link/unlink/retag/delete를 규칙으로 기술"},
-    {"id": "T04", "milestone": "M1", "layer": "spec",   "effort": 1, "title": "뷰 명세: path/폴더 = 질의 투영", "deliverable": "spec/PROJECTION.md", "verify": "한 노드가 두 뷰에 동시 등장하는 예시"},
-    {"id": "T05", "milestone": "M1", "layer": "spec",   "effort": 0.5, "title": "Lean 정합 매핑: 명세 ↔ CHU_WolframRewrite(Rewrite/Step/Path/Cell)", "deliverable": "spec/LEAN_MAP.md", "verify": "신규 axiom 0 유지(I1)"},
-
-    {"id": "T10", "milestone": "M2", "layer": "kernel", "effort": 1, "title": "chu_core.rs를 crate로 분리(chu-kernel), 기존 assert를 테스트로", "deliverable": "kernel/ crate", "verify": "cargo test green, 기존 ALL ASSERTS PASS 동등"},
-    {"id": "T11", "milestone": "M2", "layer": "kernel", "effort": 2, "title": "blob store: 콘텐츠 주소 저장(파일 본문)", "deliverable": "kernel::blob", "verify": "put/get 왕복, 동일 내용 dedup"},
-    {"id": "T12", "milestone": "M2", "layer": "kernel", "effort": 3, "title": "영속 하이퍼그래프 store: append-only 로그 + 인덱스(node->edges, type->edges)", "deliverable": "kernel::store", "verify": "재시작 후 동일 CID 복원, 인덱스 일관성 property test"},
-    {"id": "T13", "milestone": "M2", "layer": "kernel", "effort": 2, "title": "트랜잭션 = 규칙 적용 1회, 로그 = multiway 이력", "deliverable": "kernel::txn", "verify": "원자성(중간 실패 시 무변경), 이력 재생 = 현재 상태"},
-    {"id": "T14", "milestone": "M2", "layer": "kernel", "effort": 2, "title": "분기/병합: multiway 가지 + UnivalentStateStore로 동일시", "deliverable": "kernel::branch", "verify": "두 가지에서 같은 결과 -> identified()=true"},
-
-    {"id": "T20", "milestone": "M3", "layer": "query",  "effort": 3, "title": "패턴 질의: 규칙 LHS 매처를 질의 엔진으로 일반화", "deliverable": "kernel::query", "verify": "type/속성/이웃 조건 질의 골든 테스트"},
-    {"id": "T21", "milestone": "M3", "layer": "query",  "effort": 2, "title": "질의 언어(최소 텍스트 문법)", "deliverable": "spec/QUERY.md + parser", "verify": "왕복(parse->print) 테스트"},
-
-    {"id": "T30", "milestone": "M4", "layer": "compat", "effort": 2, "title": "ingest: 디렉터리 트리 -> 하이퍼그래프 (폴더는 group 하이퍼엣지로 흡수)", "deliverable": "chu ingest", "verify": "CHU 저장소 자체 ingest, 파일 수·바이트 일치"},
-    {"id": "T31", "milestone": "M4", "layer": "compat", "effort": 1, "title": "링크 추출: md 링크/JSON 참조를 하이퍼엣지로", "deliverable": "ingest 플러그인", "verify": "INDEX.md 링크 수 = 생성 엣지 수"},
-    {"id": "T32", "milestone": "M4", "layer": "compat", "effort": 2, "title": "export: 뷰 -> 트리 물질화(호환용, 정본 아님)", "deliverable": "chu export", "verify": "ingest->export 왕복 diff 0"},
-    {"id": "T33", "milestone": "M4", "layer": "compat", "effort": 4, "title": "FUSE 마운트: 질의 뷰를 가상 디렉터리로 노출", "deliverable": "chu mount", "verify": "ls/cat/편집이 txn으로 기록"},
-
-    {"id": "T40", "milestone": "M5", "layer": "shell",  "effort": 2, "title": "CLI: add/link/find/view/log/branch", "deliverable": "chu CLI", "verify": "시나리오 스크립트 e2e"},
-    {"id": "T41", "milestone": "M5", "layer": "shell",  "effort": 4, "title": "그래프 작업공간 UI(노드/하이퍼엣지 탐색·편집)", "deliverable": "chu ui", "verify": "CLI와 동일 txn 로그 생성"},
-    {"id": "T42", "milestone": "M5", "layer": "shell",  "effort": 2, "title": "에이전트 포트: 작업/에이전트/HSPINE 의지도 노드로", "deliverable": "agent adapter", "verify": "작업 노드 생성->완료가 이력에 남음"},
-
-    {"id": "T50", "milestone": "M6", "layer": "dogfood","effort": 2, "title": "셀프호스팅: CHU 저장소 문서를 CHU 안에서 관리", "deliverable": "CHU-in-CHU", "verify": "이 계획 그래프도 CHU 노드로 적재·질의"},
-    {"id": "T51", "milestone": "M6", "layer": "dogfood","effort": 1, "title": "기존 이론 문서 재배치: 이론 = 커널 근거 문서 노드", "deliverable": "INDEX/README 갱신", "verify": "끊긴 링크 0(원래 끊긴 3개 제외)"},
-    {"id": "T52", "milestone": "M6", "layer": "dist",   "effort": 5, "title": "333 백엔드: StateStore/BranchBus/Identity 분산 구현", "deliverable": "backend-333", "verify": "두 피어 간 가지 동기화"}
+    {
+      "id": "T00",
+      "milestone": "M0",
+      "layer": "canon",
+      "effort": 0.5,
+      "title": "CHU=하이퍼그래프 OS 정체성 고정",
+      "deliverable": "AGENTS.md 정체성 섹션",
+      "verify": "문서 리뷰",
+      "status": "done"
+    },
+    {
+      "id": "T08",
+      "milestone": "M0",
+      "layer": "canon",
+      "effort": 1,
+      "status": "done",
+      "title": "AI native 3대원칙 + 왜 하이퍼그래프(Wolfram·ZFC·Transformer·HSWM) 정본 수입",
+      "deliverable": "canon/AI_NATIVE_THREE_PRINCIPLES.md, WHY_HYPERGRAPH.md, lean/",
+      "verify": "HSWM 세 철학 Lean 14모듈 + CHU Lean 11개 컴파일, sorry 0"
+    },
+    {
+      "id": "T01",
+      "milestone": "M1",
+      "layer": "spec",
+      "effort": 2,
+      "title": "데이터 모델 명세: Node/Hyperedge/Type",
+      "deliverable": "spec/DATA_MODEL.md",
+      "verify": "모든 기존 파일 종류(md/json/rs/py/lean)를 모델로 표현하는 예시 5개"
+    },
+    {
+      "id": "T02",
+      "milestone": "M1",
+      "layer": "spec",
+      "effort": 1,
+      "title": "정체성 명세: CID(내용 주소) + 라벨(가변 이름)",
+      "deliverable": "spec/IDENTITY.md",
+      "verify": "strict CID / univalent 동일시 경계 명시"
+    },
+    {
+      "id": "T03",
+      "milestone": "M1",
+      "layer": "spec",
+      "effort": 1,
+      "title": "연산 명세: 모든 변경 = 재작성 규칙 H1->H2",
+      "deliverable": "spec/OPERATIONS.md",
+      "verify": "create/link/unlink/retag/delete를 규칙으로 기술"
+    },
+    {
+      "id": "T04",
+      "milestone": "M1",
+      "layer": "spec",
+      "effort": 1,
+      "title": "뷰 명세: path/폴더 = 질의 투영",
+      "deliverable": "spec/PROJECTION.md",
+      "verify": "한 노드가 두 뷰에 동시 등장하는 예시"
+    },
+    {
+      "id": "T05",
+      "milestone": "M1",
+      "layer": "spec",
+      "effort": 0.5,
+      "title": "Lean 정합 매핑: 명세 ↔ CHU_WolframRewrite(Rewrite/Step/Path/Cell)",
+      "deliverable": "spec/LEAN_MAP.md",
+      "verify": "신규 axiom 0 유지(I1)"
+    },
+    {
+      "id": "T07",
+      "milestone": "M1",
+      "layer": "research",
+      "effort": 3,
+      "title": "수렴진화 검증 설계: Wolfram·ZFC·Transformer의 출발 구조·선택 압력·비용 지표",
+      "deliverable": "research/CONVERGENCE.md",
+      "verify": "사례별 대안 경로·비용 지표 명시, 반례 1개 이상"
+    },
+    {
+      "id": "T10",
+      "milestone": "M2",
+      "layer": "kernel",
+      "effort": 1,
+      "title": "chu_core.rs를 crate로 분리(chu-kernel), 기존 assert를 테스트로",
+      "deliverable": "kernel/ crate",
+      "verify": "cargo test green, 기존 ALL ASSERTS PASS 동등"
+    },
+    {
+      "id": "T11",
+      "milestone": "M2",
+      "layer": "kernel",
+      "effort": 2,
+      "title": "blob store: 콘텐츠 주소 저장(파일 본문)",
+      "deliverable": "kernel::blob",
+      "verify": "put/get 왕복, 동일 내용 dedup"
+    },
+    {
+      "id": "T12",
+      "milestone": "M2",
+      "layer": "kernel",
+      "effort": 3,
+      "title": "영속 하이퍼그래프 store: append-only 로그 + 인덱스(node->edges, type->edges)",
+      "deliverable": "kernel::store",
+      "verify": "재시작 후 동일 CID 복원, 인덱스 일관성 property test"
+    },
+    {
+      "id": "T13",
+      "milestone": "M2",
+      "layer": "kernel",
+      "effort": 2,
+      "title": "트랜잭션 = 규칙 적용 1회, 로그 = multiway 이력",
+      "deliverable": "kernel::txn",
+      "verify": "원자성(중간 실패 시 무변경), 이력 재생 = 현재 상태"
+    },
+    {
+      "id": "T14",
+      "milestone": "M2",
+      "layer": "kernel",
+      "effort": 2,
+      "title": "분기/병합: multiway 가지 + UnivalentStateStore로 동일시",
+      "deliverable": "kernel::branch",
+      "verify": "두 가지에서 같은 결과 -> identified()=true"
+    },
+    {
+      "id": "T20",
+      "milestone": "M3",
+      "layer": "query",
+      "effort": 3,
+      "title": "패턴 질의: 규칙 LHS 매처를 질의 엔진으로 일반화",
+      "deliverable": "kernel::query",
+      "verify": "type/속성/이웃 조건 질의 골든 테스트"
+    },
+    {
+      "id": "T21",
+      "milestone": "M3",
+      "layer": "query",
+      "effort": 2,
+      "title": "질의 언어(최소 텍스트 문법)",
+      "deliverable": "spec/QUERY.md + parser",
+      "verify": "왕복(parse->print) 테스트"
+    },
+    {
+      "id": "T30",
+      "milestone": "M4",
+      "layer": "compat",
+      "effort": 2,
+      "title": "ingest: 디렉터리 트리 -> 하이퍼그래프 (폴더는 group 하이퍼엣지로 흡수)",
+      "deliverable": "chu ingest",
+      "verify": "CHU 저장소 자체 ingest, 파일 수·바이트 일치"
+    },
+    {
+      "id": "T31",
+      "milestone": "M4",
+      "layer": "compat",
+      "effort": 1,
+      "title": "링크 추출: md 링크/JSON 참조를 하이퍼엣지로",
+      "deliverable": "ingest 플러그인",
+      "verify": "INDEX.md 링크 수 = 생성 엣지 수"
+    },
+    {
+      "id": "T32",
+      "milestone": "M4",
+      "layer": "compat",
+      "effort": 2,
+      "title": "export: 뷰 -> 트리 물질화(호환용, 정본 아님)",
+      "deliverable": "chu export",
+      "verify": "ingest->export 왕복 diff 0"
+    },
+    {
+      "id": "T33",
+      "milestone": "M4",
+      "layer": "compat",
+      "effort": 4,
+      "title": "FUSE 마운트: 질의 뷰를 가상 디렉터리로 노출",
+      "deliverable": "chu mount",
+      "verify": "ls/cat/편집이 txn으로 기록"
+    },
+    {
+      "id": "T06",
+      "milestone": "M4",
+      "layer": "research",
+      "effort": 2,
+      "title": "비용 측정: CHU 저장소를 폴더 트리 vs 하이퍼그래프로 표현(중복·링크·조회 비용)",
+      "deliverable": "research/TREE_VS_HYPERGRAPH.md + 측정 스크립트",
+      "verify": "동일 정보 fidelity 확인 후 비용 6항목 보고"
+    },
+    {
+      "id": "T40",
+      "milestone": "M5",
+      "layer": "shell",
+      "effort": 2,
+      "title": "CLI: add/link/find/view/log/branch",
+      "deliverable": "chu CLI",
+      "verify": "시나리오 스크립트 e2e"
+    },
+    {
+      "id": "T41",
+      "milestone": "M5",
+      "layer": "shell",
+      "effort": 4,
+      "title": "그래프 작업공간 UI(노드/하이퍼엣지 탐색·편집)",
+      "deliverable": "chu ui",
+      "verify": "CLI와 동일 txn 로그 생성"
+    },
+    {
+      "id": "T42",
+      "milestone": "M5",
+      "layer": "shell",
+      "effort": 2,
+      "title": "에이전트 포트: 작업/에이전트/HSPINE 의지도 노드로",
+      "deliverable": "agent adapter",
+      "verify": "작업 노드 생성->완료가 이력에 남음"
+    },
+    {
+      "id": "T50",
+      "milestone": "M6",
+      "layer": "dogfood",
+      "effort": 2,
+      "title": "셀프호스팅: CHU 저장소 문서를 CHU 안에서 관리",
+      "deliverable": "CHU-in-CHU",
+      "verify": "이 계획 그래프도 CHU 노드로 적재·질의"
+    },
+    {
+      "id": "T51",
+      "milestone": "M6",
+      "layer": "dogfood",
+      "effort": 1,
+      "title": "기존 이론 문서 재배치: 이론 = 커널 근거 문서 노드",
+      "deliverable": "INDEX/README 갱신",
+      "verify": "끊긴 링크 0(원래 끊긴 3개 제외)"
+    },
+    {
+      "id": "T52",
+      "milestone": "M6",
+      "layer": "dist",
+      "effort": 5,
+      "title": "333 백엔드: StateStore/BranchBus/Identity 분산 구현",
+      "deliverable": "backend-333",
+      "verify": "두 피어 간 가지 동기화"
+    }
   ],
   "hyperedges": [
-    {"id": "E01", "type": "requires", "tail": ["T00"], "head": ["T01", "T02", "T03", "T04"]},
-    {"id": "E02", "type": "requires", "tail": ["T01", "T02", "T03"], "head": ["T05"]},
-    {"id": "E03", "type": "requires", "tail": ["T00"], "head": ["T10"]},
-    {"id": "E04", "type": "requires", "tail": ["T02", "T10"], "head": ["T11"]},
-    {"id": "E05", "type": "requires", "tail": ["T01", "T02", "T11"], "head": ["T12"]},
-    {"id": "E06", "type": "requires", "tail": ["T03", "T12"], "head": ["T13"]},
-    {"id": "E07", "type": "requires", "tail": ["T13", "T05"], "head": ["T14"]},
-    {"id": "E08", "type": "requires", "tail": ["T12", "T04"], "head": ["T20"]},
-    {"id": "E09", "type": "requires", "tail": ["T20"], "head": ["T21"]},
-    {"id": "E10", "type": "requires", "tail": ["T13"], "head": ["T30"]},
-    {"id": "E11", "type": "requires", "tail": ["T30"], "head": ["T31"]},
-    {"id": "E12", "type": "requires", "tail": ["T30", "T20"], "head": ["T32"]},
-    {"id": "E13", "type": "requires", "tail": ["T32", "T13"], "head": ["T33"]},
-    {"id": "E14", "type": "requires", "tail": ["T21", "T13", "T14"], "head": ["T40"]},
-    {"id": "E15", "type": "requires", "tail": ["T40"], "head": ["T41", "T42"]},
-    {"id": "E16", "type": "requires", "tail": ["T31", "T32", "T40"], "head": ["T50"]},
-    {"id": "E17", "type": "requires", "tail": ["T50"], "head": ["T51"]},
-    {"id": "E18", "type": "requires", "tail": ["T14", "T50"], "head": ["T52"]}
+    {
+      "id": "E01",
+      "type": "requires",
+      "tail": [
+        "T00",
+        "T08"
+      ],
+      "head": [
+        "T01",
+        "T02",
+        "T03",
+        "T04"
+      ]
+    },
+    {
+      "id": "E02",
+      "type": "requires",
+      "tail": [
+        "T01",
+        "T02",
+        "T03"
+      ],
+      "head": [
+        "T05"
+      ]
+    },
+    {
+      "id": "E03",
+      "type": "requires",
+      "tail": [
+        "T00"
+      ],
+      "head": [
+        "T10"
+      ]
+    },
+    {
+      "id": "E04",
+      "type": "requires",
+      "tail": [
+        "T02",
+        "T10"
+      ],
+      "head": [
+        "T11"
+      ]
+    },
+    {
+      "id": "E05",
+      "type": "requires",
+      "tail": [
+        "T01",
+        "T02",
+        "T11"
+      ],
+      "head": [
+        "T12"
+      ]
+    },
+    {
+      "id": "E06",
+      "type": "requires",
+      "tail": [
+        "T03",
+        "T12"
+      ],
+      "head": [
+        "T13"
+      ]
+    },
+    {
+      "id": "E07",
+      "type": "requires",
+      "tail": [
+        "T13",
+        "T05"
+      ],
+      "head": [
+        "T14"
+      ]
+    },
+    {
+      "id": "E08",
+      "type": "requires",
+      "tail": [
+        "T12",
+        "T04"
+      ],
+      "head": [
+        "T20"
+      ]
+    },
+    {
+      "id": "E09",
+      "type": "requires",
+      "tail": [
+        "T20"
+      ],
+      "head": [
+        "T21"
+      ]
+    },
+    {
+      "id": "E10",
+      "type": "requires",
+      "tail": [
+        "T13"
+      ],
+      "head": [
+        "T30"
+      ]
+    },
+    {
+      "id": "E11",
+      "type": "requires",
+      "tail": [
+        "T30"
+      ],
+      "head": [
+        "T31"
+      ]
+    },
+    {
+      "id": "E12",
+      "type": "requires",
+      "tail": [
+        "T30",
+        "T20"
+      ],
+      "head": [
+        "T32"
+      ]
+    },
+    {
+      "id": "E13",
+      "type": "requires",
+      "tail": [
+        "T32",
+        "T13"
+      ],
+      "head": [
+        "T33"
+      ]
+    },
+    {
+      "id": "E14",
+      "type": "requires",
+      "tail": [
+        "T21",
+        "T13",
+        "T14"
+      ],
+      "head": [
+        "T40"
+      ]
+    },
+    {
+      "id": "E15",
+      "type": "requires",
+      "tail": [
+        "T40"
+      ],
+      "head": [
+        "T41",
+        "T42"
+      ]
+    },
+    {
+      "id": "E16",
+      "type": "requires",
+      "tail": [
+        "T31",
+        "T32",
+        "T40"
+      ],
+      "head": [
+        "T50"
+      ]
+    },
+    {
+      "id": "E17",
+      "type": "requires",
+      "tail": [
+        "T50"
+      ],
+      "head": [
+        "T51"
+      ]
+    },
+    {
+      "id": "E18",
+      "type": "requires",
+      "tail": [
+        "T14",
+        "T50"
+      ],
+      "head": [
+        "T52"
+      ]
+    },
+    {
+      "id": "E19",
+      "type": "requires",
+      "tail": [
+        "T00"
+      ],
+      "head": [
+        "T08"
+      ]
+    },
+    {
+      "id": "E20",
+      "type": "requires",
+      "tail": [
+        "T08"
+      ],
+      "head": [
+        "T07"
+      ]
+    },
+    {
+      "id": "E21",
+      "type": "requires",
+      "tail": [
+        "T30",
+        "T31",
+        "T07"
+      ],
+      "head": [
+        "T06"
+      ]
+    }
   ]
 }

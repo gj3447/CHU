@@ -28,7 +28,12 @@ See [`../CHANGELOG.md`](../CHANGELOG.md) for the evolution trajectory.
 
 > **실측 정정 2026-07-15**: 이전 "10 files / Lean 4.30.0-rc2"는 stale. `CHU_WolframRewrite.lean`(동역학 층) 누락 + 툴체인 버전 경과. 재검증 = **11/11 `lean <file>` exit 0**, `declaration uses 'sorry'` 경고 0건(파일 내 `sorry` 문자열 2건은 블록 주석 산문이라 실제 sorry 아님 — 확인함).
 
-Source: `/Users/lagyeongjun/CD/MIND/lean_formalization/`.
+Source: [`../lean/`](../lean/) (CHU 저장소 정본 사본, 2026-09-29).
+
+> **2026-09-29 수입·재검증**: 10개는 `MIND/lean_formalization/`, `CHU_WolframRewrite.lean`은 원래 위치에서
+> 사라져 `_mac_wip_snapshot_2026-08-10/`에만 남아 있던 것을 [`../lean/`](../lean/)으로 가져옴.
+> Lean **4.34.1**에서 `AirplaneMan_Gap4_Category`·`AirplaneMan_v2`의 functor law 2곳이 `simp` 동작 변화로
+> 실패 → `(simp [...]) <;> rfl`로 보강(증명 의미 불변). 결과 **11/11 exit 0, sorry 0, 144 theorems, 3,185 LOC**.
 
 | File | LOC | Theorems | What it proves |
 |------|-----|----------|----------------|
@@ -51,8 +56,8 @@ Source: `/Users/lagyeongjun/CD/MIND/lean_formalization/`.
 Verification:
 
 ```bash
-cd /Users/lagyeongjun/CD/MIND/lean_formalization/
-for f in AirplaneMan*.lean JaebaeManInf.lean CompositeJaebaeECSTripleIso.lean; do
+cd lean/
+for f in *.lean; do
   lean "$f" && echo "PASS: $f" || echo "FAIL: $f"
 done
 ```
@@ -181,7 +186,7 @@ ErrorPatterns (`:ErrorPattern` / `:AntiPattern`):
 
 > **정정 2026-07-15** — 이전 서술: *"CHU is static. Wolfram-style rewrite rules are not built in. PROM 16 OQ2 open — future overlay possible but must preserve I1."*
 
-base `axiom CHU : Type` 자체는 동역학을 담지 않지만, Wolfram-style rewrite overlay는 더 이상 future work가 아니다. `MIND/lean_formalization/CHU_WolframRewrite.lean`이 `Rewrite := CHU → CHU`(Def 2.2) / `Step`(Def 2.4) / `Type`-valued `Path` + trans·unit·assoc를 정의하고, level-2(`Cell` 2-morphism/`vtrans`)와 level-generic `Trunc.collapse`까지 `lean` exit 0으로 검증됨 — **신규 axiom 0 = I1 보존**. 여전히 열린 것: (a) Wolfram rewrite rule ↔ `JaebaeMan.governs` 인코딩 대응(원 OQ2의 핵심), (b) level ≥3 / n→∞ colimit / native HITs.
+base `axiom CHU : Type` 자체는 동역학을 담지 않지만, Wolfram-style rewrite overlay는 더 이상 future work가 아니다. `lean/CHU_WolframRewrite.lean`이 `Rewrite := CHU → CHU`(Def 2.2) / `Step`(Def 2.4) / `Type`-valued `Path` + trans·unit·assoc를 정의하고, level-2(`Cell` 2-morphism/`vtrans`)와 level-generic `Trunc.collapse`까지 `lean` exit 0으로 검증됨 — **신규 axiom 0 = I1 보존**. 여전히 열린 것: (a) Wolfram rewrite rule ↔ `JaebaeMan.governs` 인코딩 대응(원 OQ2의 핵심), (b) level ≥3 / n→∞ colimit / native HITs.
 
 ### L2. Lean 4 mainline HoTT-incompatible
 
@@ -205,7 +210,7 @@ PROM 64 D54 (`finding_solid_D54_connections_theory`): 5 무기 ↔ SOLID 5원리
 
 ### L7. `JaebaeMan` `List` finite-bound
 
-`governs : List JaebaeMan → JaebaeMan` is finite-branching. For infinite Layer 1 families (e.g. "infinitely many human thoughts"), use `Set CHUPiece` per [`AirplaneMan_Gap3_Cover.lean`](../../MIND/lean_formalization/AirplaneMan_Gap3_Cover.lean) — but the inductive itself is finite at each node.
+`governs : List JaebaeMan → JaebaeMan` is finite-branching. For infinite Layer 1 families (e.g. "infinitely many human thoughts"), use `Set CHUPiece` per [`AirplaneMan_Gap3_Cover.lean`](../lean/AirplaneMan_Gap3_Cover.lean) — but the inductive itself is finite at each node.
 
 ### L8. No machine-readable schema for CHU lenses
 

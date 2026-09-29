@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-29 — CHU = 하이퍼그래프 OS
+
+- [`canon/AI_NATIVE_THREE_PRINCIPLES.md`](canon/AI_NATIVE_THREE_PRINCIPLES.md) — AI native 3대원칙 (원문 + 증명 상태)
+- [`WHY_HYPERGRAPH.md`](WHY_HYPERGRAPH.md) — Wolfram · ZFC · Transformer · HSWM → 왜 하이퍼그래프인가
+- [`plan/CHU_OS_PLAN.md`](plan/CHU_OS_PLAN.md) — 작업계획 (정본 [`plan/chu_os_plan.graph.json`](plan/chu_os_plan.graph.json))
+- [`lean/`](lean/) — CHU Lean 11개 정본 사본 (4.34.1, 11/11 통과)
+- [`canon/sources/`](canon/sources/) — 사용자 원문
+
 ## 자료집 구조
 
 ```
@@ -93,7 +101,7 @@ CHU 의 조각화 = 하이퍼그래프 hyperedge 집합과 isomorphic.
 - 상세: `SOURCES.md` §1-3 + 인식적 지위 요약표
 - > **⚠️ SUPERSEDED (2026-07-15, 위 "핵심 (2)" 한정)**: "CHU↔Ruliad 평행 = 아직 가설(`:Comment`)"은 후속 전용 사이클 `prom16-chu-ruliad-grounding-2026-07-15`(16셀)이 종결 — **문자 그대로의 동일시는 REFUTED**(3축 독립 DIVERGES: limit-computable 비폐쇄 / plenitude↔unique-totality / category error). 생존 = 재정의 "Ruliad ∞-groupoid의 **computable truncation/thread**". 또한 "핵심 (3) full-text 미검증"은 해소됐으나(2026-07-13 검증) **Prop 4.4의 (∞,1)-topos는 증명 아닌 저자 hedge**로 재정정됨. → `PROM_16_RULIAD_GROUNDING_REPORT_2026-07-15.md` (아래 항목)
 - **신규 산출물 (2026-07-13)**:
-  - `../MIND/lean_formalization/CHU_WolframRewrite.lean` — 동역학 층 Lean (level 1+2, exit 0). `Rewrite/Step/Path/trans` + `Cell` 2-morphism + `strict_truncation`/`strict_truncation2`.
+  - `lean/CHU_WolframRewrite.lean` — 동역학 층 Lean (level 1+2, exit 0). `Rewrite/Step/Path/trans` + `Cell` 2-morphism + `strict_truncation`/`strict_truncation2`.
   - `333_ADAPTER_CONTRACT.md` — decouple(B) 4-port 인터페이스 (ComputeSink/StateStore/BranchBus/Identity → 333 모듈 + ORRR).
   - `chu_core_prototype/chu_core.rs` — BackendLocal Rust 코어 (native run ASSERTS PASS + wasm32 빌드). multiway rewrite explorer, content-hash StateStore = strict-eq truncation.
   - `UNIVALENT_STATESTORE_DESIGN.md` — un-truncated 극(homotopy witness 저장), F1-F3 OPEN 분기.

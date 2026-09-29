@@ -52,7 +52,8 @@ if errors:
 if "--mermaid" in sys.argv:
     print("flowchart LR")
     for v, n in nodes.items():
-        print(f'  {v}["{v} {n["title"][:28]}"]')
+        mark = " ✓" if n.get("status") == "done" else ""
+        print(f'  {v}["{v}{mark} {n["title"][:28]}"]')
     for e in g["hyperedges"]:
         tail = " & ".join(e["tail"])
         head = " & ".join(e["head"])
@@ -83,4 +84,6 @@ for i, layer in enumerate(layers):
     print(f"  L{i}: " + ", ".join(layer))
 print(f"\n임계 경로 ({finish[path[-1]]:g}일): " + " -> ".join(path))
 print("\n마일스톤 effort 합계(일): " + ", ".join(f"{k}={v:g}" for k, v in sorted(ms.items())))
-print(f"총 effort: {sum(ms.values()):g}일")
+done = [v for v, n in nodes.items() if n.get("status") == "done"]
+left = sum(n["effort"] for n in nodes.values() if n.get("status") != "done")
+print(f"총 effort: {sum(ms.values()):g}일 (완료 {len(done)}개: {', '.join(done) or '-'} / 남은 {left:g}일)")

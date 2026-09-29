@@ -6,6 +6,9 @@
 > **정본 = [`chu_os_plan.graph.json`](chu_os_plan.graph.json)**. 이 문서는 그 그래프의 사람용 뷰다.
 > 계획 자체도 하이퍼그래프(B-graph): 하이퍼엣지의 tail이 **전부** 끝나야 head를 착수한다.
 > 검증: `python3 plan/check_plan.py` (참조 무결성 · 비순환 · 고아 노드 · 임계 경로).
+>
+> **토대**: [AI native 3대원칙](../canon/AI_NATIVE_THREE_PRINCIPLES.md) ·
+> [왜 하이퍼그래프인가 (Wolfram·ZFC·Transformer·HSWM)](../WHY_HYPERGRAPH.md).
 
 ---
 
@@ -25,34 +28,37 @@
 2. **I-다중소속**: 한 노드는 임의 개수의 그룹 하이퍼엣지에 속한다. 단일 부모 강제 금지.
 3. **I-규칙**: 모든 변경은 `H₁→H₂` 재작성 1회 = 트랜잭션 1회. 이력은 버리지 않는다(multiway).
 4. **I-최소공리**: Lean 쪽 신규 axiom 0 (기존 I1 유지).
+5. **I-3대원칙**: ① 층 변환 M = Map이 1급 연산 · ② 표현 단위 = n항 역할 하이퍼엣지, 저장 형식은 비용 측정으로 선택 ·
+   ③ LLM = ROM(실행 단위), CHU 그래프 = 메모리, Semantic Weight = 프로그램.
 
 ## 2. 마일스톤
 
 | M | 이름 | 종료 조건 (게이트) | effort |
 |---|---|---|---|
-| M0 | 정체성 고정 | AGENTS.md 정전 반영 | 0.5일 |
-| M1 | 명세 | 5개 spec 문서 + Lean 매핑, 신규 axiom 0 | 5.5일 |
+| M0 ✓ | 정체성 고정 + 3대원칙 수입 | AGENTS.md 정전, 3대원칙·WHY_HYPERGRAPH, CHU Lean 11개 수입·재검증 | 1.5일 |
+| M1 | 명세 | 5개 spec 문서 + Lean 매핑, 신규 axiom 0, 수렴진화 검증 설계(T07) | 8.5일 |
 | M2 | 커널 | 영속 store + txn + 분기, `cargo test` green | 10일 |
 | M3 | 질의 | 패턴 질의 + 최소 문법, 골든 테스트 | 5일 |
-| M4 | 호환 | CHU 저장소 ingest→export 왕복 diff 0, FUSE 마운트 | 9일 |
+| M4 | 호환 | CHU 저장소 ingest→export 왕복 diff 0, FUSE 마운트, 트리 vs 하이퍼그래프 비용 측정(T06) | 11일 |
 | M5 | 셸 | CLI e2e, UI·에이전트가 같은 txn 로그 생성 | 8일 |
 | M6 | 셀프호스팅/분산 | 이 계획 그래프까지 CHU 노드로 적재, 333 2-피어 동기화 | 8일 |
 
-총 46 작업일(추정). **임계 경로 20.5일**:
-`T00 → T02 → T11 → T12 → T20 → T21 → T40 → T50 → T52`
+총 52 작업일(추정, 완료 1.5 / 남은 50.5). **임계 경로 21.5일**:
+`T00 → T08 → T02 → T11 → T12 → T20 → T21 → T40 → T50 → T52`
 
 ## 3. 위상 레이어 (같은 줄 = 병렬 가능)
 
 ```
 L0: T00
-L1: T01, T02, T03, T04, T10
-L2: T05, T11
-L3: T12
-L4: T13, T20
-L5: T14, T21, T30
-L6: T31, T32, T40
-L7: T33, T41, T42, T50
-L8: T51, T52
+L1: T08, T10
+L2: T01, T02, T03, T04, T07
+L3: T05, T11
+L4: T12
+L5: T13, T20
+L6: T14, T21, T30
+L7: T31, T32, T40
+L8: T06, T33, T41, T42, T50
+L9: T51, T52
 ```
 
 ## 4. 의존 하이퍼그래프
@@ -61,12 +67,14 @@ L8: T51, T52
 
 ```mermaid
 flowchart LR
-  T00["T00 CHU=하이퍼그래프 OS 정체성 고정"]
+  T00["T00 ✓ CHU=하이퍼그래프 OS 정체성 고정"]
+  T08["T08 ✓ AI native 3대원칙 + 왜 하이퍼그래프(Wo"]
   T01["T01 데이터 모델 명세: Node/Hyperedge/Ty"]
   T02["T02 정체성 명세: CID(내용 주소) + 라벨(가변 이"]
   T03["T03 연산 명세: 모든 변경 = 재작성 규칙 H1->H2"]
   T04["T04 뷰 명세: path/폴더 = 질의 투영"]
   T05["T05 Lean 정합 매핑: 명세 ↔ CHU_Wolfram"]
+  T07["T07 수렴진화 검증 설계: Wolfram·ZFC·Tran"]
   T10["T10 chu_core.rs를 crate로 분리(chu-k"]
   T11["T11 blob store: 콘텐츠 주소 저장(파일 본문)"]
   T12["T12 영속 하이퍼그래프 store: append-only"]
@@ -78,13 +86,14 @@ flowchart LR
   T31["T31 링크 추출: md 링크/JSON 참조를 하이퍼엣지로"]
   T32["T32 export: 뷰 -> 트리 물질화(호환용, 정본 "]
   T33["T33 FUSE 마운트: 질의 뷰를 가상 디렉터리로 노출"]
+  T06["T06 비용 측정: CHU 저장소를 폴더 트리 vs 하이퍼"]
   T40["T40 CLI: add/link/find/view/log/"]
   T41["T41 그래프 작업공간 UI(노드/하이퍼엣지 탐색·편집)"]
   T42["T42 에이전트 포트: 작업/에이전트/HSPINE 의지도 "]
   T50["T50 셀프호스팅: CHU 저장소 문서를 CHU 안에서 관"]
   T51["T51 기존 이론 문서 재배치: 이론 = 커널 근거 문서 "]
   T52["T52 333 백엔드: StateStore/BranchBu"]
-  T00 --> T01 & T02 & T03 & T04
+  T00 & T08 --> T01 & T02 & T03 & T04
   T01 & T02 & T03 --> T05
   T00 --> T10
   T02 & T10 --> T11
@@ -102,6 +111,9 @@ flowchart LR
   T31 & T32 & T40 --> T50
   T50 --> T51
   T14 & T50 --> T52
+  T00 --> T08
+  T08 --> T07
+  T30 & T31 & T07 --> T06
 ```
 
 ## 5. 운영 규칙 (표준 그래프 엔지니어링)

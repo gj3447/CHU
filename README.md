@@ -14,6 +14,11 @@
 
 > **CHU** = **C**omputable **H**yper**u**niverse. The single substrate type that every 12-사도 mythological figure and 5-weapon engineering tool implicitly quantifies over. `axiom CHU : Type`; a piece of CHU is a predicate `CHUPiece := CHU → Prop`; 비행기맨 (#4 Airplane Man) = `∀ x : CHU, j.covers x`. CHU is **not** an apostle — it is the **stage** on which the 12 apostles operate (TIER 2 substrate, the pure data phase of #8 OM, per user canon 2026-04-28).
 
+> **2026-09-29 정체성 (사용자 정전)**: CHU = **하이퍼그래프 기반 OS** — 폴더 트리 없이 파일·문서·코드·모델이 모두
+> 노드 + n항 하이퍼엣지. 토대: [AI native 3대원칙](canon/AI_NATIVE_THREE_PRINCIPLES.md) ·
+> [왜 하이퍼그래프인가](WHY_HYPERGRAPH.md) · 작업계획 [plan/CHU_OS_PLAN.md](plan/CHU_OS_PLAN.md).
+> 아래 타입 시스템은 이 OS의 커널 이론이다.
+
 ---
 
 ## What CHU Is
@@ -61,7 +66,7 @@ There are **two paths** to use CHU. Pick based on whether you want the raw type 
 Use the Lean 4 sources directly:
 
 ```bash
-cd /Users/lagyeongjun/CD/MIND/lean_formalization/
+cd lean/
 lean AirplaneMan.lean                  # core axioms + JaebaeMan + isAirplaneMan + 8 theorems
 lean AirplaneMan_CHU_Universe.lean     # universe-level resolution (Type 0 + Type u)
 lean AirplaneMan_Gap3_Cover.lean       # Set CHUPiece (infinite family) cover semantics
@@ -125,7 +130,7 @@ That's the **entire** declarative surface. 6 primitives, 1 axiom, 1 inductive, 2
 | **I4** | **OR-union coverage** | Replacing the `∨` in `governs_covers_cons` with AND/XOR (changes semantics from open-cover to partition; see `AirplaneMan_Gap3_Cover.lean` for the rationale) |
 | **I5** | **Russell avoidance** | Asserting `CHU : CHU → Prop` or similar self-reference (`Girard paradox`; see [`NATURE_RUSSELL_AVOIDANCE.md`](NATURE_RUSSELL_AVOIDANCE.md)) |
 
-Violate any → the inductive becomes unsound or the cover semantics drift. See [`AirplaneMan_CHU_Universe.lean`](../MIND/lean_formalization/AirplaneMan_CHU_Universe.lean) for the universe-level proof that both `Type 0` and `Type u` satisfy I1–I5.
+Violate any → the inductive becomes unsound or the cover semantics drift. See [`AirplaneMan_CHU_Universe.lean`](lean/AirplaneMan_CHU_Universe.lean) for the universe-level proof that both `Type 0` and `Type u` satisfy I1–I5.
 
 ### CHU Lenses (11 :SymConcept)
 
@@ -151,16 +156,16 @@ See [`SOURCES.md`](SOURCES.md) §"CHU-Internet binding" for the 11th lens ground
 
 10 verified Lean 4 files (Mathlib-free standalone, Lean 4.30.0-rc2, **0 sorry**):
 
-- [`AirplaneMan.lean`](../MIND/lean_formalization/AirplaneMan.lean) — core axioms + 8 theorems (canonical entry point)
-- [`AirplaneMan_v2.lean`](../MIND/lean_formalization/AirplaneMan_v2.lean) — v2 refinements
-- [`AirplaneMan_CHU_Universe.lean`](../MIND/lean_formalization/AirplaneMan_CHU_Universe.lean) — Type 0 vs Type u resolution
-- [`AirplaneMan_Gap3_Cover.lean`](../MIND/lean_formalization/AirplaneMan_Gap3_Cover.lean) — `Set CHUPiece` infinite family open-cover semantics
-- [`AirplaneMan_Gap4_Category.lean`](../MIND/lean_formalization/AirplaneMan_Gap4_Category.lean) — categorical interpretation
-- [`AirplaneMan_Gap5_Cost.lean`](../MIND/lean_formalization/AirplaneMan_Gap5_Cost.lean) — cost-tagged JaebaeMan
-- [`AirplaneMan_Gap6_MAB.lean`](../MIND/lean_formalization/AirplaneMan_Gap6_MAB.lean) — multi-armed bandit cover selection
-- [`AirplaneMan_Uniqueness.lean`](../MIND/lean_formalization/AirplaneMan_Uniqueness.lean) — essential uniqueness on CHU
-- [`JaebaeManInf.lean`](../MIND/lean_formalization/JaebaeManInf.lean) — infinite JaebaeMan generalization
-- [`CompositeJaebaeECSTripleIso.lean`](../MIND/lean_formalization/CompositeJaebaeECSTripleIso.lean) — ECS-JaebaeMan triple isomorphism
+- [`AirplaneMan.lean`](lean/AirplaneMan.lean) — core axioms + 8 theorems (canonical entry point)
+- [`AirplaneMan_v2.lean`](lean/AirplaneMan_v2.lean) — v2 refinements
+- [`AirplaneMan_CHU_Universe.lean`](lean/AirplaneMan_CHU_Universe.lean) — Type 0 vs Type u resolution
+- [`AirplaneMan_Gap3_Cover.lean`](lean/AirplaneMan_Gap3_Cover.lean) — `Set CHUPiece` infinite family open-cover semantics
+- [`AirplaneMan_Gap4_Category.lean`](lean/AirplaneMan_Gap4_Category.lean) — categorical interpretation
+- [`AirplaneMan_Gap5_Cost.lean`](lean/AirplaneMan_Gap5_Cost.lean) — cost-tagged JaebaeMan
+- [`AirplaneMan_Gap6_MAB.lean`](lean/AirplaneMan_Gap6_MAB.lean) — multi-armed bandit cover selection
+- [`AirplaneMan_Uniqueness.lean`](lean/AirplaneMan_Uniqueness.lean) — essential uniqueness on CHU
+- [`JaebaeManInf.lean`](lean/JaebaeManInf.lean) — infinite JaebaeMan generalization
+- [`CompositeJaebaeECSTripleIso.lean`](lean/CompositeJaebaeECSTripleIso.lean) — ECS-JaebaeMan triple isomorphism
 
 Source: `/Users/lagyeongjun/CD/MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeMan*.lean`.
 
