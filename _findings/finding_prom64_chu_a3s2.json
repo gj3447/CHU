@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s2",
+  "domain": "A3::S2",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D18",
+  "confidence": "HIGH",
+  "oneLineSummary": "HGNN production: drug discovery (HGNN-DDI 2025, KGDRP +12%, MRLHGNN), recommendation (GC-HGNN session-based, news/course HGNN), multi-omics (MOGONET Nature Comms 2021, GNNRAI), social (HeteroGraphRec).",
+  "recommendation": "CHU 우선순위: (1) Drug-Target-Disease tripartite, (2) recommendation hetero, (3) multi-omics KG-CHU.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s7",
+  "domain": "A4::S7",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S7_Theory",
+  "agentId": "D31",
+  "confidence": "HIGH",
+  "oneLineSummary": "Web 토폴로지 (Broder 2000): power-law degree (in 2.1, out 2.72), bow-tie 6-component (LSCC/IN/OUT/TENDRILS/TUBES/DISCONNECTED), small-world+scale-free coexistence, hub bridges. Universal across molecular/gene/neural/social/internet.",
+  "recommendation": "web-as-CHU: A=pages, χ=hyperlink reachability. bow-tie = CHU fiber stratification 가능성. 멱법칙 지수 CHU axiom 도출 가능?",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

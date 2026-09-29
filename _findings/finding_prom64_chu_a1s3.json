@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a1s3",
+  "domain": "A1::S3",
+  "axis": "A1_GraphAwarePretraining",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D03",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "GraphArena (ICLR 2025) -29.7% hallucination. graph vs token-only 직접 OGB/GLUE perplexity 비교는 2024-25 부재. paradigm gap unmeasured at perplexity level.",
+  "recommendation": "OGB+GLUE+perplexity 직접 벤치마크 필요. GLBench 25% accuracy gain 간접 evidence.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

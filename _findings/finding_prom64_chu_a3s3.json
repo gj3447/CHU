@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s3",
+  "domain": "A3::S3",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D19",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "HGNN +1-20% over GNN (social +10%, biomedical Simple-HGN best 4/8). DPHGNN/THNN >GWL-1, match 3-GWL. OGB-LSC HGNN 직접 leaderboard 부재.",
+  "recommendation": "OGB-LSC leaderboard 직접 harvest. CHU-encoded hypergraph vs pairwise GNN on OGB-arxiv.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

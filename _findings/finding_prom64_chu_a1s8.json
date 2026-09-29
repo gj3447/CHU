@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a1s8",
+  "domain": "A1::S8",
+  "axis": "A1_GraphAwarePretraining",
+  "subAxis": "S8_Critique",
+  "agentId": "D08",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "Graph structure NOT absorbed by token co-occurrence: neural topology가 activation 대비 67-130% richer. Co-occurrence 0.6-0.7 off-diagonal redundancy 낮음. LLMs *deprioritize* (not absorb) topology.",
+  "recommendation": "가설 reframe: 'co-occurrence redundancy' → 'semantic prioritization hierarchy'. paradigm gap 유지.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

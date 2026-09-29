@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a7s5",
+  "domain": "A7::S5",
+  "axis": "A7_GraphRAG",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D53",
+  "confidence": "HIGH",
+  "oneLineSummary": "GraphRAG 4 production pitfall: LLM extraction cost (94% performance achievable via dependency parsing baseline), schema evolution requires full re-index (-16.6% time-sensitive accuracy), hallucination residual (C2RAG mitigates), latency linear with corpus.",
+  "recommendation": "hybrid: dependency parsing extraction + C2RAG constraint + delta-indexing + KG summary cache + lightweight subgraph projection.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

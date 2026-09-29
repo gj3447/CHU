@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a1s7",
+  "domain": "A1::S7",
+  "axis": "A1_GraphAwarePretraining",
+  "subAxis": "S7_Theory",
+  "agentId": "D07",
+  "confidence": "HIGH",
+  "oneLineSummary": "Message Passing ≡ 1-WL 한계 (삼각형 구분 불가). Transformer = GIN on complete graph (등치). k-WL + simplicial/cellular lift + homomorphism expressivity 초월.",
+  "recommendation": "CHU lift = WL distinguishability threshold; upper = attention as CHU adjunction; Simplicial lift boundary map ∂를 CHU adjoint functor로 재해석.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

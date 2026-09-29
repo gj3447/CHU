@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a2s8",
+  "domain": "A2::S8",
+  "axis": "A2_PageRankGeneralize",
+  "subAxis": "S8_Critique",
+  "agentId": "D16",
+  "confidence": "HIGH",
+  "oneLineSummary": "PageRank 5 한계: content blindness (200+ signal needed), link spam manipulation, static graph snapshot, eigenvector circular self-reference (artificial damping 0.85), legacy bias (older pages favored).",
+  "recommendation": "CHU-rank: semantic fingerprinting + manipulation resistance + temporal decay + topic-aware block-eigenvector + behavioral feedback. Link-only insufficient.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

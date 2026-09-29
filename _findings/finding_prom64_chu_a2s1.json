@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a2s1",
+  "domain": "A2::S1",
+  "axis": "A2_PageRankGeneralize",
+  "subAxis": "S1_OfficialDocs",
+  "agentId": "D09",
+  "confidence": "HIGH",
+  "oneLineSummary": "5 PR variants 결정화: PPR(Haveliwala 2002, α=0.85), Topic-Sensitive PR(2003), SimRank(Jeh-Widom 2002 sim(u,v) recursive), HITS(Kleinberg 1998 auth/hub eigenvectors), Eigenvector Centrality. 모두 fixed-point/eigenvector 공통.",
+  "recommendation": "CHU rank span을 5 contracts로 분해; numerical benchmark + reverse-engineer NetworkX/Neo4j 구현.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

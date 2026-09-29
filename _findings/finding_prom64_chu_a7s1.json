@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a7s1",
+  "domain": "A7::S1",
+  "axis": "A7_GraphRAG",
+  "subAxis": "S1_OfficialDocs",
+  "agentId": "D49",
+  "confidence": "HIGH",
+  "oneLineSummary": "MS GraphRAG (2024 community summary+graph ML query-time), HippoRAG (NeurIPS'24 RAG+KG+Personalized PageRank human memory), LightRAG (two-tier entity-relation+thematic). NebulaGraph/Neo4j/LangChain/LlamaIndex 인프라.",
+  "recommendation": "graph nodes=CHU pieces, edges=covers/governs. 7-Layer Reference Model NebulaGraph schema 바인딩.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

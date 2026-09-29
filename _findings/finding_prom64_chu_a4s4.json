@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s4",
+  "domain": "A4::S4",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S4_Alternatives",
+  "agentId": "D28",
+  "confidence": "HIGH",
+  "oneLineSummary": "Anchor text(spam-detect filter), DA 50-70 threshold, ccTLD geo-signal, freshness substantive>cosmetic, CTR trains RankEmbedBert. XACT(UX/Authority/Content/Technical) 2026 framework.",
+  "recommendation": "CHU corpus rank: topical anchor + DA>=50 + geo-target + substantive update + indirect CTR.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

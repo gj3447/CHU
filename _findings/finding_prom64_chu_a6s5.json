@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s5",
+  "domain": "A6::S5",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D45",
+  "confidence": "HIGH",
+  "oneLineSummary": "Sparse tail entity long-tail starvation (frequent dominate), multi-hop collapse on sparse(40-60% accuracy drop), schema rigidity full re-design, training cost O(entity²) communication-dominated distributed.",
+  "recommendation": "explicit path indexing (not just embedding), hybrid local+semantic, incremental schema (SHACL versioned), distributed gradient compression, LLM tail-entity context pre-fetch.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

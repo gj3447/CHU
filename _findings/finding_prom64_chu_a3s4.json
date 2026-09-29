@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s4",
+  "domain": "A3::S4",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S4_Alternatives",
+  "agentId": "D20",
+  "confidence": "HIGH",
+  "oneLineSummary": "H2GNN(hyperbolic multi-relational), DPHGNN(spectral+spatial dual, 3-GWL), Simplicial NN(2010, all dimensions), Cell complex networks(graph/mesh 통합).",
+  "recommendation": "다중 관계: H2GNN/DPHGNN. N≥3 차수 N-ary: SNN. 이질 타입: cell complex.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

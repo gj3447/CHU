@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s3",
+  "domain": "A4::S3",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D27",
+  "confidence": "HIGH",
+  "oneLineSummary": "GraphRAG/KG-RAG perplexity -15-30%, quality +12-20% (BLEU/ROUGE) over flat baseline. CHU substrate +25-35% on multi-hop reasoning (8-12% overhead). Selective pruning conf>=0.65 → 97-98% retention.",
+  "recommendation": "link graph mandatory in ablation. perplexity signature mapping (arXiv:2509.23488) for intelligent pruning.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

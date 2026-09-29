@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a1s5",
+  "domain": "A1::S5",
+  "axis": "A1_GraphAwarePretraining",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D05",
+  "confidence": "HIGH",
+  "oneLineSummary": "Oversmoothing+oversquashing 3-4 layer 한계 vs LLM 100+ layer; data scarcity bottleneck; KG integration immaturity; sparse hypergraph parallelization 실패.",
+  "recommendation": "non-message-passing paradigm (physics-inspired GNN, adaptive rewiring), hybrid sparse→dense pipeline.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

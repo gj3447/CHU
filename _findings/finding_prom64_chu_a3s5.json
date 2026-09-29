@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s5",
+  "domain": "A3::S5",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D21",
+  "confidence": "HIGH",
+  "oneLineSummary": "Clique expansion 정보 손실 (cardinality ambiguity, 두 distinct hypergraph 동일 expansion); spectral O(n²) memory; oversmoothing depth-dep. Ada-HGNN sampling, THNN tensor 우회.",
+  "recommendation": "Incidence-matrix/tensor aggregation, Ada-HGNN adaptive sampling O(k·d), residual+state-space attention.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

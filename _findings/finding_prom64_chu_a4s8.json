@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s8",
+  "domain": "A4::S8",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S8_Critique",
+  "agentId": "D32",
+  "confidence": "HIGH",
+  "oneLineSummary": "Link discarding intentional design (Broder, ACL J03-3001 corpus literature). 2024 GNN research: hyperlink graph adds redundancy not info gain (oversquashing, node features sufficient). Selective HITS-based link 사용은 여전히 유효.",
+  "recommendation": "redundancy ratio per corpus type 정량화, selective-link methods 벤치마크. paradigm shift real but selective.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

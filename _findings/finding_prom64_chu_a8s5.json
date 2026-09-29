@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s5",
+  "domain": "A8::S5",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D61",
+  "confidence": "HIGH",
+  "oneLineSummary": "Token-only 5 pitfalls: (P1) long-tail gradient dilution (rare entity <5% gradient), (P2) recency bias, (P3) low-resource language collapse(<100M token threshold), (P4) entity frequency asymmetry (A↔B equivalence broken), (P5) tokenization discreteness (BPE fragments).",
+  "recommendation": "hybrid frequency-semantic indexing + LTRL reflective learning + multilingual capacity parity + entity equivalence symmetry constraint.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

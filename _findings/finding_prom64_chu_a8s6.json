@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s6",
+  "domain": "A8::S6",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S6_Trends2026",
+  "agentId": "D62",
+  "confidence": "HIGH",
+  "oneLineSummary": "Model collapse threshold <1/1000 synthetic (ICLR 2025); 74% AI-generated web (Apr 2025); data-centric AI shift (provenance > scale); Reddit→Google, News Corp→OpenAI licensing; AI slop saturation >50% by 2026.",
+  "recommendation": "human corpus licensing + synthetic-data verification (filter+discriminator gate). data-provenance audit + source-chain certification > naive scale-up. CHU: human-curated/synthetic-controlled/adversarial-detection.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

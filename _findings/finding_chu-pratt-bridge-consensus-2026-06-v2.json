@@ -1,0 +1,27 @@
+{
+  "findingId": "finding_chu-pratt-bridge-consensus-2026-06-v2",
+  "domain": "CHU::PrattSemanticBridge",
+  "oneLineSummary": "Their CHU = syntactic/type substrate (axiom + CHUPiece + \u03bcF/\u03bdF covers + sheaf) with topo inspiration; Pratt Chu = semantic model (generalized topo, self-dual LL). Strong convergence on duality/covers; deliberate gap (substrate vs model).",
+  "rootCause": "Internal development of CHU as agent ontology base (JaebaeMan covers, sheaf gluing from A5) with limited external topo/logic citations; Pratt provides the precise categorical model for generalized topology + linear logic duality that fits Longinus BX, harness \u2200x:CHU, Naesengmoon polarity.",
+  "recommendation": "Add 2-3 'Chu duality / covering transform / linear polarity' lenses to LensSet:mathematical (113). Re-interpret BX laws and \u2200x:CHU as Chu morphisms. Draft Lean bridge over current axiom CHU. Cite Pratt in A1/herness. This cycle (again) for verification.",
+  "alternatives": [
+    "Treat as loose metaphor only (weaker).",
+    "Build custom topo model instead of adopting Pratt (higher effort)."
+  ],
+  "references": [
+    "internal:CHU_Pratt_Semantic_Bridge.md",
+    "A1_TypeTheory_CHU.md (8 eras + \u03bcF consensus)",
+    "MU_NU_DUALITY.md (\u03bdF necessity for selfLoop)",
+    "A5_recursive_cover_sheaf_topology.md (covers as gluing)",
+    "Pratt, V.R. 'Chu spaces as a semantic bridge between linear logic and mathematics', TCS 294 (2003)",
+    "Pratt 'Chu Spaces and their Interpretation as Concurrent Objects' (2005)"
+  ],
+  "caveats": "Name collision 'CHU' is mythology; Pratt Chu is semantic, theirs is syntactic substrate. No direct Pratt citation in their theory files yet (drift risk low but present).",
+  "confidence": "HIGH",
+  "agentId": "prom-chu-pratt-2026-06-again-01",
+  "researchedAt": "2026-06",
+  "sourceKgBindings": [
+    "Lesson:lesson-prom-chu-pratt-relationship-2026-06-again",
+    "File:CHU_Pratt_Semantic_Bridge.md"
+  ]
+}

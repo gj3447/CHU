@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s4",
+  "domain": "A6::S4",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S4_Alternatives",
+  "agentId": "D44",
+  "confidence": "HIGH",
+  "oneLineSummary": "Text-only LLM entity (EARAG framework), hyperbolic KGE (AttH attention+reflection+rotation, MuRP first hyperbolic, fully hyperbolic rotation 2024), multi-geometry (HyperComplEx, SEPA, UltraE).",
+  "recommendation": "SYMPOSIUM KG: EARAG (사도 narrative)→AttH (12사도+5무기 hierarchy, reflection/rotation)→HyperComplEx (χ-curvature). MuRP 단독 회피.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

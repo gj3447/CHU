@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s8",
+  "domain": "A6::S8",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S8_Critique",
+  "agentId": "D48",
+  "confidence": "HIGH",
+  "oneLineSummary": "Hybrid (LLM semantic + KGE structure) 산업 표준. Pure text-LLM 단독 hallucination+sparseness 이중 고충 (60.7% entities degree≤3, 14.1% degree=1 WN18RR). KGE 사양 아님.",
+  "recommendation": "CHU entity node = (description_embedding, structural_vector) dual representation.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

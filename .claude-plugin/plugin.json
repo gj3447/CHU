@@ -1,0 +1,336 @@
+{
+  "name": "chu-type-system",
+  "version": "1.0.0",
+  "description": "CHU — Computable Hyperuniverse type system. axiom CHU:Type + CHUPiece(:=CHU→Prop) + JaebaeMan inductive (atomic/governs μ-recursive) + isAirplaneMan(:= ∀x:CHU, j.covers x). The substrate type layer over which 12 SYMPOSIUM apostles and 5 weapons operate. Mathlib-free Lean 4 (10 files, 0 sorry).",
+  "author": {
+    "name": "SYMPOSIUM project",
+    "email": "gira@airobotics.im",
+    "url": "https://github.com/gj3447/symposium"
+  },
+  "homepage": "https://github.com/gj3447/symposium/tree/main/THEORY/CHU",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gj3447/symposium.git",
+    "directory": "THEORY/CHU"
+  },
+  "license": "MIT",
+  "keywords": [
+    "chu",
+    "computable-hyperuniverse",
+    "type-system",
+    "axiom",
+    "hypergraph",
+    "lean4",
+    "lean4-verified",
+    "mathlib-free",
+    "jaebaeman",
+    "airplaneman",
+    "yoneda",
+    "predicate-as-piece",
+    "open-cover",
+    "russell-avoidance",
+    "kg-canonical",
+    "symposium-substrate",
+    "tier-2"
+  ],
+  "category": "type-system",
+  "tags": [
+    "foundational",
+    "lean-verified",
+    "axiomatic",
+    "kg-grounded",
+    "mathlib-free",
+    "canonical"
+  ],
+  "engines": {
+    "lean": ">=4.30.0-rc2",
+    "claudeCode": ">=2.0.0"
+  },
+  "type_primitives": [
+    {
+      "name": "CHU",
+      "kind": "axiom",
+      "signature": "axiom CHU : Type",
+      "role": "Universe — the type quantified over by every SYMPOSIUM construct",
+      "universe": "Type 0 (default) or Type u (polymorphic, both sound per OQ1 resolution)",
+      "consistency": "Weaker than Lean's three standard axioms (propext / Classical.choice / Quot.sound)"
+    },
+    {
+      "name": "CHUPiece",
+      "kind": "def",
+      "signature": "def CHUPiece : Type := CHU → Prop",
+      "role": "A piece of CHU = a predicate (Yoneda hom-set into Prop)",
+      "interpretation": "Hypergraph hyperedge characteristic function. ISP's software cousin of Yoneda lemma."
+    },
+    {
+      "name": "JaebaeMan",
+      "kind": "inductive",
+      "signature": "inductive JaebaeMan : Type | atomic : CHUPiece → JaebaeMan | governs : List JaebaeMan → JaebaeMan deriving Inhabited",
+      "role": "μ-recursive coverer; strictly subsumes Berge (1-level) and Smarandache n-SHG (𝒫ⁿ(V) finite-n)",
+      "constructors": [
+        {
+          "name": "atomic",
+          "signature": "CHUPiece → JaebaeMan",
+          "layer": "Layer 1 — covers exactly one piece"
+        },
+        {
+          "name": "governs",
+          "signature": "List JaebaeMan → JaebaeMan",
+          "layer": "Layer N+1 — covers the OR-union of its children"
+        }
+      ]
+    },
+    {
+      "name": "JaebaeMan.covers",
+      "kind": "def",
+      "signature": "def JaebaeMan.covers : JaebaeMan → CHU → Prop",
+      "role": "Coverage as OR-union open-cover (mutual recursion via anyCovers)",
+      "semantics": "Open cover (not partition, not sheaf) — see AirplaneMan_Gap3_Cover.lean"
+    },
+    {
+      "name": "JaebaeMan.depth",
+      "kind": "def",
+      "signature": "def JaebaeMan.depth : JaebaeMan → Nat",
+      "role": "Layer depth in the self-similar hierarchy (mutual recursion via maxDepth)"
+    },
+    {
+      "name": "isAirplaneMan",
+      "kind": "def",
+      "signature": "def isAirplaneMan (j : JaebaeMan) : Prop := ∀ x : CHU, j.covers x",
+      "role": "The apex ∀-cover predicate. Formal definition of 12 사도 #4 비행기맨.",
+      "witness_existence": "airplaneManAt : Nat → JaebaeMan; airplaneManAt_is (n : Nat) : isAirplaneMan (airplaneManAt n)"
+    }
+  ],
+  "invariants": [
+    {
+      "id": "I1",
+      "name": "Axiomatic minimality",
+      "rule": "axiom CHU : Type only — no inhabitant, no equation, no structure added",
+      "forbids": "axiom chu_inhabited : Inhabited CHU; axiom CHU_eq : CHU = ...; etc.",
+      "rationale": "Model-independence — any proof transfers to any concrete CHU model"
+    },
+    {
+      "id": "I2",
+      "name": "Predicate-as-piece",
+      "rule": "CHUPiece is strictly CHU → Prop",
+      "forbids": "def CHUPiece : Set CHU := ...; def CHUPiece := { x : CHU // p x }",
+      "rationale": "Avoid Mathlib + set-theory commitment; preserve Yoneda perspective"
+    },
+    {
+      "id": "I3",
+      "name": "Self-similar coverage",
+      "rule": "JaebaeMan inductive has exactly two constructors: atomic / governs",
+      "forbids": "Adding a third constructor (e.g. concat, weighted, etc.)",
+      "rationale": "Keep the inductive minimal — extensions live in separate types (e.g. AirplaneMan_Gap5_Cost.lean adds cost as a wrapper, not a third constructor)"
+    },
+    {
+      "id": "I4",
+      "name": "OR-union coverage",
+      "rule": "JaebaeMan.covers uses ∨ in governs case (open-cover semantics)",
+      "forbids": "AND, XOR, partition (∧, ⊕, mutually-exclusive)",
+      "rationale": "User canon allows overlapping resonance (공명), not strict partition; open-cover is the unique structure-free interpretation"
+    },
+    {
+      "id": "I5",
+      "name": "Russell avoidance",
+      "rule": "No CHU : CHU → Prop or similar Russell-style self-reference",
+      "forbids": "axiom CHU_self : CHU = (CHU → Prop)",
+      "rationale": "Girard's paradox triggers regardless of universe level (both Type 0 and Type u). See NATURE_RUSSELL_AVOIDANCE.md."
+    }
+  ],
+  "lean_formalization": {
+    "toolchain": "leanprover/lean4:v4.30.0-rc2",
+    "mathlib_free": true,
+    "sorry_count": 0,
+    "file_count": 10,
+    "loc_total": 1465,
+    "theorem_count": 48,
+    "source_path": "/Users/lagyeongjun/CD/MIND/lean_formalization/",
+    "files": [
+      {
+        "path": "AirplaneMan.lean",
+        "role": "Core axioms + JaebaeMan inductive + isAirplaneMan + 8 theorems",
+        "canonical": true
+      },
+      {
+        "path": "AirplaneMan_v2.lean",
+        "role": "v2 refinements"
+      },
+      {
+        "path": "AirplaneMan_CHU_Universe.lean",
+        "role": "OQ1 resolution — Type 0 vs Type u parallel namespaces, both sound"
+      },
+      {
+        "path": "AirplaneMan_Gap3_Cover.lean",
+        "role": "Set CHUPiece infinite-family open-cover semantics + (A) ⟺ (B) gap proof"
+      },
+      {
+        "path": "AirplaneMan_Gap4_Category.lean",
+        "role": "Categorical interpretation — JaebaeMan as μ-recursive initial algebra"
+      },
+      {
+        "path": "AirplaneMan_Gap5_Cost.lean",
+        "role": "Cost-tagged JaebaeMan (weighted cover variant)"
+      },
+      {
+        "path": "AirplaneMan_Gap6_MAB.lean",
+        "role": "Multi-armed bandit cover selection"
+      },
+      {
+        "path": "AirplaneMan_Uniqueness.lean",
+        "role": "Essential uniqueness on CHU (modulo cover equivalence)"
+      },
+      {
+        "path": "JaebaeManInf.lean",
+        "role": "Infinite JaebaeMan generalization (Stream lift over List)"
+      },
+      {
+        "path": "CompositeJaebaeECSTripleIso.lean",
+        "role": "ECS ↔ JaebaeMan ↔ CHU triple isomorphism (PROM 64 D54 grounded)"
+      }
+    ]
+  },
+  "external_canon_grounding": {
+    "tier": "A (4 canons cross-referenced)",
+    "canons": [
+      {
+        "name": "Sy Friedman Hyperuniverse Programme",
+        "topic": "V-logic, set-generic absoluteness",
+        "relation": "CHU is the computable sub-fragment"
+      },
+      {
+        "name": "Wolfram 2020 Physics Project",
+        "topic": "Everything-is-hypergraph universe, rewrite rules",
+        "relation": "Slogan equivalence (✅); dynamics gap (⚠); cardinality gap (⚠) — partial iso, see PROM 16 C3"
+      },
+      {
+        "name": "Voevodsky Univalent Foundations / HoTT",
+        "topic": "Univalence axiom, paths as identity",
+        "relation": "CHU is HoTT-compatible in principle (Type u); ⚠ Lean 4 mainline UIP-friendly = HoTT-incompatible (Carneiro 2025 HoTTEST)"
+      },
+      {
+        "name": "Hyland Effective Topos Eff(N)",
+        "topic": "Realizability, BHK, Kleene #1/#2",
+        "relation": "Provides the realizability layer overlay — the 'computable' of 'Computable Hyperuniverse'"
+      }
+    ],
+    "additional": [
+      "Yoneda lemma — CHUPiece as hom-set into Prop, ISP software cousin",
+      "Yanofsky 2003 self-reference — JaebaeMan self-similarity formal limit",
+      "Aczel AFA — non-well-founded alternative interpretation (AFA_SELFLOOP_MODEL.md)"
+    ]
+  },
+  "chu_lenses": [
+    "CHU_Lens_HumanThought",
+    "CHU_Lens_ContextWindow",
+    "CHU_Lens_Manifold",
+    "CHU_Lens_EmbeddingVector",
+    "CHU_Lens_LLMModel",
+    "CHU_Lens_GPU",
+    "CHU_Lens_Token",
+    "CHU_Lens_Attention",
+    "CHU_Lens_TrainingData",
+    "CHU_Lens_Inference",
+    "CHU_Lens_Internet"
+  ],
+  "apostle_bindings": {
+    "primary": {
+      "8_OM": "CHU = OM 사도의 순수 데이터 위상 (user canon 2026-04-28). TIER 2 substrate = TIER 3 #8 데이터 위상."
+    },
+    "definitional": {
+      "4_AirplaneMan": "isAirplaneMan := ∀ x : CHU, j.covers x — the formal definition of 비행기맨",
+      "재배맨": "inductive JaebaeMan := the formal definition of 재배맨 protocol"
+    },
+    "universal": "All 12 사도 implicitly quantify over x : CHU"
+  },
+  "weapons_relation": {
+    "harness": "3-tier scaffolding over CHU pieces",
+    "prometheus": "Knowledge-action spiral over CHU evidence",
+    "taliban": "Adversarial validation of CHU coverage (GAN's D)",
+    "longinus": "7-Layer reference binding (CHU ↔ source code)",
+    "jaebaeman": "SOP protocol implemented as the JaebaeMan inductive itself"
+  },
+  "kg_canonical_nodes": [
+    "lesson-prom16-CHU-axiom-foundation-2026-04-29",
+    "lesson-prom64-chu-internet-binding-2026-04-29",
+    "lesson-prom16-chu-rank-algebra-pagerank-instance-2026-04-29",
+    "lesson-chu-universe-resolution-2026-05-02",
+    "hypothesis-pagerank-style-pretraining-substrate-2026-04-29",
+    "user-utterance-internet-as-CHU-binding-2026-04-29",
+    "ATOM_PROM16_CHU_REPORT_2026-04-29",
+    "family-expansion-pattern-canonical-2026-04-30"
+  ],
+  "documentation": {
+    "readme": "../README.md",
+    "userguide": "../docs/USERGUIDE.md",
+    "status": "../docs/STATUS.md",
+    "index": "../docs/index.md",
+    "changelog": "../CHANGELOG.md",
+    "sources": "../SOURCES.md",
+    "folder_index": "../INDEX.md",
+    "prom_16_axiom_foundation": "../PROM_16_REPORT.md",
+    "prom_64_chu_internet": "../PROM_64_REPORT.md",
+    "prom_16_rank_algebra": "../PROM_16_RANK_ALGEBRA_REPORT.md",
+    "russell_avoidance": "../NATURE_RUSSELL_AVOIDANCE.md",
+    "mu_nu_duality": "../MU_NU_DUALITY.md",
+    "park_induction": "../PARK_INDUCTION.md",
+    "afa_selfloop": "../AFA_SELFLOOP_MODEL.md",
+    "iginjonjae_fixpoint": "../IGINJONJAE_FIXPOINT.md"
+  },
+  "open_questions": {
+    "resolved": [
+      {
+        "id": "OQ1",
+        "question": "CHU universe level (Type 0 / Type u / Type ω)",
+        "resolution": "Both Type 0 and Type u sound. SYMPOSIUM default: Type 0 (pure data phase). Type u available on demand.",
+        "kg": "lesson-chu-universe-resolution-2026-05-02"
+      }
+    ],
+    "numerology_hold": [
+      {
+        "id": "OQ4",
+        "question": "Tegmark IV ↔ CHU form-isomorphism",
+        "reason": "'Mathematical structure' undefined formally in Tegmark MUH. Held as poetic pair only."
+      }
+    ],
+    "open": [
+      {
+        "id": "OQ2",
+        "question": "Wolfram dynamics rewrite rule ↔ JaebaeMan governs semantic encoding"
+      },
+      {
+        "id": "OQ3",
+        "question": "재배맨 KG TypeDB migration cost/benefit quantification"
+      },
+      {
+        "id": "OQ5",
+        "question": "AI agent ↔ computable function hypothesis (monadic PCA via Hyland Eff(N))"
+      },
+      {
+        "id": "OQ7",
+        "question": "LeanCopilot search_proof re-verification of AirplaneMan.lean"
+      },
+      {
+        "id": "OQ8",
+        "question": "#print axioms audit on all core theorems"
+      }
+    ]
+  },
+  "tier_position": {
+    "tier": 2,
+    "label": "CHU substrate",
+    "parent": "TIER 3 #8 OM 사도의 데이터 위상",
+    "children": [
+      "12 사도 (all implicitly quantify over CHU)",
+      "5 무기 (all operate as meta-structures on CHU)",
+      "APT phases (Anchor / Span / Contract / ReferenceSite are CHUPieces)",
+      "TPA reverse methodology",
+      "Longinus 7-Layer (each layer is a CHUPiece view)"
+    ]
+  },
+  "user_canon": {
+    "name_list_axiom": "그냥 모든것은 하이퍼그래프 (Everything is just a hypergraph)",
+    "om_data_phase": "CHU = ORBITAL_MOTION_CLOUD(#8) 사도의 순수 데이터 위상 (user 2026-04-28)",
+    "internet_as_chu": "인터넷도 chu 에 바인딩 될거야 (user 2026-04-29, CHU_Lens_Internet 11th lens)"
+  }
+}

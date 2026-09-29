@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s8",
+  "domain": "A8::S8",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S8_Critique",
+  "agentId": "D64",
+  "confidence": "HIGH",
+  "oneLineSummary": "Paradigm gap 측정 가능성 자체가 문제: (1) CHU categorical flexibility lacks domain-native evidence standards, (2) counterfactual measurement incommensurable across paradigms, (3) Kuhn-Feyerabend incommensurability → no theory-independent verification.",
+  "recommendation": "quantification 포기. cartography of incommensurability로 reframe — CHU authority claims + critic standards + 번역 실패 boundary 카탈로그.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a5s5",
+  "domain": "A5::S5",
+  "axis": "A5_LiftLowerFormalism",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D37",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "Isometric embedding 불가능(graph hop-count discrete vs manifold geodesic continuous, Johnson-Lindenstrauss lower bound). Planar→handle 위반(Euler characteristic). Curse of dimensionality reverse: sparse graph→manifold isometry → ambient dim ∞.",
+  "recommendation": "hybrid: isometric local clusters(charts) + homology cycle tracking + a priori 메트릭 distortion tolerance.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

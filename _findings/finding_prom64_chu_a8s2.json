@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s2",
+  "domain": "A8::S2",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D58",
+  "confidence": "HIGH",
+  "oneLineSummary": "FineWeb-Edu Llama3-70B classifier threshold=3 (92% rejected, 1.3T/15T) vs C4 heuristic (sentence/word density+blocklist+fastText)+MinHash dedup. PageRank 부재. Authority=내재적 내용 품질.",
+  "recommendation": "CHU A8 absorption mechanism = filtering consensus(92% rejected) + learned semantic signal, not link-based prominence.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

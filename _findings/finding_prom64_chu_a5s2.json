@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a5s2",
+  "domain": "A5::S2",
+  "axis": "A5_LiftLowerFormalism",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D34",
+  "confidence": "HIGH",
+  "oneLineSummary": "UMAP(manifold→graph layout, fuzzy simplicial), PyTorch Geometric(NetworkX↔PyG, GMMConv Riemannian kernel), NetworkX(community detection Louvain).",
+  "recommendation": "Lift: NetworkX→PyG→GNN/GMMConv→continuous embedding. Lower: embedding→k-NN graph or UMAP→NetworkX.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

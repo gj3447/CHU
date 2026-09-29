@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a5s4",
+  "domain": "A5::S4",
+  "axis": "A5_LiftLowerFormalism",
+  "subAxis": "S4_Alternatives",
+  "agentId": "D36",
+  "confidence": "HIGH",
+  "oneLineSummary": "BX lenses(Foster get/put coherence axioms), Galois connections(adjunction special case), Contract Lenses(ICFP 2024 predicate composition), category theory adjunctions.",
+  "recommendation": "S→V projection + coherence axioms (GetPut/PutGet/PutPut). Contract Lenses for CHU partial sync.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

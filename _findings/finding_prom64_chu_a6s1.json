@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s1",
+  "domain": "A6::S1",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S1_OfficialDocs",
+  "agentId": "D41",
+  "confidence": "HIGH",
+  "oneLineSummary": "5 canonical KGE: TransE(2013 ℝⁿ translation), ComplEx(2016 complex asymmetric), RotatE(2019 S¹ Hadamard rotation), ConvE(2018 2D conv), TuckER(2019 Tucker tensor decomp). LLM 결합 dual: K-BERT(soft injection+soft-position) vs KEPLER(unified KE+PLM joint optimize).",
+  "recommendation": "RotatE baseline (rotation closure↔CHU compositional algebra) + KEPLER text-enhanced. TuckER tensor rank study.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a5s3",
+  "domain": "A5::S3",
+  "axis": "A5_LiftLowerFormalism",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D35",
+  "confidence": "HIGH",
+  "oneLineSummary": "Stress(MDS global, scale-sensitive 0.1-0.3 optimal), KL divergence(t-SNE local, scale-variants 2025), neighborhood preservation(EMBEDR point-wise KL+permutation).",
+  "recommendation": "composite metric: stress + scale-invariant KL + EMBEDR. 단일 metric 불충분.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

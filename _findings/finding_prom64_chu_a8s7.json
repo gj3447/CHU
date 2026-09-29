@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s7",
+  "domain": "A8::S7",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S7_Theory",
+  "agentId": "D63",
+  "confidence": "HIGH",
+  "oneLineSummary": "Chinchilla 2022 vs Kaplan 2020 paradigm flip: model-size dominant → data-precision parity. 20:1 token-param ratio = authority concentration density. Bayesian posterior precision ∝ signal quality.",
+  "recommendation": "authority_signal = (precision, confidence, mutual_info) triple. Chinchilla → information-theoretic optimality λ=log(D/N).",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s1",
+  "domain": "A8::S1",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S1_OfficialDocs",
+  "agentId": "D57",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "Zipf's law(rank^-α, Mandelbrot redundancy minimization)+Chinchilla scaling (D≈20×N tokens). Kaplan 2020 N∝C^0.73 vs Chinchilla 2022 N∝C^0.50. paradigm gap = 23-43% optimal N discrepancy.",
+  "recommendation": "corpus Zipf exponent ↔ PageRank centrality KL-divergence = absorption metric. Chinchilla optimal tokens vs corpus heterogeneity regression.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

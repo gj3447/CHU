@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s8",
+  "domain": "A3::S8",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S8_Critique",
+  "agentId": "D24",
+  "confidence": "HIGH",
+  "oneLineSummary": "1-WL GNN cannot detect cliques/cycles (proven). k-WL/simplicial/cellular 필수 (not optional). Scale O(n²) 우려는 CliqueWalk (OpenReview pKjk2iKZLT) quasi-linear로 해결됨.",
+  "recommendation": "GNN sufficiency thesis fails on EXPRESSIVENESS axis. CHU intrinsic hyperstructure 우위 유지. Reframe S8: '1-WL 근본 한계 + k-WL 업그레이드 필요'.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

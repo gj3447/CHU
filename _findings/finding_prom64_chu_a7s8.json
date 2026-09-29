@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a7s8",
+  "domain": "A7::S8",
+  "axis": "A7_GraphRAG",
+  "subAxis": "S8_Critique",
+  "agentId": "D56",
+  "confidence": "HIGH",
+  "oneLineSummary": "Pretraining KG (KnowBERT/LUKE) vs retrieval-time GraphRAG: 둘 다 paradigm shift, 다른 layer (parameter vs lifecycle). 산업 데이터: hybrid (pretraining KG + retrieval) > 단독.",
+  "recommendation": "Paradigm Layer Distinction reframe. 실시간 → retrieval. dense reasoning → pretraining. 둘 모두 진정 paradigm.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

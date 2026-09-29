@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a7s7",
+  "domain": "A7::S7",
+  "axis": "A7_GraphRAG",
+  "subAxis": "S7_Theory",
+  "agentId": "D55",
+  "confidence": "HIGH",
+  "oneLineSummary": "GraphRAG retrieval = PageRank stationary distribution (Markov chain Perron-Frobenius) + Personalized PageRank (HippoRAG NeurIPS'24 multi-hop) + Mixture-of-PageRanks dynamic weighting + GFM-RAG learned graph foundation model.",
+  "recommendation": "PPR as rank-ordering functor over CHU-graph. randomWalk::∀G query→personalized_stationary→ranked_entity. Successor representations 동치 (arXiv 2512.24722) 보강.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

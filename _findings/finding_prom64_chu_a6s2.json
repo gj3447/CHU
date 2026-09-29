@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s2",
+  "domain": "A6::S2",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D42",
+  "confidence": "HIGH",
+  "oneLineSummary": "Wikidata Embedding Project Oct 2025 launch (119M entities, Jina V3, DataStax). Biomedical KGE production (KGRLFF/KGCN_NFM DDI prediction). Amazon proprietary, Google research-phase.",
+  "recommendation": "Wikidata + Jina V3 + biomedical KGRLFF 기준 baseline. RAG pipeline prototype.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

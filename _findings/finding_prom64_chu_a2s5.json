@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a2s5",
+  "domain": "A2::S5",
+  "axis": "A2_PageRankGeneralize",
+  "subAxis": "S5_Pitfalls",
+  "agentId": "D13",
+  "confidence": "HIGH",
+  "oneLineSummary": "Link spam+rank sink+dead-end triad: spider trap loop / dangling node column zero collapse. Eigenvector dominance scale-free networks (소수 hub 독식).",
+  "recommendation": "TrustRank seed set + teleportation damping + 고아 재분배 + cycle detection + centrality fusion + Katz damping + type별 threshold.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

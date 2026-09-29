@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a2s2",
+  "domain": "A2::S2",
+  "axis": "A2_PageRankGeneralize",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D10",
+  "confidence": "HIGH",
+  "oneLineSummary": "Twitter TweepCred(0-100, threshold 65)+SimClusters(3주 update, 1.5B node TwHIN), Facebook EdgeRank→CAE(900M posts/day, 63% recycled reduction), GitHub PageRank repos. 3 CHU instantiations.",
+  "recommendation": "CHU::Rank formalize = (objective, graph, decay/bias, re-clustering frequency). 학술 인용 네트워크 pilot.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

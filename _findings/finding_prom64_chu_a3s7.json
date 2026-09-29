@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s7",
+  "domain": "A3::S7",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S7_Theory",
+  "agentId": "D23",
+  "confidence": "HIGH",
+  "oneLineSummary": "r-loopy WL (NeurIPS 2024 cycle counting beyond 1-WL), EquiHGNN(rotational equivariance), DPHGNN/THNN >1-GWL match 3-GWL, simplicial/cellular WL strict hierarchy.",
+  "recommendation": "CHU completeness ↔ r-ℓWL cycle counting. CHU asymmetry (X≠Y roles)=automorphism breaking. Persistent homology 협업.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

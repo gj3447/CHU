@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s7",
+  "domain": "A6::S7",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S7_Theory",
+  "agentId": "D47",
+  "confidence": "HIGH",
+  "oneLineSummary": "KGE = group action on Lie group: TransE ℝⁿ additive, RotatE (S¹)ⁿ multiplicative, QuaternionE H⁴ Hamilton, HyperQuaternionE Poincaré ball. CompoundE 2024 통합 framework.",
+  "recommendation": "algebraic taxonomy + group structure 명시 + ICE sedenion/16D ↔ quaternion embedding 대응표. TPA-TP DesignPattern 51 매칭.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

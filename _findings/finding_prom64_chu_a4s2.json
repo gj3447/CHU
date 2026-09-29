@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s2",
+  "domain": "A4::S2",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D26",
+  "confidence": "HIGH",
+  "oneLineSummary": "Web Data Commons hyperlink graph: 2012 3.5B pages × 128B links, 2014 1.7B × 64B. 공개된 최대 웹 그래프. 검색 랭킹/스팸/그래프 알고리즘 연구.",
+  "recommendation": "WDC를 1차 공학 사례 등재. 비행기맨(#4) hypergraph 정전 evidence.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a6s3",
+  "domain": "A6::S3",
+  "axis": "A6_KGEmbeddingScale",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D43",
+  "confidence": "HIGH",
+  "oneLineSummary": "FB15k-237: RotatE Hits@10 0.884, MRR 0.338 vs TransE MRR 0.294 (~15% lift). WN18RR RotatE Hits@10 0.959. OGB-LSC WikiKG90Mv2 winning ensemble (25 TransE + 5 RotatE) MRR 0.2562.",
+  "recommendation": "RotatE rotation-in-complex 모델 hierarchical multi-relational에서 우수. CHU dimension factorization과 매핑.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

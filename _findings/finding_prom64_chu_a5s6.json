@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a5s6",
+  "domain": "A5::S6",
+  "axis": "A5_LiftLowerFormalism",
+  "subAxis": "S6_Trends2026",
+  "agentId": "D38",
+  "confidence": "HIGH",
+  "oneLineSummary": "Hyperbolic DL(Riemannian AdamW, MiCE curvature expert 2025 KDD survey), Topological DL(simplicial/cell complex ICML2024 challenge), Manifold TDL(MTDL Hodge decomposition, persistent sheaf Laplacian Hayes 2025).",
+  "recommendation": "CHU multi-curvature partitioning, simplicial lifting, MTDL homology tracking. priority: MiCE→simplicial→MTDL.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

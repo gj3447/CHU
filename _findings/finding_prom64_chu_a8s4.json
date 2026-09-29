@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s4",
+  "domain": "A8::S4",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S4_Alternatives",
+  "agentId": "D60",
+  "confidence": "HIGH",
+  "oneLineSummary": "Perplexity-based filter(inverse LM threshold), prior-based statistical(1000x faster), classifier ensemble(Doc2vec+cosine voting), embedding quality (Silhouette/Davies-Bouldin/Calinski-Harabasz).",
+  "recommendation": "tiered pipeline: statistical fast→embedding classifier→perplexity final. graph signal orthogonal complement.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

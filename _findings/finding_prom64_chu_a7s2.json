@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a7s2",
+  "domain": "A7::S2",
+  "axis": "A7_GraphRAG",
+  "subAxis": "S2_CommunityCases",
+  "agentId": "D50",
+  "confidence": "HIGH",
+  "oneLineSummary": "MS multi-model pivot (Anthropic+Google added to OpenAI-only). NebulaGraph+LangChain enterprise integration. RAG +400% YoY 2025. Retrieval-time graph = market standard.",
+  "recommendation": "MS Anthropic/Google adapter pace 추적. NebulaGraph vs Memgraph/TigerGraph 경쟁 모니터.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

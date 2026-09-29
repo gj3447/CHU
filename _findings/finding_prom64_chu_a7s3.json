@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a7s3",
+  "domain": "A7::S3",
+  "axis": "A7_GraphRAG",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D51",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "GraphRAG +11% recall on MultiHopRAG (2,556 Qs). Faithfulness via claim-context alignment (Ragas). F1 +6.4% with agentic enhancement (Llama 3.1-70B). Graph excels multi-hop, agentic narrows gap.",
+  "recommendation": "recall@k+nDCG+faithfulness (Ragas), agentic dense RAG hybrid latency-bounded scenarios.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

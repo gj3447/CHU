@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a5s8",
+  "domain": "A5::S8",
+  "axis": "A5_LiftLowerFormalism",
+  "subAxis": "S8_Critique",
+  "agentId": "D40",
+  "confidence": "MEDIUM",
+  "oneLineSummary": "Discrete↔continuous false dichotomy. Manifold-Graph 양방향성, Hybrid Systems(D:small cat × A:continuous functor) 2006부터 표준화, Univalence(HoTT) equality≡isomorphism 깊은 통일.",
+  "recommendation": "CHU repositioning: 'CHU ⊂ Hybrid Systems ⊂ Univalent Type Theory' hierarchy 명시. paradigm shift가 아닌 special case.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

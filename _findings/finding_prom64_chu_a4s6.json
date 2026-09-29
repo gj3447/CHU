@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s6",
+  "domain": "A4::S6",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S6_Trends2026",
+  "agentId": "D30",
+  "confidence": "HIGH",
+  "oneLineSummary": "FineWeb-Edu 1.3T tokens curated (Llama3 classifier 82% F1), data depletion ~2026, 80% synthetic by 2028 (Gartner), model collapse, 89.6% poisoning success (250 docs sufficient for 13B backdoor).",
+  "recommendation": "CHU 분할: human-curated/synthetic-controlled/adversarial-detection. 인터넷 = 정보 source 아닌 combat zone.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

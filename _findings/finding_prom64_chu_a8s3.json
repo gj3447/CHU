@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a8s3",
+  "domain": "A8::S3",
+  "axis": "A8_AuthorityAbsorption",
+  "subAxis": "S3_Benchmarks",
+  "agentId": "D59",
+  "confidence": "HIGH",
+  "oneLineSummary": "KG-LLM-Bench(NAACL/ESWC 2025) link-aware vs link-free 17.5% absolute gap. HotpotQA KG embedding vs LLM 10x hit rate. Relation-centric tasks (link prediction, KG completion)에서 graph 우위.",
+  "recommendation": "CHU link-aware representation을 relation-critical task에 명시. KG-LLM-Bench 5+WN18RR/FB15K-237+HotpotQA 64-item validation.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

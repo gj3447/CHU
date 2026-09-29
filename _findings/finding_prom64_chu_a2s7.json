@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a2s7",
+  "domain": "A2::S7",
+  "axis": "A2_PageRankGeneralize",
+  "subAxis": "S7_Theory",
+  "agentId": "D15",
+  "confidence": "HIGH",
+  "oneLineSummary": "PageRank = Perron-Frobenius dominant eigenvector of column-stochastic Google matrix. Irreducible aperiodic Markov chain → unique stationary π*. Spectral λ₂ controls mixing time τ_mix∝1/(1-λ₂). 일반 graph operator T:ℝⁿ→ℝⁿ.",
+  "recommendation": "CHU rank inherits PF: irreducibility=no orphan, aperiodicity=no rigid cycle. Heat kernel interpretation으로 continuous extension.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a3s1",
+  "domain": "A3::S1",
+  "axis": "A3_HGNNScale",
+  "subAxis": "S1_OfficialDocs",
+  "agentId": "D17",
+  "confidence": "HIGH",
+  "oneLineSummary": "HGNN(Feng AAAI 2019, 2-phase v-conv/e-conv), HGNN+(Gao IEEE TPAMI 2022 multi-modal), AllSet(ICLR 2022 multiset semantics), ED-HNN(ICLR 2023 star-expansion O(|E|×|V|)).",
+  "recommendation": "CHU pieces→hyperedges (arity=dim). ED-HNN equivariant, 10M-100M nodes prototype 후 trillion attempt.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}

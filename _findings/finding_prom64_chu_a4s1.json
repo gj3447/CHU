@@ -1,0 +1,14 @@
+{
+  "findingId": "finding_prom64_chu_a4s1",
+  "domain": "A4::S1",
+  "axis": "A4_WebAsCorpus",
+  "subAxis": "S1_OfficialDocs",
+  "agentId": "D25",
+  "confidence": "HIGH",
+  "oneLineSummary": "Common Crawl WAT JSON outlinks 명시 보존(host/domain graph). FineWeb/RefinedWeb 텍스트만(링크 미보존). WebText 문서 unclear. cc-webgraph 별도 산출.",
+  "recommendation": "CHU substrate: Common Crawl WAT+cc-webgraph 병합. FineWeb은 embedding 보강, 그래프 정보 손실.",
+  "schema_variant": "terse",
+  "cycle_id": "prom64-chu-internet-2026-04-29",
+  "researchedAt": "2026-04-29T09:05:25.823Z",
+  "status": "RESEARCHED"
+}
