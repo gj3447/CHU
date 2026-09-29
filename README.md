@@ -8,7 +8,7 @@
 [![Lean 4 Verified](https://img.shields.io/badge/Lean_4-10_files_/_0_sorry-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
 [![KG Lenses](https://img.shields.io/badge/CHU_Lenses-11_SymConcept-6366f1?style=for-the-badge&logoColor=white)](INDEX.md)
 [![Sources](https://img.shields.io/badge/External_Canon-Friedman_/_Wolfram_/_Voevodsky-8b5cf6?style=for-the-badge&logoColor=white)](SOURCES.md)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](../SYMPOSIUM/LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL--3.0--or--later_%2B_Commercial-blue?style=for-the-badge)](LICENSING.md)
 
 </div>
 
@@ -222,7 +222,7 @@ Detail: [`PROM_16_REPORT.md`](PROM_16_REPORT.md) and [`SOURCES.md`](SOURCES.md).
 
 ## License
 
-MIT. See repository root.
+Copyright © 2026 Ra Gyeongjun (라경준). Dual-licensed: **GNU AGPL-3.0-or-later** ([LICENSE](LICENSE)) or a separate commercial license ([LICENSING.md](LICENSING.md)). Until 2026-09-29 this material was MIT-declared inside SYMPOSIUM; see [LICENSING.md § License history](LICENSING.md#license-history).
 
 ---
 

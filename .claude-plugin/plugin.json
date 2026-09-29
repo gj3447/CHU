@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "description": "CHU — Computable Hyperuniverse type system. axiom CHU:Type + CHUPiece(:=CHU→Prop) + JaebaeMan inductive (atomic/governs μ-recursive) + isAirplaneMan(:= ∀x:CHU, j.covers x). The substrate type layer over which 12 SYMPOSIUM apostles and 5 weapons operate. Mathlib-free Lean 4 (10 files, 0 sorry).",
   "author": {
-    "name": "SYMPOSIUM project",
-    "email": "gira@airobotics.im",
-    "url": "https://github.com/gj3447/symposium"
+    "name": "Ra Gyeongjun (라경준)",
+    "email": "gj3447@gmail.com",
+    "url": "https://github.com/gj3447/CHU"
   },
-  "homepage": "https://github.com/gj3447/symposium/tree/main/THEORY/CHU",
+  "homepage": "https://github.com/gj3447/CHU",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gj3447/symposium.git",
-    "directory": "THEORY/CHU"
+    "url": "https://github.com/gj3447/CHU.git"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "keywords": [
     "chu",
     "computable-hyperuniverse",
