@@ -18,6 +18,7 @@
 > 노드 + n항 하이퍼엣지. 토대: [AI native 3대원칙](canon/AI_NATIVE_THREE_PRINCIPLES.md) ·
 > [왜 하이퍼그래프인가](WHY_HYPERGRAPH.md) · 작업계획 [plan/CHU_OS_PLAN.md](plan/CHU_OS_PLAN.md).
 > 아래 타입 시스템은 이 OS의 커널 이론이다.
+> 생태계: [CHU · HSWM · USL](ECOSYSTEM.md) — CHU ⊇ HSWM(LLM AI), USL = n항 의미 연결 문법.
 
 ---
 

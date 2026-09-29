@@ -12,6 +12,7 @@
 - [`plan/CHU_OS_PLAN.md`](plan/CHU_OS_PLAN.md) — 작업계획 (정본 [`plan/chu_os_plan.graph.json`](plan/chu_os_plan.graph.json))
 - [`lean/`](lean/) — CHU Lean 11개 정본 사본 (4.34.1, 11/11 통과)
 - [`canon/sources/`](canon/sources/) — 사용자 원문
+- [`ECOSYSTEM.md`](ECOSYSTEM.md) — CHU · HSWM · USL 관계와 연결 지점
 
 ## 자료집 구조
 

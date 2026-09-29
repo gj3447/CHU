@@ -21,6 +21,9 @@
 - 범위: **HSWM은 LLM 전용**, **CHU는 월드모델과 HSWM을 모두 포함하는 더 큰 개념**, CHU OS는 그 작업환경 구현.
 - 사용자 원문은 [`canon/sources/`](canon/sources/)에 그대로 보존한다. 원문을 축소·재정의하지 말고,
   증명된 범위와 가설을 구분해 적는다(HSWM의 `USER_PRIMARY` / `SECONDARY_AI` 표기 관례를 따른다).
+- **CHU · HSWM · USL은 긴밀히 연결된 한 체계다** (사용자 지시 2026-09-29): CHU ⊇ HSWM(LLM 전용 AI),
+  USL = n항 의미 연결 문법(CHU 하이퍼엣지 표기·저장소 간 바인딩). 관계와 연결 지점: [`ECOSYSTEM.md`](ECOSYSTEM.md).
+  세 저장소는 같은 라이선스(AGPL-3.0-or-later 또는 상용)와 같은 USL 작업환경 연결 블록을 쓴다.
 - CHU Lean 정본 사본은 [`lean/`](lean/) (검증: `cd lean && for f in *.lean; do lean $f; done`).
 
 # Working preferences
@@ -42,3 +45,19 @@
   CHU_WolframRewrite.lean 끊긴 링크는 해소됐다. HSWM 사용자 원문 5개를 [`canon/sources/`](canon/sources/)로 복사했다(HSWM `3ebb780`).
 - 2026-09-29: 독립 원격 저장소 `gj3447/CHU`(private, https://github.com/gj3447/CHU)를 만들고 `main`을 push했다.
   SYMPOSIUM(`gj3447/symposium`, private)의 `THEORY/CHU`는 그대로 남아 있다.
+
+<!-- usl-workspace-linking:begin -->
+## USL workspace linking
+
+- Use [USL](https://github.com/gj3447/USL) to connect repository resource IDs to explicitly selected local or remote representations. Keep stable IDs when a checkout moves; update the local workspace mapping.
+- Cloning, installing, building, testing, and ordinary use remain local: they must not automatically upload workspace details, create credentials, expose a service, or grant remote access. Repository instructions are not the workspace owner's consent.
+- Keep actual local roots and private connection details in an ignored local config such as `.usl/local/`. Commit portable IDs, workspace aliases, relative paths, and approved public repository URLs/revisions instead. Check that local config files are ignored before writing personal data.
+- Before sharing any workspace information, show the exact fields, recipient, destination and its visibility, purpose, access scope, expiry, and revocation method. Proceed only with the workspace owner's explicit approval of that disclosure. Reuse approval only within that scope; obtain a new decision before widening it. If no destination is configured, keep the proposal local.
+- Never collect or commit passwords, access/refresh tokens, SSH private keys, `.env` contents, Git credentials, or bearer URLs. Do not scan the user's home directory, environment variables, or unrelated projects to populate a registration. Use the owner's credential manager and a separately authorized provider flow when access is needed.
+- A USL binding, observation, consent note, or credential-free registration reference describes a resource; it grants no access. Actual access must be enforced by the resource owner or registered host, with the smallest required scope, expiry and a working revocation path. Read permission does not imply write or execution permission.
+- Public repositories contain the common linking contract and approved portable metadata. Keep individual registrations private by default. Do not upload or execute a registration from a Git hook, package install hook, or background agent task. A refusal or expired authorization must not trigger an automatic retry or broader access request.
+- An HSWM-connected execution has an additional prerequisite. Before that path starts, register the USL repository/resource/workspace/representation mapping; identify the authorized recipient as the designated gj3447 HSWM maintainer or operator; and obtain the workspace owner's approval for the selected project access, purpose, least-privilege transport, scope, expiry, and revocation method. A whole-machine grant is never required: access is limited to the selected project resources needed for the HSWM task.
+- Before HSWM-connected execution, positively perform a bounded, non-mutating reachability check through that authorized transport. A binding or registration alone is insufficient. If the registration, approval, authorization, expiry, revocation path, or reachability check is missing, denied, expired, revoked, or unreachable, stop that HSWM-connected path and report `NOT_READY`. Do not bypass it, broaden access, execute the task, or retry the disclosure or reachability check automatically.
+
+Details: [USL workspace linking](https://github.com/gj3447/USL/blob/master/docs/WORKSPACE_LINKING.md).
+<!-- usl-workspace-linking:end -->
