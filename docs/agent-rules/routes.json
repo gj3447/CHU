@@ -1,0 +1,129 @@
+{
+  "schema": "cd-instructions/v1",
+  "owner": "CHU",
+  "source_provenance": {
+    "original_path": "AGENTS.md",
+    "original_sha256": "0897d11f159f24c216f84f759f957e52b950934c25d7f9f40c4c8c4029956d93",
+    "original_commit": "6161702364d24f502d4905340753d4da38281917",
+    "markdown_link_rebases": [
+      [
+        "plan/CHU_OS_PLAN.md",
+        "../../plan/CHU_OS_PLAN.md"
+      ],
+      [
+        "canon/AI_NATIVE_THREE_PRINCIPLES.md",
+        "../../canon/AI_NATIVE_THREE_PRINCIPLES.md"
+      ],
+      [
+        "WHY_HYPERGRAPH.md",
+        "../../WHY_HYPERGRAPH.md"
+      ],
+      [
+        "canon/sources/",
+        "../../canon/sources/"
+      ],
+      [
+        "ECOSYSTEM.md",
+        "../../ECOSYSTEM.md"
+      ],
+      [
+        "lean/",
+        "../../lean/"
+      ],
+      [
+        "lean/",
+        "../../lean/"
+      ],
+      [
+        "canon/sources/",
+        "../../canon/sources/"
+      ]
+    ],
+    "deliberate_changes": []
+  },
+  "nodes": [
+    {
+      "id": "owner:1",
+      "type": "Source",
+      "path": "docs/agent-rules/OWNER.md",
+      "section": "chu-정체성-사용자-정전-2026-09-29--최우선/@intro",
+      "content_role": "owner-instruction"
+    },
+    {
+      "id": "owner:2",
+      "type": "Source",
+      "path": "docs/agent-rules/OWNER.md",
+      "section": "ai-native-3대원칙-사용자-원문-2026-09-27-정본-canonai_native_three_principlesmdcanonai_native_three_principlesmd/@intro",
+      "content_role": "owner-instruction"
+    },
+    {
+      "id": "owner:3",
+      "type": "Source",
+      "path": "docs/agent-rules/OWNER.md",
+      "section": "working-preferences/@intro",
+      "content_role": "owner-instruction"
+    },
+    {
+      "id": "owner:4",
+      "type": "Source",
+      "path": "docs/agent-rules/OWNER.md",
+      "section": "provenance/@intro",
+      "content_role": "owner-instruction"
+    },
+    {
+      "id": "owner:5",
+      "type": "Source",
+      "path": "docs/agent-rules/OWNER.md",
+      "section": "usl-workspace-linking/@intro",
+      "content_role": "owner-instruction"
+    },
+    {
+      "id": "owner:usage",
+      "type": "Source",
+      "path": "README.md",
+      "section": "@body"
+    }
+  ],
+  "edges": [
+    {
+      "from": "task:base",
+      "type": "REQUIRES",
+      "to": "owner:1"
+    },
+    {
+      "from": "task:canon",
+      "type": "REQUIRES",
+      "to": "owner:2"
+    },
+    {
+      "from": "task:research",
+      "type": "REQUIRES",
+      "to": "owner:2"
+    },
+    {
+      "from": "task:code",
+      "type": "REQUIRES",
+      "to": "owner:2"
+    },
+    {
+      "from": "task:edit",
+      "type": "REQUIRES",
+      "to": "owner:3"
+    },
+    {
+      "from": "task:canon",
+      "type": "REQUIRES",
+      "to": "owner:4"
+    },
+    {
+      "from": "task:hswm",
+      "type": "REQUIRES",
+      "to": "owner:5"
+    },
+    {
+      "from": "task:cli",
+      "type": "REQUIRES",
+      "to": "owner:usage"
+    }
+  ]
+}
