@@ -40,3 +40,5 @@
 - 2026-09-29: CHU Lean 11개를 [`lean/`](lean/)으로 가져왔다(10개 `MIND/lean_formalization/`, `CHU_WolframRewrite.lean`은
   `_mac_wip_snapshot_2026-08-10/`에만 남아 있었음). 원본 쪽 파일은 그대로 둔다. 이로써 `INDEX.md`의
   CHU_WolframRewrite.lean 끊긴 링크는 해소됐다. HSWM 사용자 원문 5개를 [`canon/sources/`](canon/sources/)로 복사했다(HSWM `3ebb780`).
+- 2026-09-29: 독립 원격 저장소 `gj3447/CHU`(private, https://github.com/gj3447/CHU)를 만들고 `main`을 push했다.
+  SYMPOSIUM(`gj3447/symposium`, private)의 `THEORY/CHU`는 그대로 남아 있다.
