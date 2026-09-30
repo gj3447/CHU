@@ -16,7 +16,7 @@
 //!
 //! KG: prom16-wolfram-chu-ruliad-hott-2026-07-13, orrr-orbital-rain-ruin-rein-2026-05-15
 
-use std::collections::hash_map::DefaultHasher;
+use std::collections::hash_map::{DefaultHasher, Entry};
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 
@@ -286,8 +286,8 @@ impl ComputeSink for BackendLocal {
                         let succ = apply(rule, &bind, state, base);
                         let to = self.put(&succ);
                         frag.updates.push((from, to));
-                        if !frag.states.contains_key(&to) {
-                            frag.states.insert(to, succ.clone());
+                        if let Entry::Vacant(entry) = frag.states.entry(to) {
+                            entry.insert(succ.clone());
                             next.push(succ); // new state => keep exploring (mergers dedup here)
                         }
                     }
@@ -358,7 +358,7 @@ fn canonical_cid(s: &HyperState) -> Option<Cid> {
             .map(|e| e.iter().map(|x| p[index[x]] as u32).collect())
             .collect();
         relabeled.sort();
-        if best.as_ref().map_or(true, |b| relabeled < *b) {
+        if best.as_ref().is_none_or(|b| relabeled < *b) {
             best = Some(relabeled);
         }
     }
@@ -390,7 +390,7 @@ impl BackendLocal {
     /// De-truncated evolve: identical strict exploration, PLUS record homotopy witnesses at
     /// observed merges — literal co-termination (`HigherMove::Merge`, path-2-cell, no state-union)
     /// and F2-b iso-up-to-relabeling (`HigherMove::Relabel`, certified only where provable). The
-    /// strict `evolve` above is byte-for-byte unchanged; this is purely additive.
+    /// strict `evolve` semantics above are preserved; this layer is additive.
     pub fn evolve_univalent(&mut self, job: &RewriteJob) -> MultiwayFragment {
         let mut frag = MultiwayFragment::default();
         let init_cid = self.put(&job.init);
@@ -411,7 +411,12 @@ impl BackendLocal {
                         let succ = apply(rule, &bind, state, base);
                         let to = self.put(&succ);
                         frag.updates.push((from, to));
-                        if frag.states.contains_key(&to) {
+                        if let Entry::Vacant(entry) = frag.states.entry(to) {
+                            entry.insert(succ.clone());
+                            arrival.insert(to, from);
+                            self.merge_canon(&succ, to, &mut canon_index);
+                            next.push(succ);
+                        } else {
                             // parallel derivations co-terminate at `to`: a path-2-cell, recorded
                             // WITHOUT identifying the (possibly distinct) parents.
                             let a_path = *arrival.get(&to).unwrap_or(&to);
@@ -422,11 +427,6 @@ impl BackendLocal {
                                 };
                                 self.put_homotopy(to, to, w);
                             }
-                        } else {
-                            frag.states.insert(to, succ.clone());
-                            arrival.insert(to, from);
-                            self.merge_canon(&succ, to, &mut canon_index);
-                            next.push(succ);
                         }
                     }
                 }

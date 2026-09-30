@@ -1,0 +1,6 @@
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?subject ?source ?reviewedOn WHERE {
+  ?subject prov:wasDerivedFrom ?source .
+  ?source a dev:Source ; dev:reviewedOn ?reviewedOn .
+} ORDER BY ?subject ?source

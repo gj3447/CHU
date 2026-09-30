@@ -23,20 +23,23 @@ import json
 import re
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SRC = HERE / "chu_core.rs"
-BIN = Path("/tmp/chu_core_detrunc_bin")
 
 
 def main():
     strict_cids = None
     witnesses = None
     try:
-        subprocess.run(["rustc", "-O", str(SRC), "-o", str(BIN)],
-                       capture_output=True, text=True, timeout=180, check=True)
-        out = subprocess.run([str(BIN)], capture_output=True, text=True, timeout=60).stdout
+        with TemporaryDirectory(prefix="chu-core-") as tmp:
+            binary = Path(tmp) / "chu_core"
+            subprocess.run(["rustc", "-O", str(SRC), "-o", str(binary)], cwd=HERE,
+                           capture_output=True, text=True, timeout=180, check=True)
+            out = subprocess.run([str(binary)], capture_output=True, text=True,
+                                 timeout=60, check=True).stdout
         m_cid = re.search(r"StateStore CIDs \(content\)\s*:\s*(\d+)", out)
         m_wit = re.search(r"homotopy witnesses recorded\s*:\s*(\d+)", out)
         if m_cid:

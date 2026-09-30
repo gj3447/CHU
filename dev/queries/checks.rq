@@ -1,0 +1,6 @@
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?check ?label ?tool ?effect ?timeout WHERE {
+  ?check a dev:Check ; skos:prefLabel ?label ; dev:requires ?tool ;
+         dev:effect ?effect ; dev:timeout ?timeout .
+} ORDER BY ?check ?tool

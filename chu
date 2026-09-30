@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+CHU_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+exec uv run --locked --project "$CHU_ROOT" python "$CHU_ROOT/scripts/chu_dev.py" "$@"

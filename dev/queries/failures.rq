@@ -1,0 +1,7 @@
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?observation ?check ?status ?endedAt WHERE {
+  ?observation a dev:Observation ; dev:check ?check ; dev:status ?status ; prov:wasGeneratedBy ?run .
+  ?run prov:endedAtTime ?endedAt .
+  FILTER (?status != "PASS")
+} ORDER BY ?check

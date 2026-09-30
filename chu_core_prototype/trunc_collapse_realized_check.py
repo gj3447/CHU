@@ -19,8 +19,9 @@ This checker measures `computable_truncation_realized` ∈ {0.0, 1.0}:
 import json
 import subprocess
 import sys
+from pathlib import Path
 
-LEAN = "/Users/lagyeongjun/CD/MIND/lean_formalization/CHU_WolframRewrite.lean"
+LEAN = Path(__file__).resolve().parents[1] / "lean" / "CHU_WolframRewrite.lean"
 REQUIRED = ["Trunc.collapse", "strict_truncation", "strict_truncation2"]
 
 
@@ -33,7 +34,7 @@ def main():
             src = fh.read()
         found = {sym: (sym in src) for sym in REQUIRED}
         proc = subprocess.run(
-            ["lean", LEAN], capture_output=True, text=True, timeout=120
+            ["lean", str(LEAN)], cwd=LEAN.parent, capture_output=True, text=True, timeout=120
         )
         compiled = proc.returncode == 0
         if compiled and all(found.values()):
@@ -46,7 +47,7 @@ def main():
     result = {
         "metric": "computable_truncation_realized",
         "value": realized,
-        "lean_file": LEAN,
+        "lean_file": str(LEAN),
         "lean_compiles_exit0": compiled,
         "required_symbols_found": found,
         "excess_content": "Trunc.collapse: forall level A, Trunc(A) proof-irrelevant "

@@ -5,7 +5,7 @@
 **Foundational Type Layer for the SYMPOSIUM Hypergraph Universe**
 
 [![Type System](https://img.shields.io/badge/Type_System-CHU_v1-D97757?style=for-the-badge&logoColor=white)](docs/STATUS.md)
-[![Lean 4 Verified](https://img.shields.io/badge/Lean_4-10_files_/_0_sorry-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
+[![Lean 4 Verified](https://img.shields.io/badge/Lean_4-11_files_/_0_sorry-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
 [![KG Lenses](https://img.shields.io/badge/CHU_Lenses-11_SymConcept-6366f1?style=for-the-badge&logoColor=white)](INDEX.md)
 [![Sources](https://img.shields.io/badge/External_Canon-Friedman_/_Wolfram_/_Voevodsky-8b5cf6?style=for-the-badge&logoColor=white)](SOURCES.md)
 [![License](https://img.shields.io/badge/License-AGPL--3.0--or--later_%2B_Commercial-blue?style=for-the-badge)](LICENSING.md)
@@ -54,6 +54,11 @@ Grounded in 4 external canons: **Sy Friedman Hyperuniverse Programme** (V-logic,
 
 ## Quick Start
 
+For reproducible Rust, Lean, Python and graph engineering development, use
+[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md): `python3 scripts/bootstrap.py`, then
+`./chu doctor --json` and `./chu check`. The RDF tool registry is
+[dev/catalog.ttl](dev/catalog.ttl); agents can discover it with `./chu tools --json`.
+
 There are **two paths** to use CHU. Pick based on whether you want the raw type system or APT-integrated workflow.
 
 | | **Path A — Direct CHU type system use** | **Path B — APT-integrated use** |
@@ -78,7 +83,7 @@ lean AirplaneMan_Uniqueness.lean       # essential uniqueness on CHU
 lean JaebaeManInf.lean                 # infinite JaebaeMan generalization
 ```
 
-All 10 files verify with Lean 4.30.0-rc2, **Mathlib-free**, **0 sorry**.
+All 11 files verify with the pinned Lean 4.34.1, **Mathlib-free**, **0 sorry**.
 
 For paper / KG use, cite the axioms by their canonical file path. The README of any SYMPOSIUM-derivative project can pull CHU as a one-line `axiom CHU : Type` postulate.
 
@@ -157,7 +162,7 @@ See [`SOURCES.md`](SOURCES.md) §"CHU-Internet binding" for the 11th lens ground
 
 ### Lean Formalization
 
-10 verified Lean 4 files (Mathlib-free standalone, Lean 4.30.0-rc2, **0 sorry**):
+11 verified Lean 4 files (Mathlib-free standalone, Lean 4.34.1, **0 sorry**):
 
 - [`AirplaneMan.lean`](lean/AirplaneMan.lean) — core axioms + 8 theorems (canonical entry point)
 - [`AirplaneMan_v2.lean`](lean/AirplaneMan_v2.lean) — v2 refinements
@@ -169,6 +174,7 @@ See [`SOURCES.md`](SOURCES.md) §"CHU-Internet binding" for the 11th lens ground
 - [`AirplaneMan_Uniqueness.lean`](lean/AirplaneMan_Uniqueness.lean) — essential uniqueness on CHU
 - [`JaebaeManInf.lean`](lean/JaebaeManInf.lean) — infinite JaebaeMan generalization
 - [`CompositeJaebaeECSTripleIso.lean`](lean/CompositeJaebaeECSTripleIso.lean) — ECS-JaebaeMan triple isomorphism
+- [`CHU_WolframRewrite.lean`](lean/CHU_WolframRewrite.lean) — rewrite dynamics and truncation overlay
 
 Source: `/Users/lagyeongjun/CD/MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeMan*.lean`.
 
@@ -215,7 +221,7 @@ Detail: [`PROM_16_REPORT.md`](PROM_16_REPORT.md) and [`SOURCES.md`](SOURCES.md).
 ## Status
 
 - **Type system version**: v1 (canonical, no breaking change since 2026-04-29 PROM 16 axiom-foundation lock-in)
-- **Lean files**: 10 (all PASS, 0 sorry)
+- **Lean files**: 11 (all PASS, 0 sorry)
 - **External canon grounding tier**: A (4 canons cross-referenced: Friedman / Wolfram / Voevodsky / Hyland)
 - **OQ1 (universe level)**: RESOLVED (`lesson-chu-universe-resolution-2026-05-02`, both Type 0 and Type u sound)
 - **OQ4 (Tegmark IV pairing)**: NUMEROLOGY_HOLD (form-iso unprovable; held as poetic pair)

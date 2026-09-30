@@ -5,6 +5,10 @@ CHU is a hypergraph OS; paths are query projections, not identity. Preserve user
 Detailed owner rules: [OWNER.md](docs/agent-rules/OWNER.md).
 Task/source graph: [routes.json](docs/agent-rules/routes.json).
 
+Development entry: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+Use `./chu tools --json`, `./chu doctor --json` and `./chu check --json` for
+tool discovery, current diagnosis and reproducible verification.
+
 Use the shared `instruction-routing` skill: call `instruction_routes` for this
 repository, applicable tasks and target paths, then `instruction_read` until all
 selected sections are complete. `edit` applies before any file change; add

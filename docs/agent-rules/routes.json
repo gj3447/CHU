@@ -82,6 +82,13 @@
       "type": "Source",
       "path": "README.md",
       "section": "@body"
+    },
+    {
+      "id": "owner:development",
+      "type": "Source",
+      "path": "docs/DEVELOPMENT.md",
+      "section": "@body",
+      "content_role": "owner-instruction"
     }
   ],
   "edges": [
@@ -124,6 +131,31 @@
       "from": "task:cli",
       "type": "REQUIRES",
       "to": "owner:usage"
+    },
+    {
+      "from": "task:code",
+      "type": "REQUIRES",
+      "to": "owner:development"
+    },
+    {
+      "from": "task:test",
+      "type": "REQUIRES",
+      "to": "owner:development"
+    },
+    {
+      "from": "task:cli",
+      "type": "REQUIRES",
+      "to": "owner:development"
+    },
+    {
+      "from": "task:infra",
+      "type": "REQUIRES",
+      "to": "owner:development"
+    },
+    {
+      "from": "task:graph",
+      "type": "REQUIRES",
+      "to": "owner:development"
     }
   ]
 }

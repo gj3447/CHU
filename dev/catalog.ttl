@@ -1,0 +1,373 @@
+@prefix dev: <https://github.com/gj3447/CHU/dev#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dev:catalog a prov:Entity ;
+    rdfs:comment "Local CHU development configuration, not shared KG canon or execution authorization." ;
+    rdfs:seeAlso <urn:symposium-kg:sym:Concept:computable_hyper_universe_(chu)> ;
+    prov:wasAttributedTo dev:agent ;
+    prov:wasDerivedFrom <https://www.w3.org/TR/prov-o/>,
+        <https://www.w3.org/TR/rdf11-concepts/>,
+        <https://www.w3.org/TR/shacl/>,
+        <https://www.w3.org/TR/skos-reference/>,
+        <https://www.w3.org/TR/sparql11-query/>,
+        <https://www.w3.org/TR/swbp-n-aryRelations/> ;
+    dev:authority "SECONDARY_AI" .
+
+dev:ci-lint a dev:Check ;
+    skos:prefLabel "Validate CI workflow" ;
+    prov:wasDerivedFrom <https://github.com/rhysd/actionlint/blob/main/docs/usage.md> ;
+    dev:argv ( ".chu/tools/actionlint" ".github/workflows/check.yml" ) ;
+    dev:effect "read" ;
+    dev:requires dev:actionlint ;
+    dev:timeout 30 ;
+    dev:workingDirectory "repository-root" .
+
+dev:core-clippy a dev:Check ;
+    skos:prefLabel "Check Rust with Clippy" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "cargo" "clippy" "--locked" "--offline" "--all-targets" "--" "-D" "warnings" ) ;
+    dev:effect "build" ;
+    dev:requires dev:rust ;
+    dev:timeout 180 ;
+    dev:workingDirectory "repository-root" .
+
+dev:core-test a dev:Check ;
+    skos:prefLabel "Execute native semantic assertions through cargo test" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "cargo" "test" "--locked" "--offline" ) ;
+    dev:effect "build" ;
+    dev:requires dev:rust ;
+    dev:timeout 180 ;
+    dev:workingDirectory "repository-root" .
+
+dev:core-wasm a dev:Check ;
+    skos:prefLabel "Compile WASM cdylib (compile gate only)" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "rustc" "--edition=2021" "--target" "wasm32-unknown-unknown" "--crate-type=cdylib" "-C" "panic=abort" "chu_core_prototype/chu_core.rs" "-o" "{out}/chu_core.wasm" ) ;
+    dev:effect "build" ;
+    dev:requires dev:rust ;
+    dev:timeout 180 ;
+    dev:workingDirectory "repository-root" .
+
+dev:env-lock a dev:Check ;
+    skos:prefLabel "Check dependency lock and installed environment" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "uv" "sync" "--locked" "--check" "--offline" ) ;
+    dev:effect "read" ;
+    dev:requires dev:uv ;
+    dev:timeout 60 ;
+    dev:workingDirectory "repository-root" .
+
+dev:env-tools a dev:Check ;
+    skos:prefLabel "Probe tool versions" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "scripts/chu_dev.py" "doctor" "--json" ) ;
+    dev:effect "read" ;
+    dev:requires dev:actionlint,
+        dev:lean,
+        dev:pyshacl,
+        dev:pytest,
+        dev:python,
+        dev:rdflib,
+        dev:ruff,
+        dev:rust,
+        dev:uv ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:finite-panel a dev:Check ;
+    skos:prefLabel "Run historical finite-panel example (not an infinite theorem proof)" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "chu_core_prototype/ruliad_limit_closure_falsify.py" ) ;
+    dev:effect "read" ;
+    dev:requires dev:python ;
+    dev:timeout 30 ;
+    dev:workingDirectory "repository-root" .
+
+dev:graph-assets a dev:Check ;
+    skos:prefLabel "Validate existing RDF assets and portable host fixture" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "scripts/check_graph_assets.py" ) ;
+    dev:effect "read" ;
+    dev:requires dev:pyshacl,
+        dev:python,
+        dev:rdflib ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:graph-catalog a dev:Check ;
+    skos:prefLabel "Validate ontology/catalog/SHACL and tool pins" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "scripts/chu_dev.py" "graph-check" "--json" ) ;
+    dev:effect "read" ;
+    dev:requires dev:pyshacl,
+        dev:python,
+        dev:rdflib ;
+    dev:timeout 60 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_CHU_Universe a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_CHU_Universe.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_CHU_Universe.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_Gap3_Cover a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_Gap3_Cover.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_Gap3_Cover.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_Gap4_Category a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_Gap4_Category.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_Gap4_Category.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_Gap5_Cost a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_Gap5_Cost.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_Gap5_Cost.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_Gap6_MAB a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_Gap6_MAB.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_Gap6_MAB.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_Uniqueness a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_Uniqueness.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_Uniqueness.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-AirplaneMan_v2 a dev:Check ;
+    skos:prefLabel "Verify AirplaneMan_v2.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/AirplaneMan_v2.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-CHU_WolframRewrite a dev:Check ;
+    skos:prefLabel "Verify CHU_WolframRewrite.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/CHU_WolframRewrite.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-CompositeJaebaeECSTripleIso a dev:Check ;
+    skos:prefLabel "Verify CompositeJaebaeECSTripleIso.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/CompositeJaebaeECSTripleIso.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:lean-JaebaeManInf a dev:Check ;
+    skos:prefLabel "Verify JaebaeManInf.lean" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "lean" "lean/JaebaeManInf.lean" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:plan a dev:Check ;
+    skos:prefLabel "Check plan referential integrity and DAG" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "plan/check_plan.py" ) ;
+    dev:effect "read" ;
+    dev:requires dev:python ;
+    dev:timeout 30 ;
+    dev:workingDirectory "repository-root" .
+
+dev:python-lint a dev:Check ;
+    skos:prefLabel "Lint Python sources" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "ruff" "check" "." ) ;
+    dev:effect "build" ;
+    dev:requires dev:ruff ;
+    dev:timeout 60 ;
+    dev:workingDirectory "repository-root" .
+
+dev:python-tests a dev:Check ;
+    skos:prefLabel "Regression tests and negative graph controls" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "-m" "pytest" "-q" ) ;
+    dev:effect "build" ;
+    dev:requires dev:pyshacl,
+        dev:pytest,
+        dev:python,
+        dev:rdflib ;
+    dev:timeout 180 ;
+    dev:workingDirectory "repository-root" .
+
+dev:truncation a dev:Check ;
+    skos:prefLabel "Verify portable Lean truncation witness" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "chu_core_prototype/trunc_collapse_realized_check.py" ) ;
+    dev:effect "read" ;
+    dev:requires dev:lean,
+        dev:python ;
+    dev:timeout 120 ;
+    dev:workingDirectory "repository-root" .
+
+dev:witness a dev:Check ;
+    skos:prefLabel "Verify native Rust witness" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
+    dev:argv ( "{python}" "chu_core_prototype/detruncation_witness_check.py" ) ;
+    dev:effect "build" ;
+    dev:requires dev:python,
+        dev:rust ;
+    dev:timeout 240 ;
+    dev:workingDirectory "repository-root" .
+
+<https://docs.astral.sh/ruff/linter/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://docs.astral.sh/uv/concepts/projects/sync/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://docs.pytest.org/en/stable/how-to/usage.html> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://docs.python.org/3.13/using/cmdline.html> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://github.com/RDFLib/pySHACL> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:agent a prov:SoftwareAgent .
+
+<https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Managing-Toolchains-with-Elan/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://rdflib.readthedocs.io/en/latest/intro_to_sparql/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://rust-lang.github.io/rustup/overrides.html> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://www.w3.org/TR/prov-o/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://www.w3.org/TR/rdf11-concepts/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://www.w3.org/TR/shacl/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://www.w3.org/TR/skos-reference/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://www.w3.org/TR/sparql11-query/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://www.w3.org/TR/swbp-n-aryRelations/> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:actionlint a dev:Tool ;
+    skos:prefLabel "actionlint" ;
+    prov:wasDerivedFrom <https://github.com/rhysd/actionlint/blob/main/docs/usage.md> ;
+    dev:probe ( ".chu/tools/actionlint" "-version" ) ;
+    dev:purpose "Validate GitHub Actions workflow syntax and expressions" ;
+    dev:version "1.7.12" .
+
+dev:pytest a dev:Tool ;
+    skos:prefLabel "pytest" ;
+    prov:wasDerivedFrom <https://docs.pytest.org/en/stable/how-to/usage.html> ;
+    dev:probe ( "pytest" "--version" ) ;
+    dev:purpose "Regression and negative-control tests" ;
+    dev:version "9.1.1" .
+
+dev:ruff a dev:Tool ;
+    skos:prefLabel "Ruff" ;
+    prov:wasDerivedFrom <https://docs.astral.sh/ruff/linter/> ;
+    dev:probe ( "ruff" "--version" ) ;
+    dev:purpose "Python syntax and correctness lint" ;
+    dev:version "0.16.9" .
+
+dev:uv a dev:Tool ;
+    skos:prefLabel "uv" ;
+    prov:wasDerivedFrom <https://docs.astral.sh/uv/concepts/projects/sync/> ;
+    dev:probe ( "uv" "--version" ) ;
+    dev:purpose "Reproduce the locked Python environment" ;
+    dev:version "0.12.3" .
+
+<https://github.com/rhysd/actionlint/blob/main/docs/usage.md> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:pyshacl a dev:Tool ;
+    skos:prefLabel "pySHACL" ;
+    prov:wasDerivedFrom <https://github.com/RDFLib/pySHACL> ;
+    dev:probe ( "pyshacl" "--version" ) ;
+    dev:purpose "SHACL validation and explicit optional OWL-RL expansion" ;
+    dev:version "0.40.1" .
+
+dev:rdflib a dev:Tool ;
+    skos:prefLabel "RDFLib" ;
+    prov:wasDerivedFrom <https://rdflib.readthedocs.io/en/latest/intro_to_sparql/> ;
+    dev:probe ( "{python}" "-c" "import rdflib; print(rdflib.__version__)" ) ;
+    dev:purpose "RDF parsing, SPARQL queries and Turtle / JSON-LD export" ;
+    dev:version "7.6.0" .
+
+dev:rust a dev:Tool ;
+    skos:prefLabel "Rust / Cargo" ;
+    prov:wasDerivedFrom <https://rust-lang.github.io/rustup/overrides.html> ;
+    dev:probe ( "rustc" "--version" ) ;
+    dev:purpose "Build and test the core" ;
+    dev:version "1.97.1" .
+
+dev:python a dev:Tool ;
+    skos:prefLabel "Python" ;
+    prov:wasDerivedFrom <https://docs.python.org/3.13/using/cmdline.html> ;
+    dev:probe ( "{python}" "--version" ) ;
+    dev:purpose "Run local checks and graph tools" ;
+    dev:version "3.13.5" .
+
+dev:lean a dev:Tool ;
+    skos:prefLabel "Lean" ;
+    prov:wasDerivedFrom <https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Managing-Toolchains-with-Elan/> ;
+    dev:probe ( "lean" "--version" ) ;
+    dev:purpose "Kernel-check the 11 formalization files" ;
+    dev:version "4.34.1" .
+
+<https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> a dev:Source ;
+    dev:reviewedOn "2026-09-30"^^xsd:date .

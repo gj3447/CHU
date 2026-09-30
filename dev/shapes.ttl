@@ -1,0 +1,33 @@
+@prefix dev: <https://github.com/gj3447/CHU/dev#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+dev:ToolShape a sh:NodeShape ; sh:targetClass dev:Tool ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dev:version ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path dev:purpose ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path dev:probe ; sh:minCount 1 ; sh:maxCount 1 ; sh:node dev:ArgvShape ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ; sh:class dev:Source ] .
+dev:CheckShape a sh:NodeShape ; sh:targetClass dev:Check ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dev:requires ; sh:minCount 1 ; sh:class dev:Tool ] ;
+    sh:property [ sh:path dev:argv ; sh:minCount 1 ; sh:maxCount 1 ; sh:node dev:ArgvShape ] ;
+    sh:property [ sh:path dev:effect ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "read" "build" ) ] ;
+    sh:property [ sh:path dev:timeout ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ; sh:maxInclusive 600 ] ;
+    sh:property [ sh:path dev:workingDirectory ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue "repository-root" ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ; sh:class dev:Source ] .
+dev:ArgvShape a sh:NodeShape ;
+    sh:property [ sh:path rdf:first ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:minLength 1 ] ;
+    sh:property [ sh:path rdf:rest ; sh:minCount 1 ; sh:maxCount 1 ] .
+dev:SourceShape a sh:NodeShape ; sh:targetClass dev:Source ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path dev:reviewedOn ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] .
+dev:CatalogShape a sh:NodeShape ; sh:targetNode dev:catalog ;
+    sh:property [ sh:path dev:authority ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue "SECONDARY_AI" ] ;
+    sh:property [ sh:path prov:wasAttributedTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class prov:SoftwareAgent ] .
+dev:ObservationShape a sh:NodeShape ; sh:targetClass dev:Observation ;
+    sh:property [ sh:path dev:check ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dev:Check ] ;
+    sh:property [ sh:path dev:status ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "PASS" "FAIL" "ERROR" "TIMEOUT" ) ] ;
+    sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class prov:Activity ] .

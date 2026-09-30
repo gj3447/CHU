@@ -1,0 +1,39 @@
+@prefix dev: <https://github.com/gj3447/CHU/dev#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+dev: a owl:Ontology ;
+    owl:versionInfo "0.1.0" ;
+    rdfs:comment "CHU-owned local development vocabulary; no shared KG schema or user-canon change." .
+dev:Tool a owl:Class ; rdfs:subClassOf prov:Entity .
+dev:Check a owl:Class ; rdfs:subClassOf prov:Entity .
+dev:Source a owl:Class ; rdfs:subClassOf prov:Entity .
+dev:Observation a owl:Class ; rdfs:subClassOf prov:Entity .
+dev:requires a owl:ObjectProperty ; rdfs:domain dev:Check ; rdfs:range dev:Tool ;
+    rdfs:comment "Check -> tool prerequisite, 1..n. Dependency, not authority." .
+dev:argv a owl:ObjectProperty ; rdfs:domain dev:Check ; rdfs:range rdf:List ;
+    rdfs:comment "Exactly one nonempty ordered argv list; no shell expansion." .
+dev:probe a owl:ObjectProperty ; rdfs:domain dev:Tool ; rdfs:range rdf:List ;
+    rdfs:comment "Exactly one nonempty version probe argv list." .
+dev:version a owl:DatatypeProperty ; rdfs:domain dev:Tool ; rdfs:range xsd:string ;
+    rdfs:comment "Exactly one desired version; not an installed-version observation." .
+dev:purpose a owl:DatatypeProperty ; rdfs:domain dev:Tool ; rdfs:range xsd:string .
+dev:effect a owl:DatatypeProperty ; rdfs:domain dev:Check ; rdfs:range xsd:string ;
+    rdfs:comment "Exactly one: read or build. Every check invocation also writes local run evidence." .
+dev:timeout a owl:DatatypeProperty ; rdfs:domain dev:Check ; rdfs:range xsd:integer ;
+    rdfs:comment "Exactly one positive per-check timeout in seconds." .
+dev:workingDirectory a owl:DatatypeProperty ; rdfs:domain dev:Check ; rdfs:range xsd:string ;
+    rdfs:comment "Exactly one execution projection: repository-root; not entity identity." .
+dev:reviewedOn a owl:DatatypeProperty ; rdfs:domain dev:Source ; rdfs:range xsd:date ;
+    rdfs:comment "Exactly one documentation review date; not publication or verification date." .
+dev:authority a owl:DatatypeProperty ; rdfs:domain prov:Entity ; rdfs:range xsd:string ;
+    rdfs:comment "Local catalog is SECONDARY_AI engineering configuration, not USER_PRIMARY." .
+dev:check a owl:ObjectProperty ; rdfs:domain dev:Observation ; rdfs:range dev:Check ;
+    rdfs:comment "Observation -> checked specification, exactly one." .
+dev:status a owl:DatatypeProperty ; rdfs:domain dev:Observation ; rdfs:range xsd:string ;
+    rdfs:comment "Exactly one measured result: PASS, FAIL, ERROR, TIMEOUT." .
+dev:pathView a owl:DatatypeProperty ; rdfs:domain prov:Entity ; rdfs:range xsd:string ;
+    rdfs:comment "0..n checkout-relative path views on a source entity identified by byte SHA-256." .

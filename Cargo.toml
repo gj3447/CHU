@@ -1,0 +1,14 @@
+[package]
+name = "chu-core-prototype"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "AGPL-3.0-or-later"
+
+[[bin]]
+name = "chu-core"
+path = "chu_core_prototype/chu_core.rs"
+
+[[test]]
+name = "core-smoke"
+path = "tests/core_smoke.rs"

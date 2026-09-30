@@ -1,0 +1,7 @@
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?tool ?label ?version ?purpose ?source WHERE {
+  ?tool a dev:Tool ; skos:prefLabel ?label ; dev:version ?version ;
+        dev:purpose ?purpose ; prov:wasDerivedFrom ?source .
+} ORDER BY ?tool

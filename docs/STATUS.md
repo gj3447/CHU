@@ -5,6 +5,42 @@
 
 ---
 
+## Development environment — observed 2026-09-30
+
+Local Linux x86_64 development is configured and verified. Entry point:
+[`DEVELOPMENT.md`](DEVELOPMENT.md), `./chu tools --json`, `./chu doctor --json`,
+`./chu check --json`. These are dated engineering observations, not user canon.
+
+- Python 3.13.5, uv 0.12.3, Rust/Cargo 1.97.1 and Lean 4.34.1 are pinned.
+  RDFLib 7.6.0, pySHACL 0.40.1, Ruff 0.16.9, pytest 9.1.1 and actionlint 1.7.12
+  are installed through a dependency lock or checksum-pinned upstream release.
+- 25 registered checks pass: native Cargo assertions, Clippy, WASM compilation,
+  Lean 11/11 with no sorry declarations, Python checks, plan and graph validators,
+  tool probes, environment lock and CI workflow lint. Python regression suite:
+  18 passed, including malformed graph, timeout/error and provenance controls.
+- A fresh temporary checkout with a space-containing path and a new `.venv`
+  passed bootstrap and all 25 checks. Existing user toolchain managers and caches
+  were reused. Repeated bootstrap is supported (already-installed Elan handled).
+- Live Linux extraction: 4,078 nodes, 9,850 hyperedges, 200,152 RDF triples;
+  SHACL conforms and all four existing SPARQL queries execute. This host snapshot
+  stays ignored under `.chu/live-host/`; routine CI uses a portable fixture.
+- The local tool catalog has 9 tools and 25 checks; actual SHACL validation,
+  named SPARQL competency queries and PROV-O execution evidence are implemented.
+  Sources use byte SHA-256 identity, with checkout paths retained as views.
+- Task routing selects the development guide for code/test/graph/CLI work in
+  Codex, Claude and Grok, and excludes it from the base-only route. Native
+  AGENTS/CLAUDE entry points stay thin. This checks routing, not fresh launches
+  of every agent client.
+
+Limits: GitHub Actions workflow is locally linted but has not run remotely in
+this task. WASM is compile-tested, not tested in a 333 runtime. `/dev/fuse` is
+absent. Shared KG reads resolved an existing CHU UID; shared KG publication was
+not performed. One upstream RDFLib JSON-LD deprecation warning and the expected
+unused-native-main warning in a WASM cdylib remain non-fatal. The CHU OS kernel
+itself remains at the milestones described in [`../plan/CHU_OS_PLAN.md`](../plan/CHU_OS_PLAN.md).
+
+---
+
 ## Current Version
 
 **v1** (canonical) — locked in at PROM 16 axiom-foundation cycle, 2026-04-29. No breaking changes since.
@@ -24,7 +60,7 @@ See [`../CHANGELOG.md`](../CHANGELOG.md) for the evolution trajectory.
 
 ## Lean 4 Formalization
 
-**11 verified Lean 4 files** (Mathlib-free, standalone, Lean **4.32.0**, **0 sorry**).
+**11 verified Lean 4 files** (Mathlib-free, standalone, pinned Lean **4.34.1**, **0 sorry**).
 
 > **실측 정정 2026-07-15**: 이전 "10 files / Lean 4.30.0-rc2"는 stale. `CHU_WolframRewrite.lean`(동역학 층) 누락 + 툴체인 버전 경과. 재검증 = **11/11 `lean <file>` exit 0**, `declaration uses 'sorry'` 경고 0건(파일 내 `sorry` 문자열 2건은 블록 주석 산문이라 실제 sorry 아님 — 확인함).
 
