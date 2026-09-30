@@ -4,6 +4,23 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+dev:CandidateShape a sh:NodeShape ; sh:targetClass dev:Candidate ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dev:selection ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "SELECTED" "DEFERRED" ) ] ;
+    sh:property [ sh:path dev:rationale ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:minLength 1 ] ;
+    sh:property [ sh:path dct:date ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path dev:authority ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue "SECONDARY_AI" ] ;
+    sh:property [ sh:path prov:wasAttributedTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class prov:SoftwareAgent ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ; sh:class dev:Source ] ;
+    sh:property [ sh:path dev:selectedTool ; sh:class dev:Tool ] ;
+    sh:or (
+        [ sh:property [ sh:path dev:selection ; sh:hasValue "SELECTED" ] ;
+          sh:property [ sh:path dev:selectedTool ; sh:minCount 1 ; sh:maxCount 1 ] ]
+        [ sh:property [ sh:path dev:selection ; sh:hasValue "DEFERRED" ] ;
+          sh:property [ sh:path dev:selectedTool ; sh:maxCount 0 ] ]
+    ) .
 
 dev:ToolShape a sh:NodeShape ; sh:targetClass dev:Tool ; sh:nodeKind sh:IRI ;
     sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;

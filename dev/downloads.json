@@ -5,12 +5,57 @@
     "version": "1.7.12",
     "url": "https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz",
     "sha256": "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8",
-    "member": "actionlint"
+    "member": "actionlint",
+    "bootstrap": true
   },
   "elan-init": {
     "version": "4.2.3",
     "url": "https://github.com/leanprover/elan/releases/download/v4.2.3/elan-x86_64-unknown-linux-gnu.tar.gz",
     "sha256": "df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2",
     "member": "elan-init"
+  },
+  "oxigraph": {
+    "version": "0.5.11",
+    "url": "https://github.com/oxigraph/oxigraph/releases/download/v0.5.11/oxigraph_v0.5.11_x86_64_linux_gnu",
+    "sha256": "66df9e704fbd26cd943757c8c62698505a1193954f86651bb0bb4abf941a917b",
+    "format": "raw",
+    "bootstrap": true
+  },
+  "duckdb": {
+    "version": "1.5.6",
+    "url": "https://github.com/duckdb/duckdb/releases/download/v1.5.6/duckdb_cli-linux-amd64.gz",
+    "sha256": "cce2687a38681db644c248198b99ecd86170ff47e324c5f33e50c0042f142839",
+    "format": "gzip",
+    "bootstrap": true
+  },
+  "yq": {
+    "version": "4.54.1",
+    "url": "https://github.com/mikefarah/yq/releases/download/v4.54.1/yq_linux_amd64",
+    "sha256": "8e34fc298390875de416e6a4afcb8cabeceb25d9aa8506c1a2f9353cf702ea5f",
+    "format": "raw",
+    "bootstrap": true
+  },
+  "ast-grep": {
+    "version": "0.45.3",
+    "url": "https://github.com/ast-grep/ast-grep/releases/download/0.45.3/app-x86_64-unknown-linux-gnu.zip",
+    "sha256": "f8ac830881339d1edee6b2652f54798c0f4da5a827f2db38a08ee31117783ce8",
+    "format": "zip",
+    "bootstrap": true,
+    "member": "ast-grep"
+  },
+  "hyperfine": {
+    "version": "1.20.0",
+    "url": "https://github.com/sharkdp/hyperfine/releases/download/v1.20.0/hyperfine-v1.20.0-x86_64-unknown-linux-gnu.tar.gz",
+    "sha256": "63ad53934062118f5b0be11785e0bb1603d4b91667d1921f2fd8df9a8712040a",
+    "format": "tar.gz",
+    "bootstrap": true,
+    "member": "hyperfine-v1.20.0-x86_64-unknown-linux-gnu/hyperfine"
+  },
+  "jq": {
+    "version": "1.8.2",
+    "url": "https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-linux-amd64",
+    "sha256": "b1c22172dd303f3be49e935aa56aa48a8b7a46e0bc838b4997d3bb451495870f",
+    "format": "raw",
+    "bootstrap": true
   }
 }

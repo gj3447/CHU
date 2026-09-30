@@ -371,3 +371,83 @@ dev:lean a dev:Tool ;
 
 <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> a dev:Source ;
     dev:reviewedOn "2026-09-30"^^xsd:date .
+
+<https://github.com/oxigraph/oxigraph> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:oxigraph a dev:Tool ; skos:prefLabel "Oxigraph" ;
+    dev:version "0.5.11" ; dev:purpose "RDF/SPARQL second engine; verify CHU competency answers and RDF roundtrips independently of RDFLib." ;
+    dev:probe ( ".chu/tools/oxigraph" "--version" ) ;
+    prov:wasDerivedFrom <https://github.com/oxigraph/oxigraph> .
+
+dev:cli-oxigraph a dev:Check ; skos:prefLabel "Verify Oxigraph on CHU data" ;
+    prov:wasDerivedFrom <https://github.com/oxigraph/oxigraph> ;
+    dev:requires dev:oxigraph, dev:python, dev:rdflib ;
+    dev:argv ( "{python}" "scripts/check_cli_tools.py" "oxigraph" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://duckdb.org/docs/current/clients/cli/output_formats> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:duckdb a dev:Tool ; skos:prefLabel "DuckDB" ;
+    dev:version "1.5.6" ; dev:purpose "Query plan JSON with SQL and compare grouped counts with Python; no persistent service needed." ;
+    dev:probe ( ".chu/tools/duckdb" "--version" ) ;
+    prov:wasDerivedFrom <https://duckdb.org/docs/current/clients/cli/output_formats> .
+
+dev:cli-duckdb a dev:Check ; skos:prefLabel "Verify DuckDB on CHU data" ;
+    prov:wasDerivedFrom <https://duckdb.org/docs/current/clients/cli/output_formats> ;
+    dev:requires dev:duckdb, dev:python ;
+    dev:argv ( "{python}" "scripts/check_cli_tools.py" "duckdb" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/mikefarah/yq> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:yq a dev:Tool ; skos:prefLabel "yq (mikefarah)" ;
+    dev:version "4.54.1" ; dev:purpose "Read YAML CI and TOML pins as JSON without text substitutions." ;
+    dev:probe ( ".chu/tools/yq" "--version" ) ;
+    prov:wasDerivedFrom <https://github.com/mikefarah/yq> .
+
+dev:cli-yq a dev:Check ; skos:prefLabel "Verify yq (mikefarah) on CHU data" ;
+    prov:wasDerivedFrom <https://github.com/mikefarah/yq> ;
+    dev:requires dev:yq, dev:python ;
+    dev:argv ( "{python}" "scripts/check_cli_tools.py" "yq" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/ast-grep/ast-grep> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:ast-grep a dev:Tool ; skos:prefLabel "ast-grep" ;
+    dev:version "0.45.3" ; dev:purpose "Structural Rust/Python code search with JSON matches; use ast-grep to avoid the system sg name collision." ;
+    dev:probe ( ".chu/tools/ast-grep" "--version" ) ;
+    prov:wasDerivedFrom <https://github.com/ast-grep/ast-grep> .
+
+dev:cli-ast-grep a dev:Check ; skos:prefLabel "Verify ast-grep on CHU data" ;
+    prov:wasDerivedFrom <https://github.com/ast-grep/ast-grep> ;
+    dev:requires dev:ast-grep, dev:python ;
+    dev:argv ( "{python}" "scripts/check_cli_tools.py" "ast-grep" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/sharkdp/hyperfine> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:hyperfine a dev:Tool ; skos:prefLabel "hyperfine" ;
+    dev:version "1.20.0" ; dev:purpose "Measure repeatable local CHU commands with warmup and JSON timings; no shell and no inferred speedup claim." ;
+    dev:probe ( ".chu/tools/hyperfine" "--version" ) ;
+    prov:wasDerivedFrom <https://github.com/sharkdp/hyperfine> .
+
+dev:cli-hyperfine a dev:Check ; skos:prefLabel "Verify hyperfine on CHU data" ;
+    prov:wasDerivedFrom <https://github.com/sharkdp/hyperfine> ;
+    dev:requires dev:hyperfine, dev:python ;
+    dev:argv ( "{python}" "scripts/check_cli_tools.py" "hyperfine" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://jqlang.org/manual/> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:jq a dev:Tool ; skos:prefLabel "jq" ;
+    dev:version "1.8.2" ; dev:purpose "Filter agent JSON reports and plan nodes; pin a project copy instead of depending on the preinstalled system version." ;
+    dev:probe ( ".chu/tools/jq" "--version" ) ;
+    prov:wasDerivedFrom <https://jqlang.org/manual/> .
+
+dev:cli-jq a dev:Check ; skos:prefLabel "Verify jq on CHU data" ;
+    prov:wasDerivedFrom <https://jqlang.org/manual/> ;
+    dev:requires dev:jq, dev:python ;
+    dev:argv ( "{python}" "scripts/check_cli_tools.py" "jq" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+dev:env-tools dev:requires dev:oxigraph, dev:duckdb, dev:yq, dev:ast-grep, dev:hyperfine, dev:jq .

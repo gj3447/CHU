@@ -1,0 +1,79 @@
+@prefix dev: <https://github.com/gj3447/CHU/dev#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+dev:candidate-oxigraph a dev:Candidate, prov:Entity ;
+    skos:prefLabel "Oxigraph" ; dev:selection "SELECTED" ;
+    dev:rationale "RDF/SPARQL second engine; verify CHU competency answers and RDF roundtrips independently of RDFLib." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://github.com/oxigraph/oxigraph> ;
+    dev:selectedTool dev:oxigraph .
+
+dev:candidate-duckdb a dev:Candidate, prov:Entity ;
+    skos:prefLabel "DuckDB" ; dev:selection "SELECTED" ;
+    dev:rationale "Query plan JSON with SQL and compare grouped counts with Python; no persistent service needed." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://duckdb.org/docs/current/clients/cli/output_formats> ;
+    dev:selectedTool dev:duckdb .
+
+dev:candidate-yq a dev:Candidate, prov:Entity ;
+    skos:prefLabel "yq (mikefarah)" ; dev:selection "SELECTED" ;
+    dev:rationale "Read YAML CI and TOML pins as JSON without text substitutions." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://github.com/mikefarah/yq> ;
+    dev:selectedTool dev:yq .
+
+dev:candidate-ast-grep a dev:Candidate, prov:Entity ;
+    skos:prefLabel "ast-grep" ; dev:selection "SELECTED" ;
+    dev:rationale "Structural Rust/Python code search with JSON matches; use ast-grep to avoid the system sg name collision." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://github.com/ast-grep/ast-grep> ;
+    dev:selectedTool dev:ast-grep .
+
+dev:candidate-hyperfine a dev:Candidate, prov:Entity ;
+    skos:prefLabel "hyperfine" ; dev:selection "SELECTED" ;
+    dev:rationale "Measure repeatable local CHU commands with warmup and JSON timings; no shell and no inferred speedup claim." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://github.com/sharkdp/hyperfine> ;
+    dev:selectedTool dev:hyperfine .
+
+dev:candidate-jq a dev:Candidate, prov:Entity ;
+    skos:prefLabel "jq" ; dev:selection "SELECTED" ;
+    dev:rationale "Filter agent JSON reports and plan nodes; pin a project copy instead of depending on the preinstalled system version." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://jqlang.org/manual/> ;
+    dev:selectedTool dev:jq .
+
+dev:candidate-robot a dev:Candidate, prov:Entity ;
+    skos:prefLabel "ROBOT" ; dev:selection "DEFERRED" ;
+    dev:rationale "Defer until OWL/OBO reasoning and ontology release reports are required; Java is absent and SHACL covers the current asserted graph contract." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://robot.obolibrary.org/report.html> .
+
+<https://robot.obolibrary.org/report.html> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:candidate-jena a dev:Candidate, prov:Entity ;
+    skos:prefLabel "Apache Jena" ; dev:selection "DEFERRED" ;
+    dev:rationale "RIOT/ARQ/SHACL are useful independent validators; defer the Java runtime and overlapping engine until a second SHACL implementation is needed." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://jena.apache.org/documentation/tools/> .
+
+<https://jena.apache.org/documentation/tools/> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:candidate-rmlmapper a dev:Candidate, prov:Entity ;
+    skos:prefLabel "RMLMapper" ; dev:selection "DEFERRED" ;
+    dev:rationale "Declarative CSV/JSON/XML-to-RDF mappings are useful for ingestion; defer until the CHU mapping contract is fixed and Java is justified." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://github.com/rmlio/rmlmapper-java> .
+
+<https://github.com/rmlio/rmlmapper-java> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+
+dev:candidate-qsv a dev:Candidate, prov:Entity ;
+    skos:prefLabel "qsv" ; dev:selection "DEFERRED" ;
+    dev:rationale "Useful CSV validation and transformations; current workload is JSON/RDF and DuckDB supplies tabular queries, so defer another overlapping binary." ;
+    dct:date "2026-09-30"^^xsd:date ; dev:authority "SECONDARY_AI" ;
+    prov:wasAttributedTo dev:agent ; prov:wasDerivedFrom <https://github.com/dathere/qsv> .
+
+<https://github.com/dathere/qsv> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .

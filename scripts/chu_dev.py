@@ -21,7 +21,7 @@ from rdflib.namespace import PROV, SKOS
 
 ROOT = Path(__file__).resolve().parents[1]
 DEV = Namespace("https://github.com/gj3447/CHU/dev#")
-QUERIES = {"tools", "checks", "sources", "failures"}
+QUERIES = {"tools", "checks", "sources", "failures", "candidates"}
 
 
 def now():
@@ -29,7 +29,18 @@ def now():
 
 
 def catalog():
-    return Graph().parse(ROOT / "dev/catalog.ttl")
+    return Graph().parse(ROOT / "dev/catalog.ttl").parse(ROOT / "dev/tool-research.ttl")
+
+
+def binary_specs():
+    manifest = json.loads((ROOT / "dev/downloads.json").read_text())
+    return {name: spec for name, spec in manifest.items()
+            if isinstance(spec, dict) and spec.get("bootstrap", False)}
+
+
+def matches_version(output, version):
+    import re
+    return bool(re.search(r"(?<![\w.])v?" + re.escape(version) + r"(?![\w.])", output))
 
 
 def commands(graph=None):
@@ -92,8 +103,8 @@ def graph_validate(graph=None):
             DEV.lean: (ROOT / "lean-toolchain").read_text().strip().split(":v")[-1],
             DEV.rust: tomllib.loads((ROOT / "rust-toolchain.toml").read_text())["toolchain"]["channel"],
             DEV.uv: tomllib.loads((ROOT / "pyproject.toml").read_text())["tool"]["uv"]["required-version"].removeprefix("=="),
-            DEV.actionlint: json.loads((ROOT / "dev/downloads.json").read_text())["actionlint"]["version"],
         }
+        pins.update({DEV[name]: spec["version"] for name, spec in binary_specs().items()})
         lock = tomllib.loads((ROOT / "uv.lock").read_text())
         for package in lock["package"]:
             if package["name"] in {"ruff", "pytest", "pyshacl", "rdflib"}:
@@ -137,8 +148,7 @@ def doctor():
         result = execute(argv, 60)
         output = result["stdout"] + result["stderr"]
         # Exact version token, not a substring match (1.2 must not match 1.20).
-        import re
-        matched = bool(re.search(r"(?<![\w.])" + re.escape(str(version)) + r"(?![\w.])", output))
+        matched = matches_version(output, str(version))
         rows.append({"tool": str(node), "expected": str(version), "argv": argv,
                      **result, "matches_pin": matched})
     return {"schema": "chu-doctor/v1", "observed_at": now(),
@@ -238,6 +248,9 @@ def query(name):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    p = sub.add_parser("tool", help="Run a pinned binary from repository root; preserve upstream output/exit code")
+    p.add_argument("name", choices=sorted(binary_specs()))
+    p.add_argument("argv", nargs=argparse.REMAINDER, help="Upstream arguments after -- (no shell)")
     for name, desc in [("doctor", "Probe installed tools against pins"),
                        ("tools", "List tools, versions and official documentation"),
                        ("checks", "List check IDs, argv, effects and timeouts"),
@@ -255,6 +268,9 @@ def main():
             p.add_argument("--format", choices=["turtle", "json-ld", "nt"], default="turtle")
     args = parser.parse_args()
     try:
+        if args.command == "tool":
+            argv = args.argv[1:] if args.argv[:1] == ["--"] else args.argv
+            return subprocess.call([str(ROOT / ".chu/tools" / args.name), *argv], cwd=ROOT)
         if args.command == "export":
             print(catalog().serialize(format=args.format))
             return 0

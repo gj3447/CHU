@@ -20,7 +20,8 @@ python3 scripts/bootstrap.py
 ```
 
 Bootstrap installs the Python packages into `.venv`, the exact Rust/Lean toolchains
-through their managers, and checksum-verified actionlint into `.chu/tools`.
+through their managers, and checksum-verified actionlint, Oxigraph, DuckDB, yq,
+ast-grep, hyperfine and jq into `.chu/tools`.
 It preserves global default toolchains; repository pins select the versions here.
 It can download packages/toolchains. A native C linker (`cc`, e.g. Ubuntu's
 `build-essential`) is also needed for Rust's native executable.
@@ -46,8 +47,10 @@ builds and behavior. Neither implies a running CHU OS or shared KG write access.
 ./chu query tools --json            # named local SPARQL competency query
 ./chu query checks --json
 ./chu query sources --json
+./chu query candidates --json       # 10 researched CLIs, decisions and official evidence
 ./chu query failures --json         # failed observations in the latest local run
 ./chu export --format json-ld       # interoperable RDF output
+./chu tool oxigraph -- --help        # pinned upstream binary, raw upstream output
 ```
 
 Exit codes: **0** success, **1** failed check/diagnosis, **2** invalid request or
@@ -56,6 +59,9 @@ operational error. `check` continues after individual failures and retains each
 Unknown check/query names are errors, never an empty successful run.
 Timeouts terminate the child process group. Commands use argv arrays with
 `shell=False`; placeholders are only `{python}` and `{out}`. No LLM/API key is needed.
+`tool NAME -- ARGS` runs an allowlisted installed binary from the repository root,
+preserving its stdin/stdout/stderr and exit code. It adds no timeout, JSON envelope,
+automatic installation or authorization; use each upstream CLI's documented modes.
 
 The versioned catalog is trusted executable repository configuration, like a
 Makefile. Read a command's effect before execution. Catalog entries and graph
@@ -69,6 +75,8 @@ The operational default is **discover → diagnose → select/run → inspect ev
 These choices extend existing CHU tools and were researched against upstream
 documentation on 2026-09-30. Full transitive dependencies and artifact hashes are
 in `uv.lock`; direct binary URLs/digests are in `dev/downloads.json`.
+The additional open-source CLI comparison, licenses and tested CHU recipes are in
+[`CLI_TOOLS.md`](CLI_TOOLS.md). Load that runbook when using those tools.
 
 | Tool | Installed pin | Purpose and example |
 |---|---|---|
@@ -84,13 +92,17 @@ in `uv.lock`; direct binary URLs/digests are in `dev/downloads.json`.
 pySHACL supports `-i owlrl` for explicit OWL-RL expansion. The default CHU checks
 use `inference="none"` so missing asserted endpoints are not hidden by inferred
 types. Full OWL-DL consistency reasoning is outside this setup. No extra graph
-database is necessary for these local data sizes; the shared KG remains its own
-owner-managed service. A package being installed is not proof of a service or
+service is necessary for these local data sizes. Oxigraph uses an isolated local
+store for independent SPARQL checks; the shared KG remains its own owner-managed
+service. A package being installed is not proof of a service or
 MCP being available.
 
 ## Graph contract and standards
 
-`dev/catalog.ttl` is the single executable registry. `dev/ontology.ttl` declares
+`dev/catalog.ttl` is the single executable registry. `dev/tool-research.ttl` adds
+dated candidate evaluations to the query/export/validation graph, with a distinct
+`Candidate` class: a deferred candidate is never an installed `Tool` declaration.
+`dev/ontology.ttl` declares
 the CHU-owned local vocabulary with domains, ranges and meanings; `dev/shapes.ttl`
 enforces cardinalities, endpoint types, effects and authority. This vocabulary
 does not add types/relations to the shared KG. `tests/test_dev.py` tests the exact
@@ -101,6 +113,13 @@ answers to these competency questions:
 3. Which standards/source documents informed the local setup?
 4. Which measured checks failed, and when were those observations produced?
 5. Do two path views on identical bytes retain one content identity?
+6. Which upstream CLIs were selected/deferred, why, and based on which sources?
+
+`cli-oxigraph` compares all five stored SELECT queries against RDFLib as multisets
+of normalized RDF values (including datatype, language and unbound variables),
+checks a graph roundtrip with ordered argument lists, and rejects malformed RDF
+atomically. Its failure-query fixture is a synthetic local observation, separate
+from real runs. This checks these queries/data, not the entire W3C test suite.
 
 | Standard | Actual use and boundary |
 |---|---|
@@ -138,7 +157,7 @@ paths can appear in logs. Publish deliberately, not as shared KG canon.
 
 `.github/workflows/check.yml` runs bootstrap and the same `./chu check` on
 Ubuntu 24.04. Actions use pinned upstream commits; Elan/actionlint downloads use
-pinned release digests. Adding the workflow locally does not mean GitHub has
+pinned release digests, as do the six added CLIs. Adding the workflow locally does not mean GitHub has
 executed it; remote execution is observed only after a push/CI run.
 
 To update: change the relevant pin, regenerate `uv.lock` where applicable, update
@@ -146,6 +165,9 @@ the catalog's desired versions and official sources, run `./chu graph-check`,
 then `./chu check`. Add new Lean files to the registry; a missing Lean check is
 an error. Keep archived journals immutable: graph-assets validates their stored
 RDF and query answers, rather than rerunning historical multi-repository actions.
+Finish changed work by committing and pushing the current CHU branch, preserving
+remote history, as requested in `docs/agent-rules/OWNER.md`. Report local checks and
+the actual remote CI status separately; a successful push is not a successful CI run.
 
 The WASM check compiles the cdylib; it does not prove a browser/333 runtime
 integration. Host graph checks use a portable fixture by default and do not

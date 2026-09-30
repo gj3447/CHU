@@ -13,16 +13,24 @@ import chu_dev as dev
 def test_catalog_and_competency_answers():
     assert dev.graph_validate()["ok"]
     tools = {r["tool"].split("#")[-1]: r for r in dev.query("tools")}
-    assert set(tools) == {"python", "uv", "rust", "lean", "rdflib", "pyshacl", "ruff", "pytest", "actionlint"}
+    assert set(tools) == {"python", "uv", "rust", "lean", "rdflib", "pyshacl", "ruff", "pytest", "actionlint",
+                          "oxigraph", "duckdb", "yq", "ast-grep", "hyperfine", "jq"}
     assert tools["pyshacl"]["source"] == "https://github.com/RDFLib/pySHACL"
     checks = dev.query("checks")
     assert {r["tool"] for r in checks if r["check"] == str(dev.DEV.truncation)} == {
         str(dev.DEV.python), str(dev.DEV.lean)}
     assert {r["source"] for r in dev.query("sources") if r["subject"] == str(dev.DEV.catalog)} >= {
         "https://www.w3.org/TR/shacl/", "https://www.w3.org/TR/prov-o/"}
+    candidates = dev.query("candidates")
+    assert len(candidates) == 10
+    assert sum(row["selection"] == "SELECTED" for row in candidates) == 6
+    assert {r["label"] for r in candidates if r["selection"] == "DEFERRED"} == {
+        "ROBOT", "Apache Jena", "RMLMapper", "qsv"}
+    assert all(("tool" in row) == (row["selection"] == "SELECTED") for row in candidates)
 
 
-@pytest.mark.parametrize("mutation", ["dangling-tool", "no-source", "two-versions", "authority", "predicate", "domain", "cycle", "pin-drift"])
+@pytest.mark.parametrize("mutation", ["dangling-tool", "no-source", "two-versions", "authority", "predicate", "domain", "cycle", "pin-drift",
+                                     "binary-pin-drift", "selected-no-tool", "deferred-tool", "candidate-no-source"])
 def test_graph_rejects_invalid_controls(mutation):
     g = dev.catalog()
     if mutation == "dangling-tool":
@@ -42,6 +50,14 @@ def test_graph_rejects_invalid_controls(mutation):
         g.set((head, RDF.rest, head))
     elif mutation == "pin-drift":
         g.set((dev.DEV.lean, dev.DEV.version, Literal("0.0")))
+    elif mutation == "binary-pin-drift":
+        g.set((dev.DEV.oxigraph, dev.DEV.version, Literal("0.0")))
+    elif mutation == "selected-no-tool":
+        g.remove((dev.DEV["candidate-oxigraph"], dev.DEV.selectedTool, None))
+    elif mutation == "deferred-tool":
+        g.add((dev.DEV["candidate-robot"], dev.DEV.selectedTool, dev.DEV.oxigraph))
+    elif mutation == "candidate-no-source":
+        g.remove((dev.DEV["candidate-robot"], PROV.wasDerivedFrom, None))
     assert not dev.graph_validate(g)["ok"]
 
 

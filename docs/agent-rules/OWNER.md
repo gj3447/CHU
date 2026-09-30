@@ -29,7 +29,8 @@
 # Working preferences
 
 - Match effort to the request: take the direct path, and expand investigation only when necessary to complete the requested outcome.
-- 파일 변경이 있는 작업은 작업을 마치기 전에 Git 커밋으로 남긴다. 변경이 없는 조회 작업에는 빈 커밋을 만들지 않는다.
+- 파일 변경이 있는 작업은 필요한 검증 후 작업을 마치기 전에 Git 커밋하고 설정된 CHU 원격의 현재 작업 브랜치로 push한다 (사용자 지시 2026-09-30). 변경이 없는 조회 작업에는 빈 커밋을 만들지 않는다.
+- push 전 원격 변경을 확인하고 기존 이력을 보존한다. force push는 하지 않는다. 인증·네트워크·충돌 등으로 push가 실패하면 로컬 커밋과 미전송 상태를 명시한다.
 - 변경에 필요한 검증을 수행하고 결과를 보고한다. 미해결 검증 실패가 있으면 커밋과 보고에 명시한다.
 - 기존 사용자 변경을 임의로 버리거나 덮어쓰지 않는다.
 

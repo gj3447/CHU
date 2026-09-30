@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Install CHU's pinned local environment using existing uv/rustup/elan managers."""
 import argparse
+import json
 import shutil
 import subprocess
 import tomllib
@@ -36,11 +37,14 @@ def main():
                 print(f"Already installed: {lean}", flush=True)
                 continue
             subprocess.run(command, cwd=ROOT, check=True, timeout=600)
-    if args.dry_run:
-        print(["python3", "scripts/download_tool.py", "actionlint"])
-    else:
-        from download_tool import install
-        install("actionlint")
+    manifest = json.loads((ROOT / "dev/downloads.json").read_text())
+    for name, spec in manifest.items():
+        if isinstance(spec, dict) and spec.get("bootstrap", False):
+            if args.dry_run:
+                print(["python3", "scripts/download_tool.py", name])
+            else:
+                from download_tool import install
+                install(name)
 
 
 if __name__ == "__main__":

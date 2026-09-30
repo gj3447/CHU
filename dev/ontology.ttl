@@ -6,12 +6,19 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 
 dev: a owl:Ontology ;
-    owl:versionInfo "0.1.0" ;
+    owl:versionInfo "0.2.0" ;
     rdfs:comment "CHU-owned local development vocabulary; no shared KG schema or user-canon change." .
 dev:Tool a owl:Class ; rdfs:subClassOf prov:Entity .
 dev:Check a owl:Class ; rdfs:subClassOf prov:Entity .
 dev:Source a owl:Class ; rdfs:subClassOf prov:Entity .
 dev:Observation a owl:Class ; rdfs:subClassOf prov:Entity .
+dev:Candidate a owl:Class ; rdfs:subClassOf prov:Entity ;
+    rdfs:comment "Dated CHU-specific evaluation of an upstream CLI; not proof of installation." .
+dev:selection a owl:DatatypeProperty ; rdfs:domain dev:Candidate ; rdfs:range xsd:string ;
+    rdfs:comment "Exactly one engineering decision: SELECTED or DEFERRED." .
+dev:rationale a owl:DatatypeProperty ; rdfs:domain dev:Candidate ; rdfs:range xsd:string .
+dev:selectedTool a owl:ObjectProperty ; rdfs:domain dev:Candidate ; rdfs:range dev:Tool ;
+    rdfs:comment "Selected evaluation -> desired local tool specification, exactly one for SELECTED, none for DEFERRED." .
 dev:requires a owl:ObjectProperty ; rdfs:domain dev:Check ; rdfs:range dev:Tool ;
     rdfs:comment "Check -> tool prerequisite, 1..n. Dependency, not authority." .
 dev:argv a owl:ObjectProperty ; rdfs:domain dev:Check ; rdfs:range rdf:List ;

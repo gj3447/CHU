@@ -1,0 +1,9 @@
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dct: <http://purl.org/dc/terms/>
+SELECT ?candidate ?label ?selection ?rationale ?date ?source ?tool WHERE {
+  ?candidate a dev:Candidate ; skos:prefLabel ?label ; dev:selection ?selection ;
+    dev:rationale ?rationale ; dct:date ?date ; prov:wasDerivedFrom ?source .
+  OPTIONAL { ?candidate dev:selectedTool ?tool }
+} ORDER BY ?selection ?candidate ?source

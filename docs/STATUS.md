@@ -14,17 +14,28 @@ Local Linux x86_64 development is configured and verified. Entry point:
 - Python 3.13.5, uv 0.12.3, Rust/Cargo 1.97.1 and Lean 4.34.1 are pinned.
   RDFLib 7.6.0, pySHACL 0.40.1, Ruff 0.16.9, pytest 9.1.1 and actionlint 1.7.12
   are installed through a dependency lock or checksum-pinned upstream release.
-- 25 registered checks pass: native Cargo assertions, Clippy, WASM compilation,
+- Internet research compared 10 additional open-source CLI candidates; Oxigraph
+  0.5.11, DuckDB 1.5.6, yq 4.54.1, ast-grep 0.45.3, hyperfine 1.20.0 and jq 1.8.2
+  are installed from checksum-pinned official releases. Decisions, deferred
+  candidates, licenses and tested commands: [`CLI_TOOLS.md`](CLI_TOOLS.md).
+- 31 registered checks pass: native Cargo assertions, Clippy, WASM compilation,
   Lean 11/11 with no sorry declarations, Python checks, plan and graph validators,
-  tool probes, environment lock and CI workflow lint. Python regression suite:
-  18 passed, including malformed graph, timeout/error and provenance controls.
-- A fresh temporary checkout with a space-containing path and a new `.venv`
-  passed bootstrap and all 25 checks. Existing user toolchain managers and caches
-  were reused. Repeated bootstrap is supported (already-installed Elan handled).
+  tool probes, environment lock, CI workflow lint and six actual CLI behavior
+  checks. Python regression suite: 31 passed, including malformed graph,
+  timeout/error, provenance, archive integrity and shell-free argument controls.
+- The earlier 25-check baseline passed bootstrap in a fresh temporary checkout
+  with a space-containing path and a new `.venv`, reusing toolchain managers and
+  caches. The expanded 31-check setup passed repeated bootstrap locally. Remote
+  bootstrap/check execution is tracked per commit in GitHub Actions below.
+- RDFLib and Oxigraph agree on all five stored SPARQL queries (XSD literal forms
+  normalized); the independent store also passes RDF/ordered-list roundtrip and
+  atomic malformed-input rejection. DuckDB agrees with Python milestone counts;
+  yq reads CI YAML/TOML, ast-grep excludes comment matches, jq propagates false,
+  and hyperfine records successful repeated plan-validator executions.
 - Live Linux extraction: 4,078 nodes, 9,850 hyperedges, 200,152 RDF triples;
   SHACL conforms and all four existing SPARQL queries execute. This host snapshot
   stays ignored under `.chu/live-host/`; routine CI uses a portable fixture.
-- The local tool catalog has 9 tools and 25 checks; actual SHACL validation,
+- The local graph has 15 tools, 31 checks and 10 candidate evaluations; actual SHACL validation,
   named SPARQL competency queries and PROV-O execution evidence are implemented.
   Sources use byte SHA-256 identity, with checkout paths retained as views.
 - Task routing selects the development guide for code/test/graph/CLI work in
@@ -32,8 +43,11 @@ Local Linux x86_64 development is configured and verified. Entry point:
   AGENTS/CLAUDE entry points stay thin. This checks routing, not fresh launches
   of every agent client.
 
-Limits: GitHub Actions workflow is locally linted but has not run remotely in
-this task. WASM is compile-tested, not tested in a 333 runtime. `/dev/fuse` is
+Remote results: [CHU development verification](https://github.com/gj3447/CHU/actions/workflows/check.yml)
+runs bootstrap and the complete check registry on push. Inspect the result for
+the relevant commit; local PASS alone does not establish remote PASS.
+
+Limits: WASM is compile-tested, not tested in a 333 runtime. `/dev/fuse` is
 absent. Shared KG reads resolved an existing CHU UID; shared KG publication was
 not performed. One upstream RDFLib JSON-LD deprecation warning and the expected
 unused-native-main warning in a WASM cdylib remain non-fatal. The CHU OS kernel
