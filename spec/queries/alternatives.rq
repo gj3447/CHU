@@ -1,0 +1,7 @@
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?state ?clause ?subject ?candidate ?ordinal WHERE {
+  ?state a chu:Snapshot ; chu:containsEdge ?clause .
+  ?clause chu:relationType "requires-any" ; chu:hasIncidence ?s, ?c .
+  ?s chu:role "subject" ; chu:node ?subject .
+  ?c chu:role "candidate" ; chu:node ?candidate ; chu:ordinal ?ordinal .
+} ORDER BY ?state ?clause ?ordinal

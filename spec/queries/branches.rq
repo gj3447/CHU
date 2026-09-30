@@ -1,0 +1,6 @@
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?event ?base ?result ?request ?actor WHERE {
+  ?event a prov:Activity ; chu:base ?base ; chu:result ?result ;
+    chu:requestId ?request ; prov:wasAssociatedWith ?actor .
+} ORDER BY ?request

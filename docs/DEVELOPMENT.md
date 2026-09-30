@@ -70,6 +70,14 @@ also create compiler/test caches and artifacts. Every `check` run writes local
 evidence to a new `.chu/runs/<uuid>/` and atomically updates `.chu/latest`.
 The operational default is **discover → diagnose → select/run → inspect evidence**.
 
+For CHU kernel development, load [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md)
+and its five contracts. `./chu model roadmap --json` derives ready/blocked tasks
+from the existing plan hypergraph. `./chu model demo --json` runs an in-memory
+reference scenario; `./chu model check --json` validates its RDF projection;
+`./chu check --only kernel-contract --json` cross-checks three model queries with
+Oxigraph and retains outputs. This is executable specification, not a persistent
+OS kernel or permission to execute agent requests on the host.
+
 ## Selected tools and exact use
 
 These choices extend existing CHU tools and were researched against upstream

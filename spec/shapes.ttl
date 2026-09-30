@@ -1,0 +1,60 @@
+@prefix chu: <https://github.com/gj3447/CHU/vocab#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+chu:ContentIdShape a sh:NodeShape ; sh:nodeKind sh:IRI ; sh:pattern "^urn:sha256:[0-9a-f]{64}$" .
+chu:NodeShape a sh:NodeShape ; sh:targetClass chu:Node ; sh:node chu:ContentIdShape ;
+    sh:property [ sh:path chu:byteLength ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path chu:pathView ; sh:datatype xsd:string ] .
+chu:EdgeShape a sh:NodeShape ; sh:targetClass chu:Hyperedge ; sh:node chu:ContentIdShape ;
+    sh:property [ sh:path chu:relationType ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "group" "requires-any" ) ] ;
+    sh:property [ sh:path chu:arity ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 2 ] ;
+    sh:property [ sh:path chu:hasIncidence ; sh:minCount 2 ; sh:class chu:Incidence ] ;
+    sh:sparql [ sh:message "arity must equal incidence count" ; sh:select """
+      PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+      SELECT $this WHERE {
+        $this chu:arity ?arity .
+        { SELECT $this (COUNT(?i) AS ?n) WHERE { $this chu:hasIncidence ?i } GROUP BY $this }
+        FILTER (?arity != ?n)
+      }""" ] ;
+    sh:sparql [ sh:message "ordinals must be unique within an edge" ; sh:select """
+      PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+      SELECT $this WHERE { $this chu:hasIncidence ?a, ?b . ?a chu:ordinal ?n . ?b chu:ordinal ?n . FILTER (?a != ?b) }
+      """ ] ;
+    sh:sparql [ sh:message "ordinal outside contiguous edge positions" ; sh:select """
+      PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+      SELECT $this WHERE { $this chu:arity ?arity ; chu:hasIncidence ?i . ?i chu:ordinal ?n . FILTER (?n < 0 || ?n >= ?arity) }
+      """ ] ;
+    sh:sparql [ sh:message "role does not match relation and position" ; sh:select """
+      PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+      SELECT $this WHERE {
+        $this chu:relationType ?t ; chu:hasIncidence ?i . ?i chu:ordinal ?n ; chu:role ?r .
+        FILTER ((?t = "group" && ((?n = 0 && ?r != "group") || (?n > 0 && ?r != "member"))) ||
+                (?t = "requires-any" && ((?n = 0 && ?r != "subject") || (?n > 0 && ?r != "candidate"))))
+      }""" ] .
+chu:IncidenceShape a sh:NodeShape ; sh:targetClass chu:Incidence ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path chu:node ; sh:minCount 1 ; sh:maxCount 1 ; sh:class chu:Node ] ;
+    sh:property [ sh:path chu:role ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path chu:ordinal ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path [ sh:inversePath chu:hasIncidence ] ; sh:minCount 1 ; sh:maxCount 1 ; sh:class chu:Hyperedge ] .
+chu:SnapshotShape a sh:NodeShape ; sh:targetClass chu:Snapshot ; sh:node chu:ContentIdShape ;
+    sh:property [ sh:path chu:containsNode ; sh:class chu:Node ] ;
+    sh:property [ sh:path chu:containsEdge ; sh:class chu:Hyperedge ] ;
+    sh:sparql [ sh:message "edge endpoint absent from the snapshot" ; sh:select """
+      PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+      SELECT $this WHERE {
+        $this chu:containsEdge/chu:hasIncidence/chu:node ?node .
+        FILTER NOT EXISTS { $this chu:containsNode ?node }
+      }""" ] .
+chu:RewriteShape a sh:NodeShape ; sh:targetSubjectsOf chu:base ; sh:class prov:Activity ;
+    sh:property [ sh:path chu:base ; sh:minCount 1 ; sh:maxCount 1 ; sh:class chu:Snapshot ] ;
+    sh:property [ sh:path chu:result ; sh:minCount 1 ; sh:maxCount 1 ; sh:class chu:Snapshot ] ;
+    sh:property [ sh:path chu:requestId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:minLength 1 ] ;
+    sh:property [ sh:path chu:operation ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "create" "link" "unlink" "retag" "delete" ) ] ;
+    sh:property [ sh:path prov:endedAtTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+    sh:property [ sh:path prov:wasAssociatedWith ; sh:minCount 1 ; sh:maxCount 1 ; sh:class prov:SoftwareAgent ] .
+chu:AuthorityShape a sh:NodeShape ; sh:targetNode chu:referenceProfile ;
+    sh:property [ sh:path chu:authority ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue "SECONDARY_AI" ] ;
+    sh:property [ sh:path prov:wasAttributedTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class prov:SoftwareAgent ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ; sh:nodeKind sh:IRI ] .

@@ -8,15 +8,22 @@ B-graph 의미론: hyperedge의 tail이 전부 완료되면 head 착수 가능.
 """
 import json
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 g = json.loads((Path(__file__).parent / "chu_os_plan.graph.json").read_text())
 nodes = {n["id"]: n for n in g["nodes"]}
 preds = defaultdict(set)  # head -> tail 합집합 (하이퍼엣지를 bipartite로 펼친 것)
 errors = []
+for kind, objects in (("node", g["nodes"]), ("hyperedge", g["hyperedges"])):
+    errors += [f"duplicate {kind} ID {uid}" for uid, count in Counter(o["id"] for o in objects).items() if count > 1]
+for node in g["nodes"]:
+    if not node.get("deliverable") or not node.get("verify"):
+        errors.append(f"{node['id']}: missing deliverable/verification gate")
 
 for e in g["hyperedges"]:
+    if e.get("type") != "requires" or not e["tail"] or not e["head"]:
+        errors.append(f"{e['id']}: requires needs nonempty tail and head")
     for v in e["tail"] + e["head"]:
         if v not in nodes:
             errors.append(f"{e['id']}: unknown node {v}")
@@ -25,6 +32,14 @@ for e in g["hyperedges"]:
 
 touched = {v for e in g["hyperedges"] for v in e["tail"] + e["head"]}
 errors += [f"orphan node {v}" for v in nodes if v not in touched]
+for node in g["nodes"]:
+    if node.get("status") == "done":
+        unfinished = [p for p in preds[node["id"]] if p in nodes and nodes[p].get("status") != "done"]
+        if unfinished:
+            errors.append(f"{node['id']}: done before prerequisites {sorted(unfinished)}")
+if errors:
+    print("FAIL\n  " + "\n  ".join(errors))
+    sys.exit(1)
 
 # Kahn 위상 정렬 (레이어 단위)
 indeg = {v: len(preds[v]) for v in nodes}

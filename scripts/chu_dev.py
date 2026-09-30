@@ -251,6 +251,8 @@ def main():
     p = sub.add_parser("tool", help="Run a pinned binary from repository root; preserve upstream output/exit code")
     p.add_argument("name", choices=sorted(binary_specs()))
     p.add_argument("argv", nargs=argparse.REMAINDER, help="Upstream arguments after -- (no shell)")
+    p = sub.add_parser("model", help="CHU executable specification: demo/export/check/roadmap")
+    p.add_argument("argv", nargs=argparse.REMAINDER)
     for name, desc in [("doctor", "Probe installed tools against pins"),
                        ("tools", "List tools, versions and official documentation"),
                        ("checks", "List check IDs, argv, effects and timeouts"),
@@ -268,6 +270,9 @@ def main():
             p.add_argument("--format", choices=["turtle", "json-ld", "nt"], default="turtle")
     args = parser.parse_args()
     try:
+        if args.command == "model":
+            from chu_model import main as model_main
+            return model_main(args.argv)
         if args.command == "tool":
             argv = args.argv[1:] if args.argv[:1] == ["--"] else args.argv
             return subprocess.call([str(ROOT / ".chu/tools" / args.name), *argv], cwd=ROOT)

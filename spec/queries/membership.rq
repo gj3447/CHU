@@ -1,0 +1,7 @@
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+SELECT ?state ?edge ?group ?member ?ordinal WHERE {
+  ?state a chu:Snapshot ; chu:containsEdge ?edge .
+  ?edge chu:relationType "group" ; chu:hasIncidence ?g, ?m .
+  ?g chu:role "group" ; chu:node ?group .
+  ?m chu:role "member" ; chu:node ?member ; chu:ordinal ?ordinal .
+} ORDER BY ?state ?edge ?ordinal

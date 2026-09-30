@@ -18,10 +18,10 @@ Local Linux x86_64 development is configured and verified. Entry point:
   0.5.11, DuckDB 1.5.6, yq 4.54.1, ast-grep 0.45.3, hyperfine 1.20.0 and jq 1.8.2
   are installed from checksum-pinned official releases. Decisions, deferred
   candidates, licenses and tested commands: [`CLI_TOOLS.md`](CLI_TOOLS.md).
-- 31 registered checks pass: native Cargo assertions, Clippy, WASM compilation,
+- 32 registered checks pass: native Cargo assertions, Clippy, WASM compilation,
   Lean 11/11 with no sorry declarations, Python checks, plan and graph validators,
   tool probes, environment lock, CI workflow lint and six actual CLI behavior
-  checks. Python regression suite: 31 passed, including malformed graph,
+  checks and the executable kernel contract. Python regression suite: 61 passed, including malformed graph,
   timeout/error, provenance, archive integrity and shell-free argument controls.
 - The earlier 25-check baseline passed bootstrap in a fresh temporary checkout
   with a space-containing path and a new `.venv`, reusing toolchain managers and
@@ -35,13 +35,21 @@ Local Linux x86_64 development is configured and verified. Entry point:
 - Live Linux extraction: 4,078 nodes, 9,850 hyperedges, 200,152 RDF triples;
   SHACL conforms and all four existing SPARQL queries execute. This host snapshot
   stays ignored under `.chu/live-host/`; routine CI uses a portable fixture.
-- The local graph has 15 tools, 31 checks and 10 candidate evaluations; actual SHACL validation,
+- The local graph has 15 tools, 32 checks and 10 candidate evaluations; actual SHACL validation,
   named SPARQL competency queries and PROV-O execution evidence are implemented.
   Sources use byte SHA-256 identity, with checkout paths retained as views.
 - Task routing selects the development guide for code/test/graph/CLI work in
   Codex, Claude and Grok, and excludes it from the base-only route. Native
   AGENTS/CLAUDE entry points stay thin. This checks routing, not fresh launches
   of every agent client.
+- T01–T05 now have [five kernel contracts and an implementation sequence](../spec/ARCHITECTURE.md).
+  The in-memory reference model uses raw-byte SHA-256, typed ordered incidences,
+  validation before state/history mutation, separate idempotency keys and event
+  identity, and snapshot-scoped group views. The actual five-format source demo
+  produces 5 states, 4 events and a 159-triple RDF projection. All three model
+  queries agree across RDFLib/Oxigraph and RDF/JSON-LD roundtrip succeeds.
+  This completes specification work, not T10–T15's persistent Rust kernel.
+  `./chu model roadmap --json` currently returns T07 and T10 as ready.
 
 Remote results: [CHU development verification](https://github.com/gj3447/CHU/actions/workflows/check.yml)
 runs bootstrap and the complete check registry on push. Inspect the result for
@@ -49,8 +57,9 @@ the relevant commit; local PASS alone does not establish remote PASS.
 
 Limits: WASM is compile-tested, not tested in a 333 runtime. `/dev/fuse` is
 absent. Shared KG reads resolved an existing CHU UID; shared KG publication was
-not performed. One upstream RDFLib JSON-LD deprecation warning and the expected
-unused-native-main warning in a WASM cdylib remain non-fatal. The CHU OS kernel
+not performed. Upstream RDFLib JSON-LD/Dataset deprecation warnings and the expected
+unused-native-main warning in a WASM cdylib remain non-fatal. Repeated Dataset
+warnings are displayed once per test instead of once per graph access. The CHU OS kernel
 itself remains at the milestones described in [`../plan/CHU_OS_PLAN.md`](../plan/CHU_OS_PLAN.md).
 
 ---

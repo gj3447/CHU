@@ -1,0 +1,27 @@
+@prefix chu: <https://github.com/gj3447/CHU/vocab#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+chu: a owl:Ontology ; owl:versionInfo "0.1.0" ;
+    rdfs:comment "CHU-owned executable specification profile; reuses research/linux_os incidence vocabulary. SECONDARY_AI, not shared KG schema or user canon." .
+chu:Node a owl:Class ; rdfs:comment "Immutable content node; raw byte SHA-256 identity. A label is a separate content node used in a binding relation." .
+chu:Hyperedge a owl:Class ; rdfs:comment "Typed, ordered relation object; not independent binary assertions." .
+chu:Incidence a owl:Class ; rdfs:comment "One role-bearing occurrence in one hyperedge. Its projection IRI is not a content CID." .
+chu:Snapshot a owl:Class ; rdfs:subClassOf prov:Entity ; rdfs:comment "Immutable node and edge sets. Historical membership is scoped to this snapshot." .
+chu:relationType a owl:DatatypeProperty ; rdfs:domain chu:Hyperedge ; rdfs:range xsd:string ; rdfs:comment "Hyperedge -> registered relation name, exactly 1." .
+chu:arity a owl:DatatypeProperty ; rdfs:domain chu:Hyperedge ; rdfs:range xsd:integer ; rdfs:comment "Exactly 1 count, equal to incidences; this initial profile supports 2 or more." .
+chu:hasIncidence a owl:ObjectProperty ; rdfs:domain chu:Hyperedge ; rdfs:range chu:Incidence ; rdfs:comment "Hyperedge -> 2..n occurrences, each owned by exactly one edge." .
+chu:role a owl:DatatypeProperty ; rdfs:domain chu:Incidence ; rdfs:range xsd:string ; rdfs:comment "Exactly 1 registered role, constrained by relation and ordinal." .
+chu:node a owl:ObjectProperty ; rdfs:domain chu:Incidence ; rdfs:range chu:Node ; rdfs:comment "Occurrence -> exactly 1 existing node; repeated nodes in different slots are allowed." .
+chu:ordinal a owl:DatatypeProperty ; rdfs:domain chu:Incidence ; rdfs:range xsd:integer ; rdfs:comment "Exactly 1 zero-based position, unique and contiguous within its edge." .
+chu:containsNode a owl:ObjectProperty ; rdfs:domain chu:Snapshot ; rdfs:range chu:Node ; rdfs:comment "Snapshot -> 0..n member content nodes, not parent/child ownership." .
+chu:containsEdge a owl:ObjectProperty ; rdfs:domain chu:Snapshot ; rdfs:range chu:Hyperedge ; rdfs:comment "Snapshot -> 0..n active edges; every endpoint must be in the same snapshot." .
+chu:byteLength a owl:DatatypeProperty ; rdfs:domain chu:Node ; rdfs:range xsd:integer ; rdfs:comment "Exactly 1 measured byte count; RDF alone does not verify the original bytes." .
+chu:pathView a owl:DatatypeProperty ; rdfs:domain chu:Node ; rdfs:range xsd:string ; rdfs:comment "0..n source checkout paths; provenance views, never node identity." .
+chu:base a owl:ObjectProperty ; rdfs:domain prov:Activity ; rdfs:range chu:Snapshot ; rdfs:comment "Rewrite observation -> exactly 1 selected base snapshot." .
+chu:result a owl:ObjectProperty ; rdfs:domain prov:Activity ; rdfs:range chu:Snapshot ; rdfs:comment "Rewrite observation -> exactly 1 validated result snapshot." .
+chu:requestId a owl:DatatypeProperty ; rdfs:domain prov:Activity ; rdfs:range xsd:string ; rdfs:comment "Exactly 1 caller idempotency key; same key with different input fails." .
+chu:operation a owl:DatatypeProperty ; rdfs:domain prov:Activity ; rdfs:range xsd:string ; rdfs:comment "Exactly 1 of create/link/unlink/retag/delete; describes model evaluation, grants no execution authority." .
+chu:authority a owl:DatatypeProperty ; rdfs:domain prov:Entity ; rdfs:range xsd:string ; rdfs:comment "Profile authorship classification, not access control or scientific validation." .

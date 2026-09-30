@@ -39,7 +39,17 @@
       "effort": 2,
       "title": "데이터 모델 명세: Node/Hyperedge/Type",
       "deliverable": "spec/DATA_MODEL.md",
-      "verify": "모든 기존 파일 종류(md/json/rs/py/lean)를 모델로 표현하는 예시 5개"
+      "verify": "모든 기존 파일 종류(md/json/rs/py/lean)를 모델로 표현하는 예시 5개",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-09-30",
+        "scope": "executable specification and mapping; not persistent Rust kernel",
+        "source": "spec/DATA_MODEL.md",
+        "checks": [
+          "kernel-contract",
+          "python-tests"
+        ]
+      }
     },
     {
       "id": "T02",
@@ -48,7 +58,17 @@
       "effort": 1,
       "title": "정체성 명세: CID(내용 주소) + 라벨(가변 이름)",
       "deliverable": "spec/IDENTITY.md",
-      "verify": "strict CID / univalent 동일시 경계 명시; D06: CID 인코딩 고정(sha256 raw bytes) + 안정 노드 ID/버전 CID 분리"
+      "verify": "strict CID / univalent 동일시 경계 명시; D06: CID 인코딩 고정(sha256 raw bytes) + 안정 노드 ID/버전 CID 분리",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-09-30",
+        "scope": "executable specification and mapping; not persistent Rust kernel",
+        "source": "spec/IDENTITY.md",
+        "checks": [
+          "kernel-contract",
+          "python-tests"
+        ]
+      }
     },
     {
       "id": "T03",
@@ -57,7 +77,17 @@
       "effort": 1,
       "title": "연산 명세: 모든 변경 = 재작성 규칙 H1->H2",
       "deliverable": "spec/OPERATIONS.md",
-      "verify": "create/link/unlink/retag/delete를 규칙으로 기술"
+      "verify": "create/link/unlink/retag/delete를 규칙으로 기술",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-09-30",
+        "scope": "executable specification and mapping; not persistent Rust kernel",
+        "source": "spec/OPERATIONS.md",
+        "checks": [
+          "kernel-contract",
+          "python-tests"
+        ]
+      }
     },
     {
       "id": "T04",
@@ -66,7 +96,17 @@
       "effort": 1,
       "title": "뷰 명세: path/폴더 = 질의 투영",
       "deliverable": "spec/PROJECTION.md",
-      "verify": "한 노드가 두 뷰에 동시 등장하는 예시"
+      "verify": "한 노드가 두 뷰에 동시 등장하는 예시",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-09-30",
+        "scope": "executable specification and mapping; not persistent Rust kernel",
+        "source": "spec/PROJECTION.md",
+        "checks": [
+          "kernel-contract",
+          "python-tests"
+        ]
+      }
     },
     {
       "id": "T05",
@@ -75,7 +115,18 @@
       "effort": 0.5,
       "title": "Lean 정합 매핑: 명세 ↔ CHU_WolframRewrite(Rewrite/Step/Path/Cell)",
       "deliverable": "spec/LEAN_MAP.md",
-      "verify": "신규 axiom 0 유지(I1)"
+      "verify": "신규 axiom 0 유지(I1)",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-09-30",
+        "scope": "executable specification and mapping; not persistent Rust kernel",
+        "source": "spec/LEAN_MAP.md",
+        "checks": [
+          "kernel-contract",
+          "python-tests",
+          "lean-CHU_WolframRewrite"
+        ]
+      }
     },
     {
       "id": "T07",

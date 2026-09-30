@@ -1,0 +1,97 @@
+# CHU 구현 순서와 실행 계약
+
+2026-09-30 · `SECONDARY_AI` · CHU 소유의 v0.1 실행 명세.
+사용자 정체성은 [OWNER](../docs/agent-rules/OWNER.md)가 우선한다.
+Linux 위 사용자 공간 구현으로 시작한다는 선택은 기존 연구 D04에 따른 구현 가정이다.
+
+**첫 제품 단위는 콘텐츠 1개를 여러 그룹에 연결하고, 한 번의 재작성으로 수정하고,
+이전 상태와 두 분기를 다시 조회할 수 있는 작은 커널이다.** 모든 기능을 이 경로 위에 쌓는다.
+
+```mermaid
+flowchart LR
+  Agent["CLI · 에이전트 · UI"] --> Request["typed 요청 + base CID + request ID"]
+  Request --> Gate["권한 집행 · 전제조건 · 타입 검증"]
+  Gate --> Rewrite["원자적 H₁ → H₂"]
+  Rewrite --> Objects["불변 콘텐츠 · n항 관계 · 상태"]
+  Rewrite --> Events["별도 실행 사건 · multiway 이력"]
+  Objects --> Query["상태를 지정하는 질의"]
+  Query --> Views["경로 · 폴더 · RDF projection"]
+  Views --> Checks["SHACL · SPARQL 교차검증"]
+```
+
+이 그림은 목표 구조다. 현재 참조 구현에는 권한 집행·영속 저장·동시 작성자가 없다.
+`scripts/chu_model.py`는 외부 파일을 수정하거나 에이전트 작업을 실행하지 않는
+메모리 모델로 핵심 데이터 계약을 검증한다. 실제 커널은 Rust로 구현하는 기존 계획을 유지한다.
+
+## 계층별 결정과 가져온 도구
+
+| 부분 | 구현 방향 | 지금 쓸 도구 / 상태 |
+|---|---|---|
+| 의미와 정체성 | raw bytes SHA-256, 관계·상태는 버전 지정 인코딩 | Python 표준 hashlib로 참조 계약 실행; Rust의 기존 u64 해시는 별도 데모 |
+| 타입 있는 n항 관계 | 기존 `vocab#`의 Hyperedge/Incidence/role/node/ordinal 재사용 | RDFLib + pySHACL로 실제 제약 검사 |
+| 저장·재작성 | 불변 객체 + 추가 전용 사건, commit 경계에서 전체 검증 | 메모리 참조 모델 동작; 영속 backend는 T11–T13 |
+| 분기·동일시 | 같은 base에서 여러 결과, 사건은 상태 CID와 분리 | 참조 모델 분기 동작; witness 검증·병합 정책은 T14 |
+| 질의·뷰 | snapshot CID를 명시하고 국소 조건으로 탐색 | RDFLib/Oxigraph 두 엔진으로 명세 질의 비교; 커널 매처는 T20 |
+| 분석·개발 | SQL 집계, 구조 검색, 설정 읽기, 시간 측정 | DuckDB, ast-grep, yq/jq, hyperfine는 개발 도구 |
+| 인터페이스 | 같은 typed 요청/결과/오류 계약을 CLI·agent·UI가 공유 | `./chu model`은 명세 데모; 제품 API는 T40/T42 |
+
+Oxigraph store와 DuckDB 테이블은 교환·검사·분석용 projection이다. 그것을 CHU의
+콘텐츠 정체성 또는 커널 저장 정본으로 선택한 것은 아니다. 공유 KG writer도 추가하지 않는다.
+SQLite의 트랜잭션이나 RocksDB의 배치 저장을 이용할 수 있지만 물리 backend 선택은
+T12에서 재시작·실패 주입·회복·동시성 시험으로 결정한다. 현재 커널에 채택했다고 표시하지 않는다.
+
+## 실행 가능한 첫 묶음
+
+```bash
+./chu model demo --json
+./chu model check --json
+./chu model export --format turtle > .chu/model.ttl
+./chu check --only kernel-contract --json
+./chu model roadmap --json
+```
+
+데모는 이 저장소의 실제 `.md/.json/.rs/.py/.lean` 5개 파일을 읽고 바이트 CID로
+묶는다. README 하나를 implementation/theory 두 그룹에 동시에 넣는다.
+`requires-any`는 두 대안을 같은 관계 안에 보존하는 시험 예이며, 실제 프로젝트가
+둘 중 하나만 필요하다는 사실 주장이나 스케줄러 실행이 아니다.
+같은 상태에서 각각 다른 group 관계를 제거한 두 가지를 만든다. 원래 상태는 유지된다.
+
+검사 산출물은 해당 `.chu/runs/<uuid>/model*.json`과 `model.ttl`에 남는다.
+`./chu model check`는 RDF 제약 검사이며, 전체 동작·음성 대조군은 `./chu check`의
+Python 테스트와 `kernel-contract`가 함께 검증한다.
+
+질문과 검증 경로:
+
+| 반드시 답할 질문 | 실행 검증 |
+|---|---|
+| 같은 바이트를 두 번 추가하면 정체성이 하나인가? | 알려진 SHA-256 벡터와 dedup 테스트 |
+| 같은 노드가 두 그룹/뷰에 동시에 존재하는가? | `queries/membership.rq`, 정확한 group/member CID 비교 |
+| OR 대안이 이진 AND 관계로 잘못 바뀌지 않는가? | `queries/alternatives.rq`, 하나의 clause와 두 candidate 확인 |
+| 실패한 변경이 상태나 사건을 남기는가? | dangling·타입·role·삭제 전제조건 실패 후 모델 전체 불변 검사 |
+| 같은 결과에 도달한 두 실행을 구분하는가? | request ID별 사건 두 개, 내용 상태 하나 테스트 |
+| 분기에서 수정해도 다른 분기/이전 상태가 유지되는가? | `queries/branches.rq`와 가지별 정확한 소속 검사 |
+| 다른 RDF 엔진에서도 답과 순서가 보존되는가? | RDF/JSON-LD 왕복 + Oxigraph/RDFLib 3개 질의 비교 |
+
+## 다음 구현 순서와 종료 조건
+
+정본 작업 ID와 의존성은 [계획 JSON](../plan/chu_os_plan.graph.json)에 유지한다.
+`roadmap`은 각 n항 선행조건의 **모든 tail**이 완료됐는지 계산해 ready/blocked를 출력한다.
+
+1. **T10 → T11:** 기존 Rust core를 라이브러리로 분리하고 기존 assert를 유지한다.
+   blob put/get·동일 바이트 dedup·다른 프로세스에서 CID 재현을 참조 모델과 비교한다.
+2. **T12 → T13:** 객체 저장, 재구축 가능한 인덱스, 검증 후 commit을 구현한다.
+   재시작과 commit 전후 실패 주입, 같은 request의 재시도, stale base 검사를 통과해야 한다.
+3. **T14 및 T20:** 가지 생성/조회와 국소 패턴 질의를 구현한다. 상태가 같아도 실행 경로는
+   보존한다. strict CID와 witness에 의한 동일시를 섞지 않는다.
+4. **T22 → T30/T32:** 이 명세의 incidence projection을 실제 저장소 export/import에 연결한다.
+   바이트·role·ordinal·branch fidelity를 비교한 뒤 CHU 저장소 ingest/export를 수행한다.
+5. **T15 → T40/T42:** capability grant의 실제 집행을 붙인 뒤 쓰기 가능한 agent API를 연다.
+   이름이 `grant`인 관계가 있다는 이유만으로 OS 명령 실행을 허용하지 않는다.
+6. **T41/T33/T52:** UI, 선택적 FUSE, 분산 backend는 앞선 커널 계약을 통과한 다음 붙인다.
+
+현재 완료한 것은 T01–T05 명세와 참조 검증이다. T07의 수렴진화 연구,
+영속 Rust 커널, 실제 권한 집행, FUSE, 333 동기화는 완료로 표시하지 않는다.
+
+공식 설계 근거: [W3C n-ary relation Note](https://www.w3.org/TR/swbp-n-aryRelations/),
+[SHACL](https://www.w3.org/TR/shacl/), [PROV-O](https://www.w3.org/TR/prov-o/).
+2026-09-30 확인. 이는 아래 계약에 활용한 표준이며 CHU OS 자체의 표준 인증을 뜻하지 않는다.

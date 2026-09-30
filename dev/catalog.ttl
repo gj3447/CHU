@@ -451,3 +451,11 @@ dev:cli-jq a dev:Check ; skos:prefLabel "Verify jq on CHU data" ;
     dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
 
 dev:env-tools dev:requires dev:oxigraph, dev:duckdb, dev:yq, dev:ast-grep, dev:hyperfine, dev:jq .
+
+<https://github.com/gj3447/CHU/blob/main/spec/ARCHITECTURE.md> a dev:Source ; dev:reviewedOn "2026-09-30"^^xsd:date .
+dev:kernel-contract a dev:Check ;
+    skos:prefLabel "Validate executable kernel specification and cross-engine RDF queries" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/spec/ARCHITECTURE.md> ;
+    dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
+    dev:argv ( "{python}" "scripts/check_model.py" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
