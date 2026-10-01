@@ -1,0 +1,194 @@
+{
+  "schema": "chu-vm-inputs/v1",
+  "host_profile": "Debian 13 x86_64 (system libc and base libraries required)",
+  "packages": [
+    {
+      "name": "genisoimage",
+      "version": "9:1.1.11-4",
+      "url": "https://deb.debian.org/debian/pool/main/c/cdrkit/genisoimage_1.1.11-4_amd64.deb",
+      "sha256": "e6dc605d0ef3fc375d6cc96c16af32b48a1053e2f08db769d3483d3c7fdb6884",
+      "file": "genisoimage_9%3a1.1.11-4_amd64.deb"
+    },
+    {
+      "name": "libaio1t64",
+      "version": "0.3.113-8+b1",
+      "url": "https://deb.debian.org/debian/pool/main/liba/libaio/libaio1t64_0.3.113-8+b1_amd64.deb",
+      "sha256": "490c8a2d116001a5f3b0a6d7a7aabf6a7b629366590dc5c3f75b078e931dd129",
+      "file": "libaio1t64_0.3.113-8+b1_amd64.deb"
+    },
+    {
+      "name": "libcapstone5",
+      "version": "5.0.7-1~deb13u1",
+      "url": "https://deb.debian.org/debian/pool/main/c/capstone/libcapstone5_5.0.7-1~deb13u1_amd64.deb",
+      "sha256": "775187a7be26bb0b076d1979a02163b943dbc13eb4adb0efc503223a03c75422",
+      "file": "libcapstone5_5.0.7-1~deb13u1_amd64.deb"
+    },
+    {
+      "name": "libdaxctl1",
+      "version": "81-1",
+      "url": "https://deb.debian.org/debian/pool/main/n/ndctl/libdaxctl1_81-1_amd64.deb",
+      "sha256": "6296eb5c976743ba0defb7a061ef081238ca072cf569c6bb96fd3f9095c58a30",
+      "file": "libdaxctl1_81-1_amd64.deb"
+    },
+    {
+      "name": "libfdt1",
+      "version": "1.7.2-2+b1",
+      "url": "https://deb.debian.org/debian/pool/main/d/device-tree-compiler/libfdt1_1.7.2-2+b1_amd64.deb",
+      "sha256": "8e37034d7864807ae2063efcc82fc79aad59069546212e6e0908ed67f9f7e107",
+      "file": "libfdt1_1.7.2-2+b1_amd64.deb"
+    },
+    {
+      "name": "libfuse3-4",
+      "version": "3.17.2-3",
+      "url": "https://deb.debian.org/debian/pool/main/f/fuse3/libfuse3-4_3.17.2-3_amd64.deb",
+      "sha256": "92e2d521ff872755a13aa69dba7b24025a7dc0f0f5aa708c9a86cd3565f570da",
+      "file": "libfuse3-4_3.17.2-3_amd64.deb"
+    },
+    {
+      "name": "libibverbs1",
+      "version": "56.1-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/rdma-core/libibverbs1_56.1-1_amd64.deb",
+      "sha256": "4c3b889607586e6328964a5f98e01ef01daa415be24334d743d6654aab4c47a4",
+      "file": "libibverbs1_56.1-1_amd64.deb"
+    },
+    {
+      "name": "libndctl6",
+      "version": "81-1",
+      "url": "https://deb.debian.org/debian/pool/main/n/ndctl/libndctl6_81-1_amd64.deb",
+      "sha256": "fe60a05d42e61cb9f49a90b872aa5ca569363b13459ee0d405243c37a7de7c93",
+      "file": "libndctl6_81-1_amd64.deb"
+    },
+    {
+      "name": "libnl-3-200",
+      "version": "3.7.0-2",
+      "url": "https://deb.debian.org/debian/pool/main/libn/libnl3/libnl-3-200_3.7.0-2_amd64.deb",
+      "sha256": "ce5c153953016be42def7b105f37d55eae07a9608d1dfe6bcb03cc017fc384cb",
+      "file": "libnl-3-200_3.7.0-2_amd64.deb"
+    },
+    {
+      "name": "libnl-route-3-200",
+      "version": "3.7.0-2",
+      "url": "https://deb.debian.org/debian/pool/main/libn/libnl3/libnl-route-3-200_3.7.0-2_amd64.deb",
+      "sha256": "1c8c95542688996cff8e954583642b10a3bd78b69954f565fda62144c2bc3897",
+      "file": "libnl-route-3-200_3.7.0-2_amd64.deb"
+    },
+    {
+      "name": "libnuma1",
+      "version": "2.0.19-1",
+      "url": "https://deb.debian.org/debian/pool/main/n/numactl/libnuma1_2.0.19-1_amd64.deb",
+      "sha256": "e578583f73f8208564e5035b18aa729c441fc7ecb389c666923552e123f4d655",
+      "file": "libnuma1_2.0.19-1_amd64.deb"
+    },
+    {
+      "name": "libpmem1",
+      "version": "1.13.1-1.1+b1",
+      "url": "https://deb.debian.org/debian/pool/main/p/pmdk/libpmem1_1.13.1-1.1+b1_amd64.deb",
+      "sha256": "7d972d6958e915ce602e4b90debc6b4b91a01dfea1fe003d0b013756e7d9d863",
+      "file": "libpmem1_1.13.1-1.1+b1_amd64.deb"
+    },
+    {
+      "name": "librdmacm1t64",
+      "version": "56.1-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/rdma-core/librdmacm1t64_56.1-1_amd64.deb",
+      "sha256": "5b56911725905b8e2a8389c99416ca078395c4ca8ce0d516bc758d5be0134687",
+      "file": "librdmacm1t64_56.1-1_amd64.deb"
+    },
+    {
+      "name": "libslirp0",
+      "version": "4.8.0-1+deb13u1",
+      "url": "https://deb.debian.org/debian/pool/main/libs/libslirp/libslirp0_4.8.0-1+deb13u1_amd64.deb",
+      "sha256": "6125698173f8be0d0de01ff897a0df3c5e50fb09f70238b26dd6574aaa0934e1",
+      "file": "libslirp0_4.8.0-1+deb13u1_amd64.deb"
+    },
+    {
+      "name": "liburing2",
+      "version": "2.9-1",
+      "url": "https://deb.debian.org/debian/pool/main/libu/liburing/liburing2_2.9-1_amd64.deb",
+      "sha256": "4b589c00c7a51172aace2cb2fb3d3ff32daf86c644023126dcfcaa840cc941ea",
+      "file": "liburing2_2.9-1_amd64.deb"
+    },
+    {
+      "name": "libvdeplug2t64",
+      "version": "4.0.1-5.1+b1",
+      "url": "https://deb.debian.org/debian/pool/main/v/vdeplug4/libvdeplug2t64_4.0.1-5.1+b1_amd64.deb",
+      "sha256": "01291e2c8e28e91eac6b59c983a3a44e29ad0ddb8622699fbb84cbd5f26334a4",
+      "file": "libvdeplug2t64_4.0.1-5.1+b1_amd64.deb"
+    },
+    {
+      "name": "qemu-system-common",
+      "version": "1:10.0.13+ds-0+deb13u1",
+      "url": "https://deb.debian.org/debian/pool/main/q/qemu/qemu-system-common_10.0.13+ds-0+deb13u1_amd64.deb",
+      "sha256": "3a99dc23c42c66bb7e96dc1f2ba12b1797d154a472fbdb1cfcd822d9fb69e85b",
+      "file": "qemu-system-common_1%3a10.0.13+ds-0+deb13u1_amd64.deb"
+    },
+    {
+      "name": "qemu-system-data",
+      "version": "1:10.0.13+ds-0+deb13u1",
+      "url": "https://deb.debian.org/debian/pool/main/q/qemu/qemu-system-data_10.0.13+ds-0+deb13u1_all.deb",
+      "sha256": "a0e03c526cc09d4c2ab20aa19a8c12e916cdc49a170acb16a6563c28f70eafd3",
+      "file": "qemu-system-data_1%3a10.0.13+ds-0+deb13u1_all.deb"
+    },
+    {
+      "name": "qemu-system-x86",
+      "version": "1:10.0.13+ds-0+deb13u1",
+      "url": "https://deb.debian.org/debian/pool/main/q/qemu/qemu-system-x86_10.0.13+ds-0+deb13u1_amd64.deb",
+      "sha256": "5e841d0723a657fd8bc2e9e1a085d24f47fcb3e4a0f94762e6c38b429f22fbb1",
+      "file": "qemu-system-x86_1%3a10.0.13+ds-0+deb13u1_amd64.deb"
+    },
+    {
+      "name": "qemu-utils",
+      "version": "1:10.0.13+ds-0+deb13u1",
+      "url": "https://deb.debian.org/debian/pool/main/q/qemu/qemu-utils_10.0.13+ds-0+deb13u1_amd64.deb",
+      "sha256": "6d31339b1630153fe7c5f8a51426b8fa6ce35731aeb015a84f2d333c4e4dca30",
+      "file": "qemu-utils_1%3a10.0.13+ds-0+deb13u1_amd64.deb"
+    },
+    {
+      "name": "seabios",
+      "version": "1.16.3-2",
+      "url": "https://deb.debian.org/debian/pool/main/s/seabios/seabios_1.16.3-2_all.deb",
+      "sha256": "2b590534250b940f43222eeab9a8f57f337a9d9a73fc412a43ab8cd07a7e56f6",
+      "file": "seabios_1.16.3-2_all.deb"
+    }
+  ],
+  "image": {
+    "url": "https://cloud-images.ubuntu.com/minimal/releases/noble/release-20260905/ubuntu-24.04-minimal-cloudimg-amd64.img",
+    "sha256": "46b0dbaffa6950a7da5ff2dc5ed34c46084610b3b6d1fae8f1ec2d7e953984a3",
+    "file": "ubuntu.img",
+    "checksums_url": "https://cloud-images.ubuntu.com/minimal/releases/noble/release-20260905/SHA256SUMS",
+    "license": "Ubuntu component licenses; guest /usr/share/doc/*/copyright"
+  },
+  "node": {
+    "version": "24.13.0",
+    "url": "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.xz",
+    "sha256": "e798599612f4bb71333a3397ab0d095fd62214e115aea45aa858a145fc72d67e",
+    "file": "node.tar.xz",
+    "checksums_url": "https://nodejs.org/dist/v24.13.0/SHASUMS256.txt",
+    "license": "MIT and bundled dependencies; LICENSE in archive"
+  },
+  "source_artifacts": [
+    {
+      "name": "ubuntu-linux",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-source-6.8.0_6.8.0-31.31_all.deb",
+      "file": "linux-source.deb",
+      "version": "6.8.0-31.31",
+      "sha256": "7afd3713fbf68b7b9586dd16fd1e9c4edac1d87548f5ef931d67832573248fda",
+      "scope": "Ubuntu GA source; guest kernel 6.8.0-139 is a later patch level, not source-identical"
+    },
+    {
+      "name": "systemd",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/main.c",
+      "file": "systemd-main.c",
+      "version": "v255",
+      "sha256": "e1953f46c4b2f1ced2c92dcd8e02e137a6bbde862f1c2ed3362d502607ce8001",
+      "scope": "upstream source; guest has Ubuntu 255.4 patches"
+    },
+    {
+      "name": "cloud-init",
+      "url": "https://raw.githubusercontent.com/canonical/cloud-init/26.2/cloudinit/sources/DataSourceNoCloud.py",
+      "file": "cloud-init-nocloud.py",
+      "version": "26.2",
+      "sha256": "55d18eb8094d9a57cbcc6c651223c65704dad3861875eb217f745bbb6fa8b2cc",
+      "scope": "upstream source; guest has Ubuntu 26.1"
+    }
+  ]
+}

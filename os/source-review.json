@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "schema": "chu-source-review/v1",
+  "selected_sha256": {
+    "init/main.c": "8196b446a9e6b62e7d6e58edb373c9e311d155816caf32711396ab10ed78d103",
+    "init/do_mounts.c": "855b3c9b2ee88596a8a160e07b842a4cc682d931f5ca3e51b6a4484ceaf23359",
+    "init/initramfs.c": "a28eb85833dc2583ece54b41d21f48f5d8a408b190861e5f5e0672a7006000e3",
+    "COPYING": "fb5a425bd3b3cd6071a3a9aff9909a859e7c1158d54d32e07658398cd67eb6a0"
+  },
+  "scope": "Selected Ubuntu GA boot sources, not a full kernel audit or rebuild",
+  "versions": [
+    {
+      "name": "ubuntu-linux",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-source-6.8.0_6.8.0-31.31_all.deb",
+      "file": "linux-source.deb",
+      "version": "6.8.0-31.31",
+      "sha256": "7afd3713fbf68b7b9586dd16fd1e9c4edac1d87548f5ef931d67832573248fda",
+      "scope": "Ubuntu GA source; guest kernel 6.8.0-139 is a later patch level, not source-identical"
+    },
+    {
+      "name": "systemd",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/main.c",
+      "file": "systemd-main.c",
+      "version": "v255",
+      "sha256": "e1953f46c4b2f1ced2c92dcd8e02e137a6bbde862f1c2ed3362d502607ce8001",
+      "scope": "upstream source; guest has Ubuntu 255.4 patches"
+    },
+    {
+      "name": "cloud-init",
+      "url": "https://raw.githubusercontent.com/canonical/cloud-init/26.2/cloudinit/sources/DataSourceNoCloud.py",
+      "file": "cloud-init-nocloud.py",
+      "version": "26.2",
+      "sha256": "55d18eb8094d9a57cbcc6c651223c65704dad3861875eb217f745bbb6fa8b2cc",
+      "scope": "upstream source; guest has Ubuntu 26.1"
+    }
+  ]
+}

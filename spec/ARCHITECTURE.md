@@ -2,14 +2,22 @@
 
 2026-09-30 · `SECONDARY_AI` · CHU 소유의 v0.1 실행 명세.
 사용자 정체성은 [OWNER](../docs/agent-rules/OWNER.md)가 우선한다.
-Linux 위 사용자 공간 구현으로 시작한다는 선택은 기존 연구 D04에 따른 구현 가정이다.
+사용자는 2026-09-30에 **VM에서 직접 부팅하고 HSWM을 실행할 수 있는 CHU OS**를
+목표로 정했다([원문](../canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt)).
+기존 연구 D04의 사용자 공간 오버레이 가정은 이 목표에 대해 대체되었다. Linux 커널·Ubuntu
+rootfs·systemd 재사용은 첫 구현 제안일 뿐, 자체 커널 여부는 아직 사용자 결정이 아니다.
 
 **첫 제품 단위는 콘텐츠 1개를 여러 그룹에 연결하고, 한 번의 재작성으로 수정하고,
 이전 상태와 두 분기를 다시 조회할 수 있는 작은 커널이다.** 모든 기능을 이 경로 위에 쌓는다.
 
 ```mermaid
 flowchart LR
-  Agent["CLI · 에이전트 · UI"] --> Request["typed 요청 + base CID + request ID"]
+  Firmware["VM firmware"] --> Linux["Linux kernel + initramfs"]
+  Linux --> PID1["Ubuntu rootfs · systemd PID 1"]
+  PID1 --> CHU["CHU graph system service"]
+  CHU --> Request["typed 요청 + base CID + request ID"]
+  HSWM["HSWM runtime adapter"] --> Request
+  Agent["CLI · 에이전트 · UI"] --> Request
   Request --> Gate["권한 집행 · 전제조건 · 타입 검증"]
   Gate --> Rewrite["원자적 H₁ → H₂"]
   Rewrite --> Objects["불변 콘텐츠 · n항 관계 · 상태"]
@@ -21,7 +29,9 @@ flowchart LR
 
 이 그림은 목표 구조다. 현재 참조 구현에는 권한 집행·영속 저장·동시 작성자가 없다.
 `scripts/chu_model.py`는 외부 파일을 수정하거나 에이전트 작업을 실행하지 않는
-메모리 모델로 핵심 데이터 계약을 검증한다. 실제 커널은 Rust로 구현하는 기존 계획을 유지한다.
+메모리 모델로 핵심 데이터 계약을 검증한다. Rust 그래프 커널 계획은 유지하지만, 그것은
+Linux 커널 자체와 다른 계층이다. 현재 VM substrate는 systemd·Node·cgroup v2·지속 상태만
+검사하며 HSWM을 실행하지 않는다. 부팅 입력·증거·한계는 [`os/README.md`](../os/README.md)에 있다.
 
 ## 계층별 결정과 가져온 도구
 
@@ -34,6 +44,9 @@ flowchart LR
 | 질의·뷰 | snapshot CID를 명시하고 국소 조건으로 탐색 | RDFLib/Oxigraph 두 엔진으로 명세 질의 비교; 커널 매처는 T20 |
 | 분석·개발 | SQL 집계, 구조 검색, 설정 읽기, 시간 측정 | DuckDB, ast-grep, yq/jq, hyperfine는 개발 도구 |
 | 인터페이스 | 같은 typed 요청/결과/오류 계약을 CLI·agent·UI가 공유 | `./chu model`은 명세 데모; 제품 API는 T40/T42 |
+| VM 부팅 | firmware→kernel→initramfs→rootfs→PID 1을 실제 guest에서 통과 | T60–T62; 현재는 substrate probe, HSWM 실행 아님 |
+| guest 서비스 | CHU store/txn을 systemd 서비스로 실행하고 guest 상태와 연결 | T63; 메모리 참조 모델로 대체할 수 없음 |
+| HSWM | 선언된 runtime을 CHU agent port에 연결 | T64–T65; provider·자격증명·원격 리소스는 이미지에 넣지 않음 |
 
 Oxigraph store와 DuckDB 테이블은 교환·검사·분석용 projection이다. 그것을 CHU의
 콘텐츠 정체성 또는 커널 저장 정본으로 선택한 것은 아니다. 공유 KG writer도 추가하지 않는다.

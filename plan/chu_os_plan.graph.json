@@ -325,6 +325,87 @@
       "title": "333 백엔드: StateStore/BranchBus/Identity 분산 구현",
       "deliverable": "backend-333",
       "verify": "두 피어 간 가지 동기화"
+    },
+    {
+      "id": "T60",
+      "milestone": "M7",
+      "layer": "boot-research",
+      "effort": 2,
+      "title": "VM 부팅 경로와 Ubuntu 소스 추적: firmware→kernel→initramfs→rootfs→systemd",
+      "deliverable": "os/README.md, os/inputs.lock.json, 선택 Ubuntu 6.8 boot source digest 증거",
+      "verify": "고정 입력 SHA-256 검증, init/main.c·do_mounts.c·initramfs.c 추출과 byte digest 기록; 전체 Ubuntu 감사/커널 재빌드라고 주장하지 않음",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-10-01",
+        "scope": "Ubuntu-based VM substrate and clean power-cycle only; not complete CHU OS or HSWM execution",
+        "source": "os/source-review.json",
+        "checks": [
+          "vm source checksums"
+        ]
+      }
+    },
+    {
+      "id": "T61",
+      "milestone": "M7",
+      "layer": "image",
+      "effort": 2,
+      "title": "재현 가능한 CHU VM 입력·seed 이미지 생성",
+      "deliverable": "checksum-pinned QEMU/ISO 도구·Ubuntu image·Node, cloud-init seed 생성기",
+      "verify": "고정 .deb를 새 전용 디렉터리에 추출하고 receipt·버전 doctor와 Ubuntu/Node SHA-256를 통과; guest network·KVM·global install 없이 seed 생성",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-10-01",
+        "scope": "Ubuntu-based VM substrate and clean power-cycle only; not complete CHU OS or HSWM execution",
+        "source": "os/boot-verification.json",
+        "checks": [
+          "vm bootstrap input and extracted host verification"
+        ]
+      }
+    },
+    {
+      "id": "T62",
+      "milestone": "M7",
+      "layer": "boot",
+      "effort": 2,
+      "title": "QEMU TCG에서 CHU VM substrate 두 번 부팅",
+      "deliverable": "nonce-bound serial report, 두 boot log, PROV evidence",
+      "verify": "두 cold boot의 systemd PID 1·cgroup v2·고정 Node·서로 다른 boot_id를 확인하고 boot2.previous_state_sha256 == boot1.state_sha256 검증; 정상 종료·재부팅만, HSWM 실행/전원차단 복구 증명 아님",
+      "status": "done",
+      "completion_evidence": {
+        "date": "2026-10-01",
+        "scope": "Ubuntu-based VM substrate and clean power-cycle only; not complete CHU OS or HSWM execution",
+        "source": "os/boot-verification.json",
+        "checks": [
+          "vm two cold boots with previous-state digest chain"
+        ]
+      }
+    },
+    {
+      "id": "T63",
+      "milestone": "M7",
+      "layer": "guest-kernel",
+      "effort": 5,
+      "title": "guest의 persistent CHU graph system service와 capability 경계",
+      "deliverable": "systemd CHU graph service, persistent blob/store/txn/branch 상태, guest capability enforcement",
+      "verify": "두 guest 부팅 사이 CID·append-only 이력·branch가 보존되고, 허가 없는 요청은 거부되며 service가 host 파일을 쓰지 않음"
+    },
+    {
+      "id": "T64",
+      "milestone": "M7",
+      "layer": "hswm-runtime",
+      "effort": 3,
+      "title": "HSWM guest runtime 계약과 이미지 통합",
+      "deliverable": "HSWM pin/lock, guest adapter contract, provider·resource transport capability schema",
+      "verify": "guest에서 선언된 HSWM runtime의 offline self-check를 실행하고, secret·provider 설정 부재와 network denial을 명시적으로 검사"
+    },
+    {
+      "id": "T65",
+      "milestone": "M7",
+      "layer": "hswm-integration",
+      "effort": 5,
+      "title": "HSWM이 CHU guest agent port를 통해 실행되고 그래프 이력을 남김",
+      "deliverable": "guest HSWM→CHU adapter e2e workload와 evidence",
+      "verify": "등록된 HSWM workload가 guest CHU transaction·result CID·PROV evidence를 생성하고, resource delegation은 유효 capability 없이는 거부; USL 등록·사용자 승인·최소권한 전송의 유효성·bounded reachability를 먼저 확인하고 실제 LLM 요청/응답과 재시작 뒤 결과를 기록; 인지/학습 효능과 구분"
     }
   ],
   "hyperedges": [
@@ -622,6 +703,77 @@
       ],
       "head": [
         "T42"
+      ]
+    },
+    {
+      "id": "E28",
+      "type": "requires",
+      "tail": [
+        "T00",
+        "T08"
+      ],
+      "head": [
+        "T60"
+      ]
+    },
+    {
+      "id": "E29",
+      "type": "requires",
+      "tail": [
+        "T60"
+      ],
+      "head": [
+        "T61"
+      ]
+    },
+    {
+      "id": "E30",
+      "type": "requires",
+      "tail": [
+        "T61"
+      ],
+      "head": [
+        "T62"
+      ]
+    },
+    {
+      "id": "E31",
+      "type": "requires",
+      "tail": [
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T62"
+      ],
+      "head": [
+        "T63"
+      ]
+    },
+    {
+      "id": "E32",
+      "type": "requires",
+      "tail": [
+        "T15",
+        "T42",
+        "T62"
+      ],
+      "head": [
+        "T64"
+      ]
+    },
+    {
+      "id": "E33",
+      "type": "requires",
+      "tail": [
+        "T63",
+        "T64",
+        "T42"
+      ],
+      "head": [
+        "T65"
       ]
     }
   ]

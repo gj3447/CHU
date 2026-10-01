@@ -253,6 +253,8 @@ def main():
     p.add_argument("argv", nargs=argparse.REMAINDER, help="Upstream arguments after -- (no shell)")
     p = sub.add_parser("model", help="CHU executable specification: demo/export/check/roadmap")
     p.add_argument("argv", nargs=argparse.REMAINDER)
+    p = sub.add_parser("vm", help="Boot and verify the CHU OS substrate in offline QEMU")
+    p.add_argument("argv", nargs=argparse.REMAINDER)
     for name, desc in [("doctor", "Probe installed tools against pins"),
                        ("tools", "List tools, versions and official documentation"),
                        ("checks", "List check IDs, argv, effects and timeouts"),
@@ -270,6 +272,9 @@ def main():
             p.add_argument("--format", choices=["turtle", "json-ld", "nt"], default="turtle")
     args = parser.parse_args()
     try:
+        if args.command == "vm":
+            from chu_vm import main as vm_main
+            return vm_main(args.argv)
         if args.command == "model":
             from chu_model import main as model_main
             return model_main(args.argv)

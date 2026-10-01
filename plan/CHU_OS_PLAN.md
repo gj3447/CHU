@@ -21,6 +21,16 @@ T01–T05의 데이터·정체성·연산·뷰·Lean 매핑 문서를 작성하�
 참조 모델은 메모리 실행 명세다. T10–T15 영속 Rust 커널은 여전히 후속 구현이며,
 현재 착수 가능한 작업은 T07(연구)과 T10(Rust 라이브러리 분리)다.
 
+2026-10-01: T60–T62의 소스 추적·고정 입력 생성·실제 두 번의 VM 부팅을 완료했다.
+[측정 결과](../os/boot-verification.json)는 정상 종료 후 상태 해시 연쇄까지 확인한다.
+T63–T65의 guest 그래프 서비스와 HSWM 연결은 미완료다.
+
+2026-09-30 사용자 발언에 따라 목표는 **VM에서 부팅하고 HSWM을 실행할 수 있는 CHU OS**다.
+과거 Linux 연구의 사용자 공간 오버레이(D04)는 이 목표의 범위 결정을 대신하지 않는다.
+T60–T65는 부팅, guest graph service, HSWM runtime, 실제 adapter 실행을 각각 분리한
+M7 게이트다. 현 VM 구현은 substrate probe이며 HSWM을 실행하지 않는다. 입력·증거·정확한
+부팅 계약은 [`../os/README.md`](../os/README.md)에 있다.
+
 ## 1. 목표 아키텍처 (레이어 = 노드 속성 `layer`)
 
 | 레이어 | 역할 | 기존 자산 재사용 |
@@ -51,26 +61,42 @@ T01–T05의 데이터·정체성·연산·뷰·Lean 매핑 문서를 작성하�
 | M4 | 호환 | CHU 저장소 ingest→export 왕복 diff 0, FUSE(선택), Linux 시스템 그래프 ingest(T34), 트리 vs 하이퍼그래프 비용 측정(T06) | 13일 |
 | M5 | 셸 | CLI e2e, UI·에이전트가 같은 txn 로그 생성 | 8일 |
 | M6 | 셀프호스팅/분산 | 이 계획 그래프까지 CHU 노드로 적재, 333 2-피어 동기화 | 8일 |
+| M7 | VM OS / HSWM | Ubuntu source trace → 재현 image → 2회 QEMU boot → guest graph service → HSWM runtime·e2e | 19일 |
 
-총 60 작업일(기존 추정, 완료 9 / 남은 51). **전체 의존 경로의 임계 길이 23.5일**
-(완료 작업을 포함한 원래 추정이며 납기 확약 아님):
-`T00 → T08 → T09 → T02 → T11 → T12 → T20 → T21 → T40 → T50 → T52`
+총 79 작업일(추정, 완료 15일 / 남은 64일; 완료 노드 11개). **전체 의존 경로의 임계 길이 26.5일**
+(완료 작업을 포함한 추정이며 납기 확약 아님):
+`T00 → T08 → T09 → T02 → T11 → T12 → T20 → T21 → T40 → T42 → T64 → T65`
 
 ## 3. 위상 레이어 (같은 줄 = 병렬 가능)
 
 ```
 L0: T00
 L1: T08, T10
-L2: T03, T04, T07, T09
-L3: T01, T02
-L4: T05, T11
+L2: T03, T04, T07, T09, T60
+L3: T01, T02, T61
+L4: T05, T11, T62
 L5: T12
 L6: T13, T20
 L7: T14, T15, T21, T22, T30
-L8: T31, T32, T34, T40
+L8: T31, T32, T34, T40, T63
 L9: T06, T33, T41, T42, T50
-L10: T51, T52
+L10: T51, T52, T64
+L11: T65
 ```
+
+VM OS 경로는 기존 그래프 커널과 합류한다.
+
+```mermaid
+flowchart LR
+  T60["T60 Ubuntu boot source trace"] --> T61["T61 reproducible image inputs"]
+  T61 --> T62["T62 two QEMU TCG boots"]
+  T10["T10 crate"] & T11["T11 blob"] & T12["T12 store"] & T13["T13 txn"] & T14["T14 branches"] & T15["T15 capability"] & T62 --> T63["T63 guest CHU graph service"]
+  T15 & T42["T42 agent port"] & T62 --> T64["T64 HSWM guest runtime"]
+  T63 & T64 & T42 --> T65["T65 HSWM guest e2e"]
+```
+
+T62는 HSWM 실행 완료가 아니다. T65의 guest transaction·result CID·capability 거부
+증거가 있어야 HSWM을 CHU OS에서 실행했다고 말할 수 있다.
 
 ## 4. 의존 하이퍼그래프
 
@@ -108,6 +134,12 @@ flowchart LR
   T50["T50 셀프호스팅: CHU 저장소 문서를 CHU 안에서 관"]
   T51["T51 기존 이론 문서 재배치: 이론 = 커널 근거 문서 "]
   T52["T52 333 백엔드: StateStore/BranchBu"]
+  T60["T60 ✓ VM 부팅 경로와 Ubuntu 소스 추적: firm"]
+  T61["T61 ✓ 재현 가능한 CHU VM 입력·seed 이미지 생성"]
+  T62["T62 ✓ QEMU TCG에서 CHU VM substrate "]
+  T63["T63 guest의 persistent CHU graph "]
+  T64["T64 HSWM guest runtime 계약과 이미지 통"]
+  T65["T65 HSWM이 CHU guest agent port를 "]
   T00 & T08 --> T01 & T02 & T03 & T04
   T01 & T02 & T03 --> T05
   T00 --> T10
@@ -135,6 +167,12 @@ flowchart LR
   T20 & T01 --> T22
   T30 & T09 --> T34
   T15 --> T42
+  T00 & T08 --> T60
+  T60 --> T61
+  T61 --> T62
+  T10 & T11 & T12 & T13 & T14 & T15 & T62 --> T63
+  T15 & T42 & T62 --> T64
+  T63 & T64 & T42 --> T65
 ```
 
 ## 5. 운영 규칙 (표준 그래프 엔지니어링)
@@ -145,8 +183,10 @@ flowchart LR
 - **임계 경로 우선**: 착수 순서는 임계 경로 노드 → 같은 레이어의 나머지.
 - **재계획 = 재작성**: 계획 변경도 그래프 재작성으로 보고, 이유를 커밋 메시지에 남긴다.
 
-## 6. 열린 결정 (사용자 확인 필요)
+## 6. 열린 결정
 
-- OS의 범위: 사용자 공간 작업환경 OS(현재 가정 — [Linux 연구](../research/LINUX_OS_RESEARCH_2026-09-29.md) D04가 근거를 보강) vs 부트 가능한 커널 수준.
+- OS 목표: VM에서 부팅하고 HSWM을 실행 가능한 CHU OS(사용자 결정). Linux 커널 재사용으로
+  시작할지 자체 커널을 구현할지는 아직 미확정이며, 현재 구현은 전자에 대한 `SECONDARY_AI`
+  제안이다.
 - 영속 백엔드: 자체 append-only 로그(현재 가정) vs SQLite/RocksDB 같은 임베디드 DB 위에 구현.
 - 정본 소유: SYMPOSIUM/THEORY/CHU와 이 저장소 중 어느 쪽이 정본인지 (Provenance 참조).

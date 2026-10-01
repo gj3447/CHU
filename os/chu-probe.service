@@ -1,0 +1,15 @@
+[Unit]
+Description=CHU VM substrate verification (not HSWM execution)
+After=local-fs.target cloud-final.service
+RequiresMountsFor=/var/lib/chu /opt/chu
+
+[Service]
+Type=oneshot
+ExecStart=/opt/chu/node /opt/chu/guest-probe.mjs
+ExecStartPost=/usr/bin/systemctl --no-block poweroff
+StandardOutput=journal+console
+StandardError=journal+console
+TimeoutStartSec=120
+
+[Install]
+WantedBy=cloud-init.target

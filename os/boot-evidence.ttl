@@ -1,0 +1,37 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:sha256:70e0de33b5efaeac975b778fc497c6edff1f61898119b150cef6b123416a803d> a prov:Entity ;
+    prov:wasGeneratedBy <urn:uuid:c87afeea-f46a-49be-8066-c1748f24cda8> .
+
+<urn:sha256:bae0c8d8a239402b672586f3aaa997aa25c1f7cb0b5edce783022f0392111073> a prov:Entity ;
+    prov:wasGeneratedBy <urn:uuid:c87afeea-f46a-49be-8066-c1748f24cda8> .
+
+<urn:sha256:ca58dd6ec55be3213dc28ddec831a05c709d92f99fbfcad6e9fe571c260e8533> a prov:Entity ;
+    prov:value "{\"accelerator\": \"tcg\", \"boots\": [{\"arch\": \"x64\", \"boot_id\": \"df0b09b8-dd5b-4a81-adb7-852df37335cd\", \"boots\": 1, \"cgroup_v2\": true, \"hswm\": \"NOT_READY\", \"hswm_reason\": \"HSWM package, model provider and authorized resource transport not provisioned\", \"kernel\": \"6.8.0-139-generic\", \"node\": \"v24.13.0\", \"nonce\": \"c87afeea-f46a-49be-8066-c1748f24cda8\", \"ok\": true, \"pid1\": \"systemd\", \"previous_state_sha256\": null, \"schema\": \"chu-guest-probe/v1\", \"state_sha256\": \"a4a38072054d583751b61fe38403ce2a2c5e3e136505eddc285a8aa216a3830a\"}, {\"arch\": \"x64\", \"boot_id\": \"f29bab08-30cf-48d6-8271-d1eada49a403\", \"boots\": 2, \"cgroup_v2\": true, \"hswm\": \"NOT_READY\", \"hswm_reason\": \"HSWM package, model provider and authorized resource transport not provisioned\", \"kernel\": \"6.8.0-139-generic\", \"node\": \"v24.13.0\", \"nonce\": \"c87afeea-f46a-49be-8066-c1748f24cda8\", \"ok\": true, \"pid1\": \"systemd\", \"previous_state_sha256\": \"a4a38072054d583751b61fe38403ce2a2c5e3e136505eddc285a8aa216a3830a\", \"schema\": \"chu-guest-probe/v1\", \"state_sha256\": \"648644923e30f5b48d69eb25e0ed15fdef352a5fb4535713ea1210ce443a578c\"}], \"duration_s\": 345.995, \"ended_at\": \"2026-10-01T01:00:27.456543+00:00\", \"evidence\": \".chu/os/runs/c87afeea-f46a-49be-8066-c1748f24cda8\", \"guest_probe_sha256\": \"2359afdc55eda972317ee4550a1bf03db8f51e005051d50b0bbc8a324f790257\", \"hswm\": \"NOT_READY\", \"inputs_sha256\": \"5e9db9810120ebc3d1a1bc6b8de52a55bc53bb876f36778defc15e95867ed60c\", \"log_sha256\": {\"boot-1.log\": \"70e0de33b5efaeac975b778fc497c6edff1f61898119b150cef6b123416a803d\", \"boot-2.log\": \"bae0c8d8a239402b672586f3aaa997aa25c1f7cb0b5edce783022f0392111073\"}, \"network\": \"none\", \"nonce\": \"c87afeea-f46a-49be-8066-c1748f24cda8\", \"ok\": true, \"schema\": \"chu-vm-run/v1\", \"source_sha256\": {\".chu/os/hosts/745d9f8c81e3f603/receipt.json\": \"e58545f7bd0f3f877b4ad24b028db62026399261787bb19a326997aedfc78f52\", \".chu/os/node\": \"53fb205ae78805130177e24bcb459a69a1518c8d98f8965f31d85aae7ea840fc\", \".chu/os/runs/c87afeea-f46a-49be-8066-c1748f24cda8/seed.iso\": \"bf7f540384184873d4973ba7e0ab3c54e6ad377be9b57aee83487d3236ae0fa4\", \"os/chu-probe.service\": \"4e6b4bb3d082d26ed15725979ed14cce21367d0c5fcdb5bd51e3039e0852a6e0\", \"os/guest-probe.mjs\": \"2359afdc55eda972317ee4550a1bf03db8f51e005051d50b0bbc8a324f790257\", \"os/inputs.lock.json\": \"5e9db9810120ebc3d1a1bc6b8de52a55bc53bb876f36778defc15e95867ed60c\", \"scripts/chu_vm.py\": \"0c22205ed046b4fcb58c9064fdd06f6671369d15543024d9a46bb30cc29f303e\"}, \"started_at\": \"2026-10-01T00:54:41.979399+00:00\", \"unit_sha256\": \"4e6b4bb3d082d26ed15725979ed14cce21367d0c5fcdb5bd51e3039e0852a6e0\"}" ;
+    prov:wasGeneratedBy <urn:uuid:c87afeea-f46a-49be-8066-c1748f24cda8> .
+
+<urn:sha256:0c22205ed046b4fcb58c9064fdd06f6671369d15543024d9a46bb30cc29f303e> a prov:Entity .
+
+<urn:sha256:2359afdc55eda972317ee4550a1bf03db8f51e005051d50b0bbc8a324f790257> a prov:Entity .
+
+<urn:sha256:4e6b4bb3d082d26ed15725979ed14cce21367d0c5fcdb5bd51e3039e0852a6e0> a prov:Entity .
+
+<urn:sha256:53fb205ae78805130177e24bcb459a69a1518c8d98f8965f31d85aae7ea840fc> a prov:Entity .
+
+<urn:sha256:5e9db9810120ebc3d1a1bc6b8de52a55bc53bb876f36778defc15e95867ed60c> a prov:Entity .
+
+<urn:sha256:bf7f540384184873d4973ba7e0ab3c54e6ad377be9b57aee83487d3236ae0fa4> a prov:Entity .
+
+<urn:sha256:e58545f7bd0f3f877b4ad24b028db62026399261787bb19a326997aedfc78f52> a prov:Entity .
+
+<urn:uuid:c87afeea-f46a-49be-8066-c1748f24cda8> a prov:Activity ;
+    prov:endedAtTime "2026-10-01T01:00:27.456543+00:00"^^xsd:dateTime ;
+    prov:startedAtTime "2026-10-01T00:54:41.979399+00:00"^^xsd:dateTime ;
+    prov:used <urn:sha256:0c22205ed046b4fcb58c9064fdd06f6671369d15543024d9a46bb30cc29f303e>,
+        <urn:sha256:2359afdc55eda972317ee4550a1bf03db8f51e005051d50b0bbc8a324f790257>,
+        <urn:sha256:4e6b4bb3d082d26ed15725979ed14cce21367d0c5fcdb5bd51e3039e0852a6e0>,
+        <urn:sha256:53fb205ae78805130177e24bcb459a69a1518c8d98f8965f31d85aae7ea840fc>,
+        <urn:sha256:5e9db9810120ebc3d1a1bc6b8de52a55bc53bb876f36778defc15e95867ed60c>,
+        <urn:sha256:bf7f540384184873d4973ba7e0ab3c54e6ad377be9b57aee83487d3236ae0fa4>,
+        <urn:sha256:e58545f7bd0f3f877b4ad24b028db62026399261787bb19a326997aedfc78f52> .

@@ -78,6 +78,11 @@ reference scenario; `./chu model check --json` validates its RDF projection;
 Oxigraph and retains outputs. This is executable specification, not a persistent
 OS kernel or permission to execute agent requests on the host.
 
+The VM substrate experiment is separate from the normal check suite. Its inputs,
+boot contract, evidence location, and HSWM boundary are in
+[`../os/README.md`](../os/README.md). It starts QEMU with TCG and no guest network;
+the current probe verifies guest substrate only and reports HSWM as `NOT_READY`.
+
 ## Selected tools and exact use
 
 These choices extend existing CHU tools and were researched against upstream

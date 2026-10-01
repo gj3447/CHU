@@ -59,6 +59,11 @@ For reproducible Rust, Lean, Python and graph engineering development, use
 `./chu doctor --json` and `./chu check`. The RDF tool registry is
 [dev/catalog.ttl](dev/catalog.ttl); agents can discover it with `./chu tools --json`.
 
+CHU's current OS target is a VM-booting environment capable of running HSWM.
+The present Ubuntu/QEMU substrate and its strict boundary are documented in
+[os/README.md](os/README.md): it verifies a guest boot contract but does **not**
+yet run HSWM or constitute a complete CHU OS.
+
 There are **two paths** to use CHU. Pick based on whether you want the raw type system or APT-integrated workflow.
 
 | | **Path A — Direct CHU type system use** | **Path B — APT-integrated use** |

@@ -5,6 +5,31 @@
 
 ---
 
+## VM OS substrate — observed 2026-10-01
+
+The [user target](../canon/VM_OS_TARGET.md) is a VM-bootable CHU OS capable of
+running HSWM. The former user-space overlay assumption has been superseded.
+[VM commands and source trace](../os/README.md) now implement a bounded first step:
+
+- QEMU 10.0.13 TCG boots the checksum-pinned Ubuntu 24.04 image twice with no
+  guest network, KVM, root privileges or host filesystem sharing.
+- Both clean shutdowns pass; guest Linux 6.8.0-139, systemd PID 1, Node 24.13.0
+  and cgroup v2 are verified. The second boot reads the exact previous state
+  digest. [JSON evidence](../os/boot-verification.json) and
+  [PROV-O evidence](../os/boot-evidence.ttl) bind the inputs and serial log digests.
+- Ubuntu GA kernel sources were downloaded and the init/initramfs/root-mount
+  paths traced. Reviewed source versions differ from guest patch versions;
+  this is not a complete Ubuntu audit, a kernel rebuild, or crash-recovery proof.
+- T60–T62 are complete for that substrate contract. HSWM remains `NOT_READY`:
+  its package, dependencies, chosen provider, authorized resource transport,
+  and the persistent guest CHU service are not integrated. T63–T65 remain open.
+- The complete local registry passes 32/32 checks, including 80 Python tests
+  and all 11 Lean files. VM boot evidence is a separate real local run;
+  ordinary CI does not provision or boot this VM profile.
+- The initial second-boot attempt failed because of a systemd ordering cycle.
+  Enabling the probe under `cloud-init.target` fixes it. The offline image's
+  first network wait times out; subsequent boots mask that unnecessary wait.
+
 ## Development environment — observed 2026-09-30
 
 Local Linux x86_64 development is configured and verified. Entry point:
