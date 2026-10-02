@@ -1,0 +1,8 @@
+PREFIX os: <https://github.com/gj3447/CHU/os#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?decision ?authority ?status ?proposal ?alternative ?source ?replaces WHERE {
+  ?decision a os:Decision ; os:authority ?authority ; os:status ?status ;
+    os:proposes ?proposal ; os:alternative ?alternative ; prov:wasDerivedFrom ?source .
+  OPTIONAL { ?decision dct:replaces ?replaces }
+} ORDER BY ?decision ?alternative ?source

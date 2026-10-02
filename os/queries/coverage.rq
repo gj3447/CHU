@@ -1,0 +1,6 @@
+PREFIX os: <https://github.com/gj3447/CHU/os#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?requirement ?source ?task ?status WHERE {
+  ?requirement a os:Requirement ; prov:wasDerivedFrom ?source ; os:plannedBy ?task .
+  ?task os:taskStatus ?status .
+} ORDER BY ?requirement ?source ?task

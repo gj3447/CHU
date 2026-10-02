@@ -459,3 +459,12 @@ dev:kernel-contract a dev:Check ;
     dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
     dev:argv ( "{python}" "scripts/check_model.py" "--out" "{out}" ) ;
     dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/gj3447/CHU/blob/main/research/OS_BUILD_RESEARCH_2026-10-02.md>
+    a dev:Source ; dev:reviewedOn "2026-10-02"^^xsd:date .
+dev:os-design a dev:Check ;
+    skos:prefLabel "Validate OS requirements, proposal provenance and bounded archived evidence" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/OS_BUILD_RESEARCH_2026-10-02.md> ;
+    dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
+    dev:argv ( "{python}" "scripts/check_os_design.py" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .

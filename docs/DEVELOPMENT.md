@@ -43,6 +43,7 @@ builds and behavior. Neither implies a running CHU OS or shared KG write access.
 ./chu checks --json                 # check IDs, argv, prerequisites, effects, timeouts
 ./chu check --json                  # all registered checks; stderr progress, JSON stdout
 ./chu check --only core-test --only truncation --json
+./chu check --only os-design --json  # OS requirements/proposals/evidence; no VM boot
 ./chu graph-check --json            # SHACL, ontology predicates, lists, version drift
 ./chu query tools --json            # named local SPARQL competency query
 ./chu query checks --json

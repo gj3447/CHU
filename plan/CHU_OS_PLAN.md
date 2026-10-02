@@ -19,16 +19,20 @@ T01–T05의 데이터·정체성·연산·뷰·Lean 매핑 문서를 작성하�
 내용 주소, 다중 소속, 원자적 변경, 두 분기, RDF 왕복과 독립 SPARQL 결과를 검증한다.
 `./chu model demo --json`, `./chu model roadmap --json`, `./chu check --only kernel-contract --json`.
 참조 모델은 메모리 실행 명세다. T10–T15 영속 Rust 커널은 여전히 후속 구현이며,
-현재 착수 가능한 작업은 T07(연구)과 T10(Rust 라이브러리 분리)다.
+현재 착수 가능한 작업은 T07(연구), T10(Rust 라이브러리 분리), T66(선언형 release
+recipe)다.
 
 2026-10-01: T60–T62의 소스 추적·고정 입력 생성·실제 두 번의 VM 부팅을 완료했다.
 [측정 결과](../os/boot-verification.json)는 정상 종료 후 상태 해시 연쇄까지 확인한다.
-T63–T65의 guest 그래프 서비스와 HSWM 연결은 미완료다.
+T63–T69의 guest 그래프 서비스·HSWM 연결·release/rollback·fault recovery·최종
+수용 게이트는 미완료다. T61의 체크섬 고정 입력은 재현 가능한 *입력* 증거이지,
+bit-identical guest image 재빌드 증거가 아니다.
 
 2026-09-30 사용자 발언에 따라 목표는 **VM에서 부팅하고 HSWM을 실행할 수 있는 CHU OS**다.
 과거 Linux 연구의 사용자 공간 오버레이(D04)는 이 목표의 범위 결정을 대신하지 않는다.
-T60–T65는 부팅, guest graph service, HSWM runtime, 실제 adapter 실행을 각각 분리한
-M7 게이트다. 현 VM 구현은 substrate probe이며 HSWM을 실행하지 않는다. 입력·증거·정확한
+T60–T69는 부팅, guest graph service, HSWM runtime, 실제 adapter 실행, 선언형 release,
+update/rollback, fault recovery, 최종 수용을 분리한 M7 게이트다. 현 VM 구현은 substrate
+probe이며 HSWM을 실행하지 않는다. 입력·증거·정확한
 부팅 계약은 [`../os/README.md`](../os/README.md)에 있다.
 
 ## 1. 목표 아키텍처 (레이어 = 노드 속성 `layer`)
@@ -61,11 +65,11 @@ M7 게이트다. 현 VM 구현은 substrate probe이며 HSWM을 실행하지 않
 | M4 | 호환 | CHU 저장소 ingest→export 왕복 diff 0, FUSE(선택), Linux 시스템 그래프 ingest(T34), 트리 vs 하이퍼그래프 비용 측정(T06) | 13일 |
 | M5 | 셸 | CLI e2e, UI·에이전트가 같은 txn 로그 생성 | 8일 |
 | M6 | 셀프호스팅/분산 | 이 계획 그래프까지 CHU 노드로 적재, 333 2-피어 동기화 | 8일 |
-| M7 | VM OS / HSWM | Ubuntu source trace → 재현 image → 2회 QEMU boot → guest graph service → HSWM runtime·e2e | 19일 |
+| M7 | VM OS / HSWM | Ubuntu source trace → checksum-pinned inputs → 2회 QEMU boot → release recipe/SBOM → guest graph service → HSWM runtime·e2e → update/rollback → fault recovery → final acceptance | 32일 |
 
-총 79 작업일(추정, 완료 15일 / 남은 64일; 완료 노드 11개). **전체 의존 경로의 임계 길이 26.5일**
+총 92 작업일(추정, 완료 15일 / 남은 77일; 완료 노드 11개). **전체 의존 경로의 임계 길이 31.5일**
 (완료 작업을 포함한 추정이며 납기 확약 아님):
-`T00 → T08 → T09 → T02 → T11 → T12 → T20 → T21 → T40 → T42 → T64 → T65`
+`T00 → T08 → T09 → T02 → T11 → T12 → T20 → T21 → T40 → T42 → T64 → T67 → T68 → T69`
 
 ## 3. 위상 레이어 (같은 줄 = 병렬 가능)
 
@@ -75,28 +79,35 @@ L1: T08, T10
 L2: T03, T04, T07, T09, T60
 L3: T01, T02, T61
 L4: T05, T11, T62
-L5: T12
+L5: T12, T66
 L6: T13, T20
 L7: T14, T15, T21, T22, T30
 L8: T31, T32, T34, T40, T63
 L9: T06, T33, T41, T42, T50
 L10: T51, T52, T64
-L11: T65
+L11: T65, T67
+L12: T68
+L13: T69
 ```
 
 VM OS 경로는 기존 그래프 커널과 합류한다.
 
 ```mermaid
 flowchart LR
-  T60["T60 Ubuntu boot source trace"] --> T61["T61 reproducible image inputs"]
+  T60["T60 Ubuntu boot source trace"] --> T61["T61 checksum-pinned inputs"]
   T61 --> T62["T62 two QEMU TCG boots"]
+  T60 & T61 & T62 --> T66["T66 declarative release/SBOM"]
   T10["T10 crate"] & T11["T11 blob"] & T12["T12 store"] & T13["T13 txn"] & T14["T14 branches"] & T15["T15 capability"] & T62 --> T63["T63 guest CHU graph service"]
   T15 & T42["T42 agent port"] & T62 --> T64["T64 HSWM guest runtime"]
   T63 & T64 & T42 --> T65["T65 HSWM guest e2e"]
+  T63 & T64 & T66 --> T67["T67 update/migration/rollback"]
+  T63 & T66 & T67 --> T68["T68 fault recovery"]
+  T63 & T64 & T65 & T66 & T67 & T68 --> T69["T69 VM OS/HSWM acceptance"]
 ```
 
 T62는 HSWM 실행 완료가 아니다. T65의 guest transaction·result CID·capability 거부
-증거가 있어야 HSWM을 CHU OS에서 실행했다고 말할 수 있다.
+증거가 있어야 HSWM workload를 CHU guest에서 실행했다고 말할 수 있다. T69는 T63–T68
+모두의 evidence가 같은 release에 결합된 뒤에만 complete VM CHU OS/HSWM 수용을 허용한다.
 
 ## 4. 의존 하이퍼그래프
 
@@ -135,11 +146,15 @@ flowchart LR
   T51["T51 기존 이론 문서 재배치: 이론 = 커널 근거 문서 "]
   T52["T52 333 백엔드: StateStore/BranchBu"]
   T60["T60 ✓ VM 부팅 경로와 Ubuntu 소스 추적: firm"]
-  T61["T61 ✓ 재현 가능한 CHU VM 입력·seed 이미지 생성"]
+  T61["T61 ✓ 체크섬 고정 CHU VM 입력·seed 이미지 생성"]
   T62["T62 ✓ QEMU TCG에서 CHU VM substrate "]
   T63["T63 guest의 persistent CHU graph "]
   T64["T64 HSWM guest runtime 계약과 이미지 통"]
   T65["T65 HSWM이 CHU guest agent port를 "]
+  T66["T66 선언형 image/release recipe와 패키지 "]
+  T67["T67 세대 기반 update·schema migration"]
+  T68["T68 fault injection 기반 boot·store "]
+  T69["T69 VM CHU OS·HSWM 최종 수용 게이트"]
   T00 & T08 --> T01 & T02 & T03 & T04
   T01 & T02 & T03 --> T05
   T00 --> T10
@@ -173,6 +188,10 @@ flowchart LR
   T10 & T11 & T12 & T13 & T14 & T15 & T62 --> T63
   T15 & T42 & T62 --> T64
   T63 & T64 & T42 --> T65
+  T60 & T61 & T62 --> T66
+  T63 & T64 & T66 --> T67
+  T63 & T66 & T67 --> T68
+  T63 & T64 & T65 & T66 & T67 & T68 --> T69
 ```
 
 ## 5. 운영 규칙 (표준 그래프 엔지니어링)

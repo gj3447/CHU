@@ -5,6 +5,25 @@
 
 ---
 
+## OS construction research — 2026-10-02
+
+[Primary-source comparison](../research/OS_BUILD_RESEARCH_2026-10-02.md) covers
+mkosi, Buildroot, Yocto, LFS and kernel-development alternatives. A Linux/mkosi
+image experiment is proposed, not installed or adopted. The actual OS is still
+unimplemented beyond the earlier substrate and executable graph specification.
+
+- [OS design graph](../os/design.ttl) connects seven requirements to sources and
+  plan tasks, distinguishes AI proposals from primary user bytes, and limits the
+  archived two-boot observation to clean-boot substrate scope.
+- `os-design` adds SHACL, byte-CID and domain/range checks plus three queries
+  compared across RDFLib/Oxigraph. The current registry contains 33 checks;
+  the dated test counts below describe earlier observations.
+- Open T66–T69 add owned image/release construction, update/rollback, fault
+  recovery and an AND gate for final acceptance. T07, T10 and T66 are ready.
+- Individual typed boot/input-role evidence and digest-bound completion records
+  for every older task remain gaps. No new VM run or HSWM execution was performed
+  for this research change.
+
 ## VM OS substrate — observed 2026-10-01
 
 The [user target](../canon/VM_OS_TARGET.md) is a VM-bootable CHU OS capable of
@@ -74,7 +93,7 @@ Local Linux x86_64 development is configured and verified. Entry point:
   produces 5 states, 4 events and a 159-triple RDF projection. All three model
   queries agree across RDFLib/Oxigraph and RDF/JSON-LD roundtrip succeeds.
   This completes specification work, not T10–T15's persistent Rust kernel.
-  `./chu model roadmap --json` currently returns T07 and T10 as ready.
+  At that observation, `./chu model roadmap --json` returned T07 and T10 as ready.
 
 Remote results: [CHU development verification](https://github.com/gj3447/CHU/actions/workflows/check.yml)
 runs bootstrap and the complete check registry on push. Inspect the result for

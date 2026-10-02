@@ -1,0 +1,7 @@
+PREFIX os: <https://github.com/gj3447/CHU/os#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?observation ?requirement ?scope ?when ?artifact ?path WHERE {
+  ?observation a os:Observation ; os:reportsOn ?requirement ; os:claimScope ?scope ;
+    os:observedAt ?when ; prov:wasDerivedFrom ?artifact .
+  ?artifact os:pathView ?path .
+} ORDER BY ?observation

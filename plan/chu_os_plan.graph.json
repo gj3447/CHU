@@ -349,9 +349,9 @@
       "milestone": "M7",
       "layer": "image",
       "effort": 2,
-      "title": "재현 가능한 CHU VM 입력·seed 이미지 생성",
+      "title": "체크섬 고정 CHU VM 입력·seed 이미지 생성",
       "deliverable": "checksum-pinned QEMU/ISO 도구·Ubuntu image·Node, cloud-init seed 생성기",
-      "verify": "고정 .deb를 새 전용 디렉터리에 추출하고 receipt·버전 doctor와 Ubuntu/Node SHA-256를 통과; guest network·KVM·global install 없이 seed 생성",
+      "verify": "고정 .deb를 새 전용 디렉터리에 추출하고 receipt·버전 doctor와 Ubuntu/Node SHA-256를 통과; guest network·KVM·global install 없이 seed 생성. 이 단계만으로 bit-identical image 재빌드를 주장하지 않음",
       "status": "done",
       "completion_evidence": {
         "date": "2026-10-01",
@@ -406,6 +406,42 @@
       "title": "HSWM이 CHU guest agent port를 통해 실행되고 그래프 이력을 남김",
       "deliverable": "guest HSWM→CHU adapter e2e workload와 evidence",
       "verify": "등록된 HSWM workload가 guest CHU transaction·result CID·PROV evidence를 생성하고, resource delegation은 유효 capability 없이는 거부; USL 등록·사용자 승인·최소권한 전송의 유효성·bounded reachability를 먼저 확인하고 실제 LLM 요청/응답과 재시작 뒤 결과를 기록; 인지/학습 효능과 구분"
+    },
+    {
+      "id": "T66",
+      "milestone": "M7",
+      "layer": "release",
+      "effort": 3,
+      "title": "선언형 image/release recipe와 패키지 inventory·SBOM·입력 lock",
+      "deliverable": "선언형 guest image/release recipe, package inventory/SBOM, source lock, image CID와 rebuild comparison report",
+      "verify": "새 recipe가 만든 image CID를 QEMU 부팅 증거에 연결하고, 동일 lock에서 독립 재빌드해 image CID 또는 byte-level 차이를 기록. 차이가 남으면 bit-identical reproducibility 미달로 명시하며, package inventory·SBOM·source lock을 같은 release evidence에 연결; T61의 고정 입력만으로 재빌드·새 이미지 부팅을 주장하지 않음"
+    },
+    {
+      "id": "T67",
+      "milestone": "M7",
+      "layer": "lifecycle",
+      "effort": 4,
+      "title": "세대 기반 update·schema migration·rollback과 health gate",
+      "deliverable": "active/previous generation metadata, migration/rollback protocol, versioned health criteria와 evidence",
+      "verify": "새 generation의 health gate가 실패하면 previous generation과 graph state로 rollback하고, 성공 update·migration·rollback 각각의 generation·reason·health evidence를 보존"
+    },
+    {
+      "id": "T68",
+      "milestone": "M7",
+      "layer": "recovery",
+      "effort": 4,
+      "title": "fault injection 기반 boot·store recovery 검증",
+      "deliverable": "fault injection scenarios, recovery contract, boot/store recovery evidence",
+      "verify": "commit 전후·migration 중·boot 중단 fault를 주입하고, 허용된 마지막 generation 또는 append-only graph state로 회복하며 손상·부분 적용을 검출"
+    },
+    {
+      "id": "T69",
+      "milestone": "M7",
+      "layer": "acceptance",
+      "effort": 2,
+      "title": "VM CHU OS·HSWM 최종 수용 게이트",
+      "deliverable": "VM OS/HSWM acceptance report와 requirements-to-evidence trace",
+      "verify": "persistent CHU service·HSWM guest runtime·registered HSWM workload·declarative release·update/rollback·fault recovery의 모든 증거를 같은 VM release에 연결. 하나라도 없으면 substrate 또는 partial integration으로 표시하고 complete OS/HSWM이라고 주장하지 않음"
     }
   ],
   "hyperedges": [
@@ -774,6 +810,57 @@
       ],
       "head": [
         "T65"
+      ]
+    },
+    {
+      "id": "E34",
+      "type": "requires",
+      "tail": [
+        "T60",
+        "T61",
+        "T62"
+      ],
+      "head": [
+        "T66"
+      ]
+    },
+    {
+      "id": "E35",
+      "type": "requires",
+      "tail": [
+        "T63",
+        "T64",
+        "T66"
+      ],
+      "head": [
+        "T67"
+      ]
+    },
+    {
+      "id": "E36",
+      "type": "requires",
+      "tail": [
+        "T63",
+        "T66",
+        "T67"
+      ],
+      "head": [
+        "T68"
+      ]
+    },
+    {
+      "id": "E37",
+      "type": "requires",
+      "tail": [
+        "T63",
+        "T64",
+        "T65",
+        "T66",
+        "T67",
+        "T68"
+      ],
+      "head": [
+        "T69"
       ]
     }
   ]

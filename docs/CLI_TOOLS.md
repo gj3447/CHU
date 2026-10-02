@@ -148,7 +148,7 @@ SHACL은 출처·날짜·근거·작성자·authority와 연결 대상 타입을
 ```
 
 CLI 도입 시 기존 검사 25개에 CLI 동작 검사 6개를 더했다. 이후 CHU 실행 명세의
-`kernel-contract`가 추가되어 현재 등록 검사는 32개다. 명세와 구현 순서는
+`kernel-contract`, OS 조사·요구사항 추적의 `os-design`이 추가되어 현재 등록 검사는 33개다. 명세와 구현 순서는
 [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md)에서 확인한다.
 현재 구현은 RDF/SHACL/SPARQL/PROV-O에 기반한 개발 워크플로다.
 W3C 전체 적합성 인증, OWL-DL 추론 완료, CHU OS 커널 완성 또는 공유 KG 쓰기 권한을

@@ -1,0 +1,40 @@
+@prefix os: <https://github.com/gj3447/CHU/os#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+os: a owl:Ontology ; owl:versionInfo "0.1.0" ;
+    rdfs:comment "CHU-owned research/requirements profile. Not a runtime store or an execution grant. Cardinalities are in design-shapes.ttl; plan status is a derived view of the JSON plan." .
+os:Requirement a rdfs:Class ; rdfs:subClassOf prov:Entity .
+os:Decision a rdfs:Class ; rdfs:subClassOf prov:Entity .
+os:Strategy a rdfs:Class ; rdfs:subClassOf prov:Entity .
+os:Observation a rdfs:Class ; rdfs:subClassOf prov:Entity .
+os:Artifact a rdfs:Class ; rdfs:subClassOf prov:Entity .
+os:PlanTask a rdfs:Class ; rdfs:subClassOf prov:Entity .
+
+os:authority a rdf:Property ; rdfs:domain prov:Entity ; rdfs:range xsd:string ;
+    rdfs:comment "Entity -> provenance authority (one). Normalized requirements and recommendations remain SECONDARY_AI, even when derived from USER_PRIMARY source bytes." .
+os:plannedBy a rdf:Property ; rdfs:domain os:Requirement ; rdfs:range os:PlanTask ;
+    rdfs:comment "Requirement -> one or more plan tasks expected to establish it; not evidence that it is fulfilled. All listed tasks are needed." .
+os:addresses a rdf:Property ; rdfs:domain os:Decision ; rdfs:range os:Requirement ;
+    rdfs:comment "Decision -> one or more requirements motivating the proposal; not satisfaction." .
+os:proposes a rdf:Property ; rdfs:domain os:Decision ; rdfs:range os:Strategy ;
+    rdfs:comment "Decision -> exactly one recommended experiment; does not install or adopt it." .
+os:alternative a rdf:Property ; rdfs:domain os:Decision ; rdfs:range os:Strategy ;
+    rdfs:comment "Decision -> one or more considered alternatives; not identity or a dependency." .
+os:status a rdf:Property ; rdfs:domain os:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "Decision -> exactly one lifecycle status; this research profile permits PROPOSED only." .
+os:pathView a rdf:Property ; rdfs:domain os:Artifact ; rdfs:range xsd:string ;
+    rdfs:comment "Byte CID -> exactly one repo-relative source view, checked against bytes; path is not identity." .
+os:reportsOn a rdf:Property ; rdfs:domain os:Observation ; rdfs:range os:Requirement ;
+    rdfs:comment "Observation -> exactly one bounded requirement it measured; not transitive OS acceptance." .
+os:claimScope a rdf:Property ; rdfs:domain os:Observation ; rdfs:range xsd:string ;
+    rdfs:comment "Observation -> exactly one scope. Current archived evidence is CLEAN_BOOT_SUBSTRATE only." .
+os:observedAt a rdf:Property ; rdfs:domain os:Observation ; rdfs:range xsd:dateTime ;
+    rdfs:comment "Observation -> original experiment end time, not this research ingestion date (exactly one)." .
+os:reviewedOn a rdf:Property ; rdfs:domain prov:Entity ; rdfs:range xsd:date ;
+    rdfs:comment "Source/catalog -> one review date, not the source publication date." .
+os:taskStatus a rdf:Property ; rdfs:domain os:PlanTask ; rdfs:range xsd:string ;
+    rdfs:comment "Task -> exactly one status projected from canonical plan JSON; not separately authored in design.ttl." .

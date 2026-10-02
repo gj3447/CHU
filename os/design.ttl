@@ -1,0 +1,93 @@
+@prefix os: <https://github.com/gj3447/CHU/os#> .
+@prefix plan: <https://github.com/gj3447/CHU/plan#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+os:design a prov:Entity ; os:authority "SECONDARY_AI" ;
+    os:reviewedOn "2026-10-02"^^xsd:date ; prov:wasAttributedTo os:research-agent ;
+    skos:prefLabel "OS requirements, proposed experiment and bounded historical evidence" .
+os:research-agent a prov:SoftwareAgent .
+
+<urn:sha256:5adbb6840a07b94233761b1eccbe4294c6b8b593722c44852e7839ef9f4f4bd3>
+    a os:Artifact ; os:authority "USER_PRIMARY" ;
+    os:pathView "canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt" .
+<urn:sha256:7d3d6e3f4ed358275fda93b84abff1796f5214bd6f5173dafd72c736f1787f53>
+    a os:Artifact ; os:authority "USER_PRIMARY" ;
+    os:pathView "canon/sources/USER_PRIMARY_CHU_HYPERGRAPH_OS_2026-09-29.txt" .
+<urn:sha256:ca58dd6ec55be3213dc28ddec831a05c709d92f99fbfcad6e9fe571c260e8533>
+    a os:Artifact ; os:authority "SECONDARY_AI" ; os:pathView "os/boot-verification.json" .
+
+os:R-VM-OS a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "VM에서 부팅하고 HSWM을 실행하는 CHU OS" ;
+    prov:wasDerivedFrom <urn:sha256:5adbb6840a07b94233761b1eccbe4294c6b8b593722c44852e7839ef9f4f4bd3> ;
+    os:plannedBy plan:T69 .
+os:R-HSWM a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "guest HSWM runtime과 실제 workload의 CHU 이력 생성" ;
+    prov:wasDerivedFrom <urn:sha256:5adbb6840a07b94233761b1eccbe4294c6b8b593722c44852e7839ef9f4f4bd3> ;
+    os:plannedBy plan:T64, plan:T65 .
+os:R-GRAPH a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "영속 그래프 재작성 서비스와 capability 집행" ;
+    prov:wasDerivedFrom <urn:sha256:7d3d6e3f4ed358275fda93b84abff1796f5214bd6f5173dafd72c736f1787f53> ;
+    os:plannedBy plan:T63 .
+os:R-IMAGE a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "선언적 이미지 입력·release identity와 재빌드 비교" ;
+    prov:wasDerivedFrom <https://systemd.io/BUILDING_IMAGES/>,
+        <https://docs.yoctoproject.org/current/test-manual/reproducible-builds.html> ;
+    os:plannedBy plan:T66 .
+os:R-UPDATE a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "상태 migration과 실패 시 이전 generation으로 rollback" ;
+    prov:wasDerivedFrom <https://systemd.io/BUILDING_IMAGES/> ; os:plannedBy plan:T67 .
+os:R-RECOVERY a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "강제 중단 뒤 부팅·graph store 복구" ;
+    prov:wasDerivedFrom os:R-VM-OS, os:R-GRAPH ; os:plannedBy plan:T68 .
+os:R-SUBSTRATE a os:Requirement ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "Ubuntu/Node probe의 정상 종료 후 두 cold boot 상태 연결" ;
+    prov:wasDerivedFrom os:R-VM-OS ; os:plannedBy plan:T62 .
+
+os:D-linux-image a os:Decision ; os:authority "SECONDARY_AI" ; os:status "PROPOSED" ;
+    skos:prefLabel "Linux 기반 VM OS의 mkosi 이미지 제작 실험을 우선 제안" ;
+    os:addresses os:R-VM-OS, os:R-IMAGE, os:R-HSWM ;
+    os:proposes os:S-mkosi ; os:alternative os:S-buildroot, os:S-yocto, os:S-new-kernel ;
+    prov:wasDerivedFrom os:R-VM-OS, <https://mkosi.systemd.io/>,
+        <https://github.com/nodejs/node/blob/v24.13.0/BUILDING.md> ;
+    dct:replaces <https://github.com/gj3447/CHU/research/linux_os#D04> .
+# Replaces the old overlay-only target in the CURRENT design; archived D04 stays immutable.
+# A proposed image experiment is not a user-ratified kernel decision.
+os:S-mkosi a os:Strategy ; skos:prefLabel "Linux/Ubuntu + mkosi image recipe" ;
+    prov:wasDerivedFrom <https://mkosi.systemd.io/> .
+os:S-buildroot a os:Strategy ; skos:prefLabel "Buildroot custom Linux appliance" ;
+    prov:wasDerivedFrom <https://buildroot.org/downloads/manual/manual.html> .
+os:S-yocto a os:Strategy ; skos:prefLabel "Yocto/OpenEmbedded custom Linux image" ;
+    prov:wasDerivedFrom <https://docs.yoctoproject.org/current/overview-manual/yp-intro.html> .
+os:S-new-kernel a os:Strategy ; skos:prefLabel "별도 kernel/ABI 구현 또는 이식 연구" ;
+    prov:wasDerivedFrom <https://pdos.csail.mit.edu/6.1810/2025/xv6.html>,
+        <https://docs.sel4.systems/projects/sel4/> .
+
+os:O-clean-boots-20261001 a os:Observation ; os:authority "SECONDARY_AI" ;
+    skos:prefLabel "보관된 두 정상 cold boot report의 제한된 성공 관찰" ;
+    os:reportsOn os:R-SUBSTRATE ; os:claimScope "CLEAN_BOOT_SUBSTRATE" ;
+    os:observedAt "2026-10-01T01:00:27.456543+00:00"^^xsd:dateTime ;
+    prov:wasDerivedFrom <urn:sha256:ca58dd6ec55be3213dc28ddec831a05c709d92f99fbfcad6e9fe571c260e8533> .
+
+os:R-VM-OS prov:wasAttributedTo os:research-agent .
+os:R-HSWM prov:wasAttributedTo os:research-agent .
+os:R-GRAPH prov:wasAttributedTo os:research-agent .
+os:R-IMAGE prov:wasAttributedTo os:research-agent .
+os:R-UPDATE prov:wasAttributedTo os:research-agent .
+os:R-RECOVERY prov:wasAttributedTo os:research-agent .
+os:R-SUBSTRATE prov:wasAttributedTo os:research-agent .
+os:D-linux-image prov:wasAttributedTo os:research-agent .
+os:O-clean-boots-20261001 prov:wasAttributedTo os:research-agent .
+
+# Dated web citations: URLs/content can change. These are NOT byte-verified snapshots.
+# Pin immutable source/retrieval artifacts when an implementation input is selected.
+<https://mkosi.systemd.io/> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://systemd.io/BUILDING_IMAGES/> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://buildroot.org/downloads/manual/manual.html> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://docs.yoctoproject.org/current/overview-manual/yp-intro.html> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://docs.yoctoproject.org/current/test-manual/reproducible-builds.html> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://github.com/nodejs/node/blob/v24.13.0/BUILDING.md> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://pdos.csail.mit.edu/6.1810/2025/xv6.html> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .
+<https://docs.sel4.systems/projects/sel4/> a prov:Entity ; os:reviewedOn "2026-10-02"^^xsd:date .

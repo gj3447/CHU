@@ -3,8 +3,8 @@
 2026-10-01 · `SECONDARY_AI` implementation design. The user-required target is a
 CHU OS that **boots in a virtual machine and can run HSWM**. The exact user
 statement is preserved in [`canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt`](../canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt).
-This directory is a reproducible first substrate, not a claim that that target
-has already been met.
+This directory contains a checksum-pinned first substrate experiment. It has not
+met that target or demonstrated bit-for-bit reproducible OS image builds.
 
 ## What exists now
 
@@ -110,4 +110,45 @@ declared runtime, chosen provider, and guest adapter producing a verified result
 Credentials and resource transport remain explicit deployment inputs, never
 implicit image contents. The exact prerequisite graph is maintained in
 [`plan/chu_os_plan.graph.json`](../plan/chu_os_plan.graph.json), particularly
-T60–T65.
+T60–T69. T66–T68 cover image construction, update/rollback and crash recovery;
+T69 requires their evidence together with the guest graph and HSWM results.
+
+## Research and requirements trace
+
+The [2026-10-02 research](../research/OS_BUILD_RESEARCH_2026-10-02.md) compares
+mkosi, Buildroot, Yocto, LFS and kernel-development paths. Linux reuse with a
+mkosi image experiment is a `SECONDARY_AI` proposal, not an adopted toolchain.
+
+[`design.ttl`](design.ttl) connects seven normalized requirements, the proposed
+experiment and alternatives, plan tasks, primary-source byte CIDs, and one
+bounded historical observation. [`ontology.ttl`](ontology.ttl) defines the
+local predicates; [`design-shapes.ttl`](design-shapes.ttl) constrains their use.
+Requirement/decision IRIs identify engineering concepts; artifact IRIs identify
+file bytes. `pathView` is a repo-relative representation, not identity.
+Only the three local source artifacts are byte-verified. External URLs are dated
+web citations, not archived or hash-verified content; implementation selection
+must pin its actual inputs. The D04 identifier is the existing RDF subject in
+`research/linux_os/findings.ttl`, not an HTTP retrieval URL.
+
+```bash
+./chu check --only os-design --json
+```
+
+This check projects task status from the canonical JSON plan, validates SHACL,
+predicate domains/ranges and cited byte CIDs, then compares three SPARQL queries
+with RDFLib and Oxigraph. The retained `os-design-answers.json` answers:
+
+- Which source supports each requirement, which task covers it, and is it done?
+- Which strategy is proposed, by whose authority, with which alternatives and sources?
+- What exactly does the archived experiment support, and at what original time?
+
+The old overlay-only research decision D04 is preserved in its archive and
+explicitly superseded in the current design view. The current graph cannot
+promote a proposal to a user decision or the clean-boot observation to OS/HSWM
+completion. Tests exercise those invalid claims.
+
+Remaining gaps: boot evidence still stores detailed results in a JSON literal,
+not individual typed boot/input-role nodes; the plan's older completion records
+do not all have digest-bound evidence; HSWM packaging and the release/update/
+recovery activities are still unimplemented. This check reads archived evidence
+and does not rerun a VM, validate unavailable serial logs, or execute HSWM.
