@@ -1,0 +1,52 @@
+@prefix eng: <https://github.com/gj3447/CHU/engineering#> .
+@prefix dev: <https://github.com/gj3447/CHU/dev#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+eng:ArtifactShape a sh:NodeShape ; sh:targetClass eng:Artifact ; sh:nodeKind sh:IRI ;
+    sh:pattern "^urn:sha256:[0-9a-f]{64}$" .
+
+eng:RepresentationShape a sh:NodeShape ; sh:targetClass eng:Representation ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path eng:content ; sh:class eng:Artifact ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:collection ; sh:class eng:Collection ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:authority ; sh:in ( "USER_PRIMARY" "OWNER_INSTRUCTION" "SECONDARY_AI" "UNSPECIFIED" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:lifecycle ; sh:in ( "CURRENT" "HISTORICAL" "REFERENCE" "PRESERVED" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dev:pathView ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+eng:CollectionShape a sh:NodeShape ; sh:targetClass eng:Collection ;
+    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+eng:ProfileShape a sh:NodeShape ; sh:targetClass eng:Profile ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:lifecycle ; sh:in ( "CURRENT" "HISTORICAL" "REFERENCE" "PRESERVED" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:scope ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:validatedBy ; sh:class dev:Check ; sh:minCount 1 ] .
+
+eng:AssetBindingShape a sh:NodeShape ; sh:targetClass eng:AssetBinding ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path eng:profile ; sh:class eng:Profile ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:representation ; sh:class eng:Representation ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:assetRole ; sh:in ( "data" "ontology" "shapes" "queries" "source" ) ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+eng:PlanTaskShape a sh:NodeShape ; sh:targetClass eng:PlanTask ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:taskStatus ; sh:in ( "pending" "done" ) ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+eng:GateShape a sh:NodeShape ; sh:targetClass eng:Gate ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path eng:tailTask ; sh:class eng:PlanTask ; sh:minCount 1 ] ;
+    sh:property [ sh:path eng:headTask ; sh:class eng:PlanTask ; sh:minCount 1 ] ;
+    sh:property [ sh:path eng:gateSemantics ; sh:hasValue "ALL_TAILS" ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+eng:EvidenceBindingShape a sh:NodeShape ; sh:targetClass eng:EvidenceBinding ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path dev:pathView ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:sourceReport ; sh:class eng:Artifact ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:recordedContent ; sh:class eng:Artifact ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:currentContent ; sh:class eng:Artifact ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:freshness ; sh:in ( "MATCH" "CHANGED" "UNAVAILABLE" ) ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+eng:GapShape a sh:NodeShape ; sh:targetClass eng:Gap ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:scope ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path eng:addressesTask ; sh:class eng:PlanTask ] ;
+    sh:property [ sh:path eng:gapState ; sh:hasValue "OPEN" ; sh:minCount 1 ; sh:maxCount 1 ] .

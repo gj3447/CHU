@@ -1,30 +1,27 @@
 <div align="center">
 
-# CHU — Computable Hyperuniverse Type System
+# CHU — Computable Hyperuniverse · Hypergraph OS
 
-**Foundational Type Layer for the SYMPOSIUM Hypergraph Universe**
+**VM OS under development · Agent-native graph workspace · Formal foundations**
 
 [![Type System](https://img.shields.io/badge/Type_System-CHU_v1-D97757?style=for-the-badge&logoColor=white)](docs/STATUS.md)
-[![Lean 4 Verified](https://img.shields.io/badge/Lean_4-11_files_/_0_sorry-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
+[![Lean 4 Verified](https://img.shields.io/badge/Lean_4-11_files_/_dated_observation-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
 [![KG Lenses](https://img.shields.io/badge/CHU_Lenses-11_SymConcept-6366f1?style=for-the-badge&logoColor=white)](INDEX.md)
 [![Sources](https://img.shields.io/badge/External_Canon-Friedman_/_Wolfram_/_Voevodsky-8b5cf6?style=for-the-badge&logoColor=white)](SOURCES.md)
 [![License](https://img.shields.io/badge/License-AGPL--3.0--or--later_%2B_Commercial-blue?style=for-the-badge)](LICENSING.md)
 
 </div>
 
-> **CHU** = **C**omputable **H**yper**u**niverse. The single substrate type that every 12-사도 mythological figure and 5-weapon engineering tool implicitly quantifies over. `axiom CHU : Type`; a piece of CHU is a predicate `CHUPiece := CHU → Prop`; 비행기맨 (#4 Airplane Man) = `∀ x : CHU, j.covers x`. CHU is **not** an apostle — it is the **stage** on which the 12 apostles operate (TIER 2 substrate, the pure data phase of #8 OM, per user canon 2026-04-28).
+> **현재 사용자 목표 (2026-09-29/30 USER_PRIMARY)**: CHU = **하이퍼그래프 기반 OS**. 파일·문서·코드·모델은 노드와 역할 있는 n항 하이퍼엣지로 다루며, VM에서 부팅해 HSWM을 실행할 수 있어야 한다. 현재 목표·근거·작업 상태는 [engineering README](engineering/README.md), [OS 설계](os/README.md), [계획](plan/CHU_OS_PLAN.md), [사용자 원문](canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt)에서 확인한다.
 
-> **2026-09-29 정체성 (사용자 정전)**: CHU = **하이퍼그래프 기반 OS** — 폴더 트리 없이 파일·문서·코드·모델이 모두
-> 노드 + n항 하이퍼엣지. 토대: [AI native 3대원칙](canon/AI_NATIVE_THREE_PRINCIPLES.md) ·
-> [왜 하이퍼그래프인가](WHY_HYPERGRAPH.md) · 작업계획 [plan/CHU_OS_PLAN.md](plan/CHU_OS_PLAN.md).
-> 아래 타입 시스템은 이 OS의 커널 이론이다.
+> **Lean/type-theory 층 (역사적·현재의 보조 자산)**: `axiom CHU : Type`, `CHUPiece := CHU → Prop`, `JaebaeMan`은 CHU의 형식적 이론·프로토타입 층이다. 이는 완성된 OS 커널이나 HSWM 실행 증거가 아니다. 2026-04-28의 SYMPOSIUM TIER 2 해석은 [역사적 이론 맥락](docs/index.md#historical-theory-context)으로 보존한다.
 > 생태계: [CHU · HSWM · USL](ECOSYSTEM.md) — CHU ⊇ HSWM(LLM AI), USL = n항 의미 연결 문법.
 > 작업환경 참여(“우리는 하나의 존재다”)는 저장소 사용과 분리된 opt-in 약정으로 제안 중:
 > [MetaHumotonic Covenant — MHP-0001 (DRAFT)](https://github.com/gj3447/metahumotonic-foundation/pull/1). 이 저장소를 쓰는 것만으로는 작업환경 권한이 넘어가지 않는다.
 
 ---
 
-## What CHU Is
+## What the Formal Layer Models
 
 CHU formalizes the user's name-list axiom **"그냥 모든것은 하이퍼그래프"** ("everything is a hypergraph") as a *minimal*, *model-independent*, *consistency-safe* Lean 4 axiom layer:
 
@@ -37,9 +34,9 @@ inductive JaebaeMan : Type             -- recursive coverer
 def isAirplaneMan (j : JaebaeMan) : Prop := ∀ x : CHU, j.covers x
 ```
 
-That is the entire core — every other SYMPOSIUM construct (5 weapons, 12 apostles, APT/TPA methodology, Longinus 7-Layer, Harness 3-tier) operates **on or over** CHU.
+That is the small type-theory core. The VM OS, persistent graph service and agent execution contracts are separate implementation layers described in [the architecture](spec/ARCHITECTURE.md).
 
-## Why CHU
+## Why This Formal Layer
 
 Most type universes are either too specific (a particular set theory model, e.g. ZFC) or too abstract for engineering use (univalent Type Theory with Mathlib transit). CHU is deliberately **the minimum sufficient stage**:
 
@@ -54,10 +51,15 @@ Grounded in 4 external canons: **Sy Friedman Hyperuniverse Programme** (V-logic,
 
 ## Quick Start
 
-For reproducible Rust, Lean, Python and graph engineering development, use
-[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md): `python3 scripts/bootstrap.py`, then
-`./chu doctor --json` and `./chu check`. The RDF tool registry is
-[dev/catalog.ttl](dev/catalog.ttl); agents can discover it with `./chu tools --json`.
+Start with [engineering README](engineering/README.md) for the current graph-engineering map and [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for reproducible development. Inspect the current repository projection instead of relying on prose counts:
+
+```bash
+./chu repo status --json
+./chu repo query profiles --json
+./chu repo query evidence --json
+```
+
+`./chu doctor --json`, `./chu tools --json`, and `./chu check --json` provide environment and verification views. The RDF development registry is [dev/catalog.ttl](dev/catalog.ttl).
 
 CHU's current OS target is a VM-booting environment capable of running HSWM.
 The present Ubuntu/QEMU substrate and its strict boundary are documented in
@@ -88,7 +90,7 @@ lean AirplaneMan_Uniqueness.lean       # essential uniqueness on CHU
 lean JaebaeManInf.lean                 # infinite JaebaeMan generalization
 ```
 
-All 11 files verify with the pinned Lean 4.34.1, **Mathlib-free**, **0 sorry**.
+**2026-09-29 observation:** all 11 files verified with pinned Lean 4.34.1, **Mathlib-free**, **0 sorry**. Run `./chu check --json` for fresh verification; `./chu repo status --json` is inventory discovery only.
 
 For paper / KG use, cite the axioms by their canonical file path. The README of any SYMPOSIUM-derivative project can pull CHU as a one-line `axiom CHU : Type` postulate.
 
@@ -118,7 +120,7 @@ That's the simplest 비행기맨 witness. `airplaneManAt n` extends it to any de
 
 ## Architecture
 
-### Type Primitives (the entire surface)
+### Type Primitives (formal-layer surface)
 
 | Primitive | Lean signature | Role |
 |-----------|----------------|------|
@@ -167,7 +169,7 @@ See [`SOURCES.md`](SOURCES.md) §"CHU-Internet binding" for the 11th lens ground
 
 ### Lean Formalization
 
-11 verified Lean 4 files (Mathlib-free standalone, Lean 4.34.1, **0 sorry**):
+**2026-09-29 observation:** 11 verified Lean 4 files (Mathlib-free standalone, Lean 4.34.1, **0 sorry**):
 
 - [`AirplaneMan.lean`](lean/AirplaneMan.lean) — core axioms + 8 theorems (canonical entry point)
 - [`AirplaneMan_v2.lean`](lean/AirplaneMan_v2.lean) — v2 refinements
@@ -181,7 +183,7 @@ See [`SOURCES.md`](SOURCES.md) §"CHU-Internet binding" for the 11th lens ground
 - [`CompositeJaebaeECSTripleIso.lean`](lean/CompositeJaebaeECSTripleIso.lean) — ECS-JaebaeMan triple isomorphism
 - [`CHU_WolframRewrite.lean`](lean/CHU_WolframRewrite.lean) — rewrite dynamics and truncation overlay
 
-Source: `/Users/lagyeongjun/CD/MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeMan*.lean`.
+Current CHU copy: [`lean/`](lean/). Historical origin: `MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeMan*.lean` (provenance only, not the current navigation path).
 
 ---
 
@@ -191,7 +193,8 @@ Source: `/Users/lagyeongjun/CD/MIND/lean_formalization/AirplaneMan*.lean` + `Jae
 |-----|---------|
 | [`docs/USERGUIDE.md`](docs/USERGUIDE.md) | CHU type definition + usage patterns + ∀-cover proof recipes + pitfalls |
 | [`docs/STATUS.md`](docs/STATUS.md) | Lean formalization status, OQ resolution, external grounding tier |
-| [`docs/index.md`](docs/index.md) | Documentation hub |
+| [`docs/index.md`](docs/index.md) | Documentation hub: current OS route and historical theory route |
+| [`engineering/README.md`](engineering/README.md) | Current graph-engineering profiles, evidence and query entry |
 | [`CHANGELOG.md`](CHANGELOG.md) | Type-system evolution history |
 | [`SOURCES.md`](SOURCES.md) | 1차 sources + 핵심 주장 + 인용 + 발전축 (a)~(n) |
 | [`INDEX.md`](INDEX.md) | Folder navigation (PROM cycles + axis findings + raw _findings) |
@@ -225,8 +228,10 @@ Detail: [`PROM_16_REPORT.md`](PROM_16_REPORT.md) and [`SOURCES.md`](SOURCES.md).
 
 ## Status
 
+The following describes the Lean/type-theory layer. Current repository, OS, and evidence status must be queried through the commands above.
+
 - **Type system version**: v1 (canonical, no breaking change since 2026-04-29 PROM 16 axiom-foundation lock-in)
-- **Lean files**: 11 (all PASS, 0 sorry)
+- **Lean layer evidence**: 2026-09-29 observation: 11 files, 0 sorry; run `./chu check --json` for fresh verification.
 - **External canon grounding tier**: A (4 canons cross-referenced: Friedman / Wolfram / Voevodsky / Hyland)
 - **OQ1 (universe level)**: RESOLVED (`lesson-chu-universe-resolution-2026-05-02`, both Type 0 and Type u sound)
 - **OQ4 (Tegmark IV pairing)**: NUMEROLOGY_HOLD (form-iso unprovable; held as poetic pair)

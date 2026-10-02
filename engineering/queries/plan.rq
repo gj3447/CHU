@@ -1,0 +1,11 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+
+SELECT ?gate ?tail ?head ?tailStatus ?headStatus WHERE {
+  GRAPH eng:inventory {
+    ?gate a eng:Gate ; eng:gateSemantics "ALL_TAILS" ;
+      eng:tailTask ?tail ; eng:headTask ?head .
+    ?tail eng:taskStatus ?tailStatus .
+    ?head eng:taskStatus ?headStatus .
+  }
+}
+ORDER BY ?gate ?tail ?head

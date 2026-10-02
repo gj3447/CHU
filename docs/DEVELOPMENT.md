@@ -44,6 +44,10 @@ builds and behavior. Neither implies a running CHU OS or shared KG write access.
 ./chu check --json                  # all registered checks; stderr progress, JSON stdout
 ./chu check --only core-test --only truncation --json
 ./chu check --only os-design --json  # OS requirements/proposals/evidence; no VM boot
+./chu repo status --json            # complete file inventory, profiles and evidence freshness
+./chu repo query profiles --json    # each profile's checks and exact proof boundary
+./chu repo query evidence --json    # historical input digests vs current tracked bytes
+./chu check --only repo-graph --json # SHACL, inventory, selected syntax/local links, isolated RDF queries
 ./chu graph-check --json            # SHACL, ontology predicates, lists, version drift
 ./chu query tools --json            # named local SPARQL competency query
 ./chu query checks --json
@@ -112,6 +116,15 @@ service. A package being installed is not proof of a service or
 MCP being available.
 
 ## Graph contract and standards
+
+The repository-wide [engineering map](../engineering/README.md) connects file
+byte CIDs, source representations, explicit collections, validation profiles,
+plan AND gates and evidence freshness. Its `repo` commands are read-only views;
+the `repo-graph` check retains an ignored TriG dataset and query answers.
+Every existing RDF source is a separate named graph. The inventory's SHACL is
+applied only to its own metadata, leaving each domain profile's existing
+validator authoritative for that domain. Inventory membership and check
+associations are not semantic proof, current PASS or execution permission.
 
 `dev/catalog.ttl` is the single executable registry. `dev/tool-research.ttl` adds
 dated candidate evaluations to the query/export/validation graph, with a distinct

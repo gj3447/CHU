@@ -1,6 +1,6 @@
 # CHU · HSWM · USL — 하나의 하이퍼그래프 생태계
 
-2026-09-29 · 세 저장소는 **긴밀히 연결된 한 체계**다 (사용자 지시 2026-09-29).
+2026-09-29 · 사용자 정의의 개념적 관계 지도. 실행·통합 완료 여부는 [current engineering view](engineering/README.md)와 [`os/README.md`](os/README.md)의 증거 범위로 확인한다.
 
 | 저장소 | 한 줄 정체성 | 권위 |
 |---|---|---|
@@ -25,7 +25,7 @@ flowchart TB
 
 | 관계 | 내용 |
 |---|---|
-| **CHU ⊇ HSWM** | 사용자 정의 그대로. HSWM은 CHU OS 위에서 사는 LLM AI이고, CHU OS의 메모리·파일시스템이 HSWM의 Semantic Weight 그래프를 담는 기반이 된다. ([3대원칙](canon/AI_NATIVE_THREE_PRINCIPLES.md) ③: LLM = ROM, CHU = 메모리, Semantic Weight = 프로그램) |
+| **CHU ⊇ HSWM** | 사용자 정의 그대로. HSWM은 CHU OS 위에서 살도록 정의된 LLM AI이며, 계획상 CHU OS의 메모리·파일시스템이 HSWM의 Semantic Weight 그래프를 담는 기반이 된다. 현재 guest HSWM 통합은 완료되지 않았다. ([3대원칙](canon/AI_NATIVE_THREE_PRINCIPLES.md) ③: LLM = ROM, CHU = 메모리, Semantic Weight = 프로그램) |
 | **USL ↔ CHU** | USL 링크 = `meaning + participants[{role, resource}]` = **역할 있는 n항 하이퍼엣지**. "checkout이 이동해도 자원 ID는 유지하고 표현(경로·URL·commit)만 고른다"는 USL 원칙은 CHU의 "정체성은 ID, 경로는 뷰" 원칙과 같다. 그래서 CHU OS는 저장소 **밖** 자원과 저장소 **사이** 연결을 USL 문법으로 표기한다. USL은 DB가 아니므로 상태의 정본은 CHU store가 갖고, USL은 그것을 가리키고 묶는다. |
 | **USL ↔ HSWM** | HSWM 연결 실행 전에는 USL 작업환경 등록·소유자 승인·도달성 확인이 필요하다(공통 AGENTS 블록). USL `connections/hswm/`이 HSWM 연구 자료를 바인딩한다. |
 | **HSWM → CHU** | 3대원칙의 계산적 핵심은 HSWM `formal/`에서 Lean 검증됐고 CHU는 그것을 링크로 인용한다 ([증명 상태](canon/AI_NATIVE_THREE_PRINCIPLES.md#증명-상태-2026-09-29-재검증)). |
@@ -36,5 +36,5 @@ flowchart TB
   고정 commit·SHA-256으로 결속하고, 위 관계를 USL 링크(하이퍼엣지)로 기록. 사용법: [USL `docs/CHU_CONNECTION.md`](https://github.com/gj3447/USL/blob/master/docs/CHU_CONNECTION.md).
 - **공통 에이전트 규칙**: 세 저장소의 `AGENTS.md`에 같은 `usl-workspace-linking` 블록.
 - **공통 라이선스**: 세 저장소 모두 AGPL-3.0-or-later 또는 별도 상용 라이선스, © Ra Gyeongjun ([LICENSING.md](LICENSING.md)).
-- **로컬 배치**: `~/CD/{CHU,HSWM,USL}` 형제 디렉터리. CHU 문서의 `../HSWM/...` 상대 링크는 이 배치를 전제로 한다.
+- **로컬 배치**: `~/CD/{CHU,HSWM,USL}`은 개발자의 한 작업공간 투영이다. 자원 정체성이나 통합 완료 증거가 아니며, 상대 링크는 그 배치에서만 해석된다.
 - **CHU OS 계획과의 연결**: [계획](plan/CHU_OS_PLAN.md)의 T31(링크 추출)·T42(에이전트 포트)·T52(분산 백엔드)는 USL 바인딩과 HSWM 실행 경로를 재사용한다.

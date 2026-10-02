@@ -1,0 +1,9 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+SELECT ?profile ?role ?representation ?path ?content WHERE {
+  GRAPH eng:inventory {
+    ?binding a eng:AssetBinding ; eng:profile ?profile ;
+      eng:assetRole ?role ; eng:representation ?representation .
+    ?representation dev:pathView ?path ; eng:content ?content .
+  }
+} ORDER BY ?profile ?role ?path

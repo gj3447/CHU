@@ -5,8 +5,14 @@
 
 ---
 
-## 2026-09-29 — CHU = 하이퍼그래프 OS
+## 현재 엔지니어링 진입점 — CHU 하이퍼그래프 OS
 
+CHU의 현재 USER_PRIMARY 목표는 VM에서 부팅하고 HSWM을 실행할 수 있는 하이퍼그래프 OS다. Lean·PROM 자료는 이 목표의 이론/연구 층이며 완료된 OS의 증거가 아니다.
+
+- [`engineering/README.md`](engineering/README.md) — 현재 그래프 프로필, CID 인벤토리와 증거 질의 진입점
+- [`os/README.md`](os/README.md) — 제한된 VM substrate 관찰과 미완료 경계
+- [`spec/ARCHITECTURE.md`](spec/ARCHITECTURE.md) — 구현 계층과 종료 조건
+- 현재 상태는 `./chu repo status --json`, 프로필은 `./chu repo query profiles --json`, 증거는 `./chu repo query evidence --json`으로 확인
 - [`canon/AI_NATIVE_THREE_PRINCIPLES.md`](canon/AI_NATIVE_THREE_PRINCIPLES.md) — AI native 3대원칙 (원문 + 증명 상태)
 - [`WHY_HYPERGRAPH.md`](WHY_HYPERGRAPH.md) — Wolfram · ZFC · Transformer · HSWM → 왜 하이퍼그래프인가
 - [`plan/CHU_OS_PLAN.md`](plan/CHU_OS_PLAN.md) — 작업계획 (정본 [`plan/chu_os_plan.graph.json`](plan/chu_os_plan.graph.json))
@@ -48,9 +54,12 @@ THEORY/CHU/
 │   ├── A3_CategoricalPageRank.md
 │   └── A4_QuaternionSedenionAlgebra.md
 │
-└── _findings/                        ← raw JSON dumps (PROM v6 L3 layer)
-    ├── finding_prom16_chu_a*s*.json    (16+16 from PROM 16 cycles)
-    └── finding_prom64_chu_a*s*.json    (64 from PROM 64)
+└── _findings/                        ← locally preserved raw JSON (PROM v6 L3 layer)
+    ├── finding_prom16_chu_*.json       (2 local PROM16 records)
+    ├── finding_prom64_chu_*.json       (64 local PROM64 records)
+    └── finding_chu-pratt-bridge-*.json (1 local Pratt record)
+
+`PROM_16_axis_findings/finding_prom16_chu_a4s3_unified.json` is a separate unified record outside `_findings/`. Historical reports may describe 16-cell cycles; that describes research scope, not a claim that 16 corresponding PROM16 raw JSON files are locally present.
 ```
 
 ---
@@ -172,5 +181,5 @@ KG 정전: 2026-04-29 기준 **11개 lens**
 
 ## 한 줄 정리
 
-**CHU = 계산가능 하이퍼우주 = 모든 것의 데이터 위상.**
+**역사적 이론 표기:** CHU = 계산가능 하이퍼우주 = 모든 것의 데이터 위상. 현재 제품 목표와 증거는 이 문서의 상단 현재 엔지니어링 진입점에서 확인한다.
 PROM 16 이 *형식 토대*, PROM 64 가 *물리 evidence* (인터넷 = CHU 인스턴스). 두 사이클이 짝패로 CHU 정전을 떠받침.

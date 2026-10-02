@@ -1,0 +1,15 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+PREFIX os: <https://github.com/gj3447/CHU/os#>
+PREFIX chu: <https://github.com/gj3447/CHU/vocab#>
+PREFIX old: <https://github.com/gj3447/CHU/research/linux_os#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?path ?representation ?subject ?kind WHERE {
+  VALUES (?path ?subject ?kind) {
+    ("dev/catalog.ttl" dev:catalog prov:Entity)
+    ("os/design.ttl" os:D-linux-image os:Decision)
+    ("research/linux_os/findings.ttl" old:D04 chu:DesignDecision)
+  }
+  GRAPH eng:inventory { ?representation a eng:Representation ; dev:pathView ?path . }
+  GRAPH ?representation { ?subject a ?kind . }
+} ORDER BY ?path

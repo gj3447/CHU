@@ -1,6 +1,8 @@
 # CHU Status
 
-> Lean formalization status, OQ resolution, external grounding tier.
+> Current repository state: `./chu repo status --json`; profile and evidence views: `./chu repo query profiles --json`, `./chu repo query evidence --json`.
+>
+> The remainder contains dated Lean, research, and environment observations. It is not a live pass dashboard.
 > Quick overview: [`../README.md`](../README.md). User guide: [`USERGUIDE.md`](USERGUIDE.md).
 
 ---
@@ -9,26 +11,27 @@
 
 [Primary-source comparison](../research/OS_BUILD_RESEARCH_2026-10-02.md) covers
 mkosi, Buildroot, Yocto, LFS and kernel-development alternatives. A Linux/mkosi
-image experiment is proposed, not installed or adopted. The actual OS is still
-unimplemented beyond the earlier substrate and executable graph specification.
+image experiment is proposed, not installed or adopted. CHU OS acceptance remains incomplete: the current records cover design and a bounded substrate observation, not HSWM execution, release/update, or recovery acceptance.
 
 - [OS design graph](../os/design.ttl) connects seven requirements to sources and
   plan tasks, distinguishes AI proposals from primary user bytes, and limits the
   archived two-boot observation to clean-boot substrate scope.
 - `os-design` adds SHACL, byte-CID and domain/range checks plus three queries
-  compared across RDFLib/Oxigraph. The current registry contains 33 checks;
-  the dated test counts below describe earlier observations.
+  compared across RDFLib/Oxigraph. Obtain current check inventory through
+  `./chu repo status --json` and fresh verdicts through `./chu check --json`;
+  counts below are dated observations only.
 - Open T66–T69 add owned image/release construction, update/rollback, fault
   recovery and an AND gate for final acceptance. T07, T10 and T66 are ready.
 - Individual typed boot/input-role evidence and digest-bound completion records
   for every older task remain gaps. No new VM run or HSWM execution was performed
   for this research change.
 
-## VM OS substrate — observed 2026-10-01
+## Archived VM OS substrate observation — 2026-10-01
 
 The [user target](../canon/VM_OS_TARGET.md) is a VM-bootable CHU OS capable of
-running HSWM. The former user-space overlay assumption has been superseded.
-[VM commands and source trace](../os/README.md) now implement a bounded first step:
+running HSWM. The former user-space overlay assumption has been superseded. This
+section records the old harness observation only; it is not a current VM verdict.
+[VM commands and source trace](../os/README.md) define its bounded scope:
 
 - QEMU 10.0.13 TCG boots the checksum-pinned Ubuntu 24.04 image twice with no
   guest network, KVM, root privileges or host filesystem sharing.
@@ -42,20 +45,23 @@ running HSWM. The former user-space overlay assumption has been superseded.
 - T60–T62 are complete for that substrate contract. HSWM remains `NOT_READY`:
   its package, dependencies, chosen provider, authorized resource transport,
   and the persistent guest CHU service are not integrated. T63–T65 remain open.
-- The complete local registry passes 32/32 checks, including 80 Python tests
-  and all 11 Lean files. VM boot evidence is a separate real local run;
-  ordinary CI does not provision or boot this VM profile.
+- The historical local check/test counts recorded with this observation are not
+  a current-pass claim. Query the repository for the current suite verdict. VM
+  boot evidence is separate from ordinary CI, which does not provision or boot
+  this VM profile.
 - The initial second-boot attempt failed because of a systemd ordering cycle.
-  Enabling the probe under `cloud-init.target` fixes it. The offline image's
-  first network wait times out; subsequent boots mask that unnecessary wait.
+  Enabling the probe under `cloud-init.target` fixed that archived harness. The
+  offline image's first network wait timed out; subsequent boots masked it.
+- 2026-10-02: Ubuntu-image CID/lock validation changed forward only. No new VM
+  run was performed, so it does not refresh this archived observation.
 
 ## Development environment — observed 2026-09-30
 
-Local Linux x86_64 development is configured and verified. Entry point:
+This is a dated 2026-09-30 development observation. It does not state the current suite result. Entry point:
 [`DEVELOPMENT.md`](DEVELOPMENT.md), `./chu tools --json`, `./chu doctor --json`,
 `./chu check --json`. These are dated engineering observations, not user canon.
 
-- Python 3.13.5, uv 0.12.3, Rust/Cargo 1.97.1 and Lean 4.34.1 are pinned.
+- At this observation, Python 3.13.5, uv 0.12.3, Rust/Cargo 1.97.1 and Lean 4.34.1 were pinned.
   RDFLib 7.6.0, pySHACL 0.40.1, Ruff 0.16.9, pytest 9.1.1 and actionlint 1.7.12
   are installed through a dependency lock or checksum-pinned upstream release.
 - Internet research compared 10 additional open-source CLI candidates; Oxigraph
@@ -127,7 +133,7 @@ See [`../CHANGELOG.md`](../CHANGELOG.md) for the evolution trajectory.
 
 ## Lean 4 Formalization
 
-**11 verified Lean 4 files** (Mathlib-free, standalone, pinned Lean **4.34.1**, **0 sorry**).
+**2026-09-29 Lean observation:** 11 verified Lean 4 files (Mathlib-free, standalone, pinned Lean **4.34.1**, **0 sorry**). Query the current suite rather than treating this as a live verdict.
 
 > **실측 정정 2026-07-15**: 이전 "10 files / Lean 4.30.0-rc2"는 stale. `CHU_WolframRewrite.lean`(동역학 층) 누락 + 툴체인 버전 경과. 재검증 = **11/11 `lean <file>` exit 0**, `declaration uses 'sorry'` 경고 0건(파일 내 `sorry` 문자열 2건은 블록 주석 산문이라 실제 sorry 아님 — 확인함).
 
@@ -221,9 +227,9 @@ See [`../SOURCES.md`](../SOURCES.md) for the full table with paths and citations
 
 ---
 
-## KG Canon
+## Historical KG references
 
-**Canonical KG nodes related to CHU**:
+The following identifiers are historical project references, not a claim of live shared-KG availability or current authority. Current user canon is in [`../canon/sources/`](../canon/sources/).
 
 - `family-expansion-pattern-canonical-2026-04-30` — CHU as TIER 2 substrate of #8 OM apostle.
 - `lesson-prom16-CHU-axiom-foundation-2026-04-29` — PROM 16 cycle lesson.
@@ -235,13 +241,13 @@ See [`../SOURCES.md`](../SOURCES.md) for the full table with paths and citations
 - `ATOM_PROM16_CHU_REPORT_2026-04-29` — PROM 16 REPORT atom.
 - 11 `CHU_Lens_*` `:SymConcept` nodes (HumanThought / ContextWindow / Manifold / EmbeddingVector / LLMModel / GPU / Token / Attention / TrainingData / Inference / Internet).
 
-KG source: dgx worker Neo4j + MongoDB + Redis (see `reference_kg_infra_topology.md`).
+Historical source note: dgx worker Neo4j + MongoDB + Redis (see `reference_kg_infra_topology.md`).
 
 ---
 
-## Production Use
+## Historical type-layer use
 
-CHU is a *type system*, not a runtime artifact. There is no Python/dgx prototype like APT/TPA have. Production use is:
+This section describes the Lean/type-theory layer at the time recorded. It does not override the current CHU OS target or establish a runtime verdict. There is no Python/dgx prototype like APT/TPA have. Production use is:
 
 1. **Cited in Lean proofs** — any SYMPOSIUM-derivative Lean file can `axiom CHU : Type` at the top (Mathlib-free) and use the inductive.
 2. **Referenced as KG canon** — `:Anchor` / `:Span` / `:Contract` / `:ReferenceSite` nodes all implicitly quantify over CHU.
@@ -347,6 +353,6 @@ The 11 lenses are KG `:SymConcept` nodes but not in a typed schema. Future: type
 
 - KG canonical issue tracker: `:Lesson` nodes in dgx worker Neo4j.
 - SYMPOSIUM root: [`../../SYMPOSIUM/THEORY/CLAUDE.md`](../../SYMPOSIUM/CLAUDE.md).
-- Lean sources: `/Users/lagyeongjun/CD/MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeManInf.lean` + `CompositeJaebaeECSTripleIso.lean`.
+- Current Lean sources: [`../lean/`](../lean/). Historical origin: `MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeManInf.lean` + `CompositeJaebaeECSTripleIso.lean` (provenance only).
 - Cross-methodology comparison: [`../../SYMPOSIUM/THEORY/APT/COMPARISON_METHODOLOGIES.md`](../../SYMPOSIUM/THEORY/APT/COMPARISON_METHODOLOGIES.md).
 - PROM cycle reports: [`../PROM_16_REPORT.md`](../PROM_16_REPORT.md), [`../PROM_64_REPORT.md`](../PROM_64_REPORT.md), [`../PROM_16_RANK_ALGEBRA_REPORT.md`](../PROM_16_RANK_ALGEBRA_REPORT.md).

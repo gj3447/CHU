@@ -2,6 +2,7 @@ import hashlib
 import json
 import subprocess
 import uuid
+from copy import deepcopy
 
 import pytest
 from rdflib import Graph, Literal, URIRef
@@ -94,6 +95,43 @@ def test_corrupt_cached_input_is_not_used_or_silently_replaced(tmp_path):
     with pytest.raises(ValueError, match='Cached checksum mismatch'):
         fetch({'sha256': '0' * 64, 'url': 'https://invalid.example'}, path)
     assert path.read_bytes() == b'corrupt'
+
+
+@pytest.mark.parametrize('mutate', [
+    lambda value: value['image'].update(sha256='not-a-sha256'),
+    lambda value: value['image'].update(file='..'),
+    lambda value: value['packages'].pop(),
+    lambda value: value['source_artifacts'][0].pop('version'),
+])
+def test_vm_lock_rejects_corrupt_or_incomplete_consumed_inputs(mutate):
+    manifest = deepcopy(json.loads((chu_vm.ROOT / 'os/inputs.lock.json').read_text()))
+    mutate(manifest)
+    with pytest.raises(ValueError):
+        chu_vm.validate_lock(manifest)
+
+
+def test_new_run_input_evidence_includes_the_checksum_verified_ubuntu_image(monkeypatch, tmp_path):
+    root = tmp_path / 'checkout'
+    work = root / '.chu/os'
+    host = work / 'hosts/test'
+    out = work / 'runs/run'
+    manifest = {'image': {'file': 'ubuntu.img'}}
+    paths = [
+        root / 'scripts/chu_vm.py', root / 'os/inputs.lock.json',
+        root / 'os/guest-probe.mjs', root / 'os/chu-probe.service',
+        work / 'ubuntu.img', work / 'node', host / 'receipt.json', out / 'seed.iso',
+    ]
+    for number, path in enumerate(paths):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(f'input-{number}'.encode())
+    monkeypatch.setattr(chu_vm, 'ROOT', root)
+    monkeypatch.setattr(chu_vm, 'WORK', work)
+    monkeypatch.setattr(chu_vm, 'HOST', host)
+
+    inputs = chu_vm.source_inputs(out, manifest)
+
+    image = work / 'ubuntu.img'
+    assert inputs['.chu/os/ubuntu.img'] == hashlib.sha256(image.read_bytes()).hexdigest()
 
 
 def test_evidence_binds_report_inputs_and_each_boot_log(tmp_path):

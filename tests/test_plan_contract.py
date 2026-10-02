@@ -33,6 +33,62 @@ def test_plan_rejects_invalid_engineering_contract(tmp_path, mutation):
     assert "Traceback" not in result.stderr
 
 
+@pytest.mark.parametrize("mutation", [
+    "root-list", "schema", "nodes-container", "node-object", "node-id", "status", "status-unhashable",
+    "effort-bool", "effort-infinite", "effort-huge", "edge-endpoint-duplicates", "evidence-not-object",
+    "evidence-missing-checks", "evidence-invalid-date", "evidence-unsafe-source", "evidence-empty-check",
+])
+def test_plan_rejects_malformed_v1_structure_without_reading_evidence_files(tmp_path, mutation):
+    plan = json.loads((ROOT / "plan/chu_os_plan.graph.json").read_text())
+    if mutation == "root-list":
+        plan = []
+    elif mutation == "schema":
+        plan["schema"] = "other-plan/v1"
+    elif mutation == "nodes-container":
+        plan["nodes"] = {}
+    elif mutation == "node-object":
+        plan["nodes"][0] = "not-an-object"
+    elif mutation == "node-id":
+        plan["nodes"][0]["id"] = 1
+    elif mutation == "status":
+        plan["nodes"][0]["status"] = "running"
+    elif mutation == "status-unhashable":
+        plan["nodes"][0]["status"] = []
+    elif mutation == "effort-bool":
+        plan["nodes"][0]["effort"] = True
+    elif mutation == "effort-infinite":
+        plan["nodes"][0]["effort"] = float("inf")
+    elif mutation == "effort-huge":
+        plan["nodes"][0]["effort"] = 10 ** 400
+    elif mutation == "edge-endpoint-duplicates":
+        plan["hyperedges"][0]["tail"] *= 2
+    elif mutation == "evidence-not-object":
+        plan["nodes"][0]["completion_evidence"] = "PASS"
+    elif mutation == "evidence-missing-checks":
+        plan["nodes"][0]["completion_evidence"] = {
+            "date": "2026-10-02", "scope": "declared only", "source": "spec/DATA_MODEL.md"
+        }
+    elif mutation == "evidence-invalid-date":
+        plan["nodes"][0]["completion_evidence"] = {
+            "date": "not-a-date", "scope": "declared only", "source": "spec/DATA_MODEL.md", "checks": ["old free-text label"]
+        }
+    elif mutation == "evidence-unsafe-source":
+        plan["nodes"][0]["completion_evidence"] = {
+            "date": "2026-10-02", "scope": "declared only", "source": "../outside.md", "checks": ["old free-text label"]
+        }
+    elif mutation == "evidence-empty-check":
+        plan["nodes"][0]["completion_evidence"] = {
+            "date": "2026-10-02", "scope": "declared only", "source": "does-not-need-to-exist.md", "checks": [""]
+        }
+    (tmp_path / "chu_os_plan.graph.json").write_text(json.dumps(plan))
+    script = tmp_path / "check_plan.py"
+    script.write_bytes((ROOT / "plan/check_plan.py").read_bytes())
+    result = subprocess.run([sys.executable, str(script)], cwd=tmp_path,
+                            capture_output=True, text=True, timeout=30)
+    assert result.returncode == 1 and "FAIL" in result.stdout
+    assert "Traceback" not in result.stderr
+
+
 def test_completion_evidence_and_next_frontier():
     rows = {row["id"]: row for row in roadmap()["tasks"]}
     assert set(roadmap()["ready"]) == {"T07", "T10", "T66"}

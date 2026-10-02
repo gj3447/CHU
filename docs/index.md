@@ -1,11 +1,22 @@
 ---
 title: CHU Documentation Hub
-description: Computable Hyperuniverse type system — the SYMPOSIUM substrate
+description: CHU hypergraph OS navigation with Lean/type-theory historical layer
 ---
 
 # CHU Documentation
 
-**CHU** (Computable Hyperuniverse, 계산가능 하이퍼우주) is the foundational type layer of the SYMPOSIUM project. A single `axiom CHU : Type` plus a μ-recursive `JaebaeMan` inductive, on which every 12 사도 mythological figure and 5-weapon engineering tool operates.
+**CHU**의 현재 USER_PRIMARY 목표는 VM에서 부팅하고 HSWM을 실행하는 하이퍼그래프 OS다. `axiom CHU : Type`과 μ-재귀 `JaebaeMan`은 이를 위한 Lean/type-theory 층이며, OS·HSWM 실행 완료를 뜻하지 않는다.
+
+## Current Engineering
+
+| Doc / command | Read or run this when |
+|---|---|
+| [`../engineering/README.md`](../engineering/README.md) | Current graph profiles, CID inventory and evidence navigation |
+| [`../os/README.md`](../os/README.md) | VM substrate scope and limits |
+| [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md) | Implementation layers and acceptance gates |
+| `./chu repo status --json` | You need current status, not a dated prose observation |
+| `./chu repo query profiles --json` | You need profile/source-of-truth boundaries |
+| `./chu repo query evidence --json` | You need evidence and its scope |
 
 ## Quick Links
 
@@ -66,7 +77,7 @@ See [`USERGUIDE.md#type-primitives`](USERGUIDE.md#type-primitives) for the full 
 | `CompositeJaebaeECSTripleIso.lean` | ECS-JaebaeMan-CHU triple isomorphism |
 | `CHU_WolframRewrite.lean` | 동역학 층 — Wolfram rewrite overlay + truncation dichotomy (`Reach` 1-category vs `Path` un-truncated) |
 
-**Total**: **3,185 LOC, 144 theorems**, **0 sorry**, Mathlib-free, Lean **4.32.0** (실측 2026-07-15 — 이전 `~1,465 / ~48 / 10 files / 4.30.0-rc2`는 stale).
+**Historical observation (2026-07-15)**: **3,185 LOC, 144 theorems**, **0 sorry**, Mathlib-free, Lean **4.32.0**. The later 2026-09-29 recheck uses the pinned Lean **4.34.1** above; neither dated observation substitutes for the current repository status query.
 
 See [`STATUS.md#lean-4-formalization`](STATUS.md#lean-4-formalization) for the detailed table.
 
@@ -134,9 +145,9 @@ Each cycle produces axis findings + raw JSON + REPORT. See [`../INDEX.md`](../IN
 
 See [`../.claude-plugin/plugin.json`](../.claude-plugin/plugin.json) for the type-primitive registry and invariant declarations.
 
-## SYMPOSIUM Context
+## Historical Theory Context
 
-CHU is the substrate type layer (TIER 2) for the entire SYMPOSIUM monorepo. Mythological lens: CHU is the **stage** on which the 12 사도 perform; engineering lens: CHU is the **type axiom** every Lean proof and every KG node implicitly quantifies over. See [`../../SYMPOSIUM/CLAUDE.md`](../../SYMPOSIUM/CLAUDE.md).
+The following is historical SYMPOSIUM/type-theory context. CHU is described there as the substrate type layer (TIER 2) for the SYMPOSIUM monorepo. Mythological lens: CHU is the **stage** on which the 12 사도 perform; engineering lens: CHU is the **type axiom** every Lean proof and every KG node implicitly quantifies over. See [`../../SYMPOSIUM/CLAUDE.md`](../../SYMPOSIUM/CLAUDE.md).
 
 The user-canonical name list ends with:
 

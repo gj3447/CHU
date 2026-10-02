@@ -17,6 +17,13 @@ These are local execution observations; normal CI checks the harness without
 booting this Debian-specific VM profile. Original serial logs remain in the
 ignored run directory named in the report.
 
+On 2026-10-02 the harness gained offline input-lock structure validation and
+direct Ubuntu image byte-CID recording for future runs. The archived report and
+PROV above are unchanged: they omit the direct image CID, and their runner source
+digest no longer matches the current harness. No new VM boot was performed for
+that change. `./chu repo query evidence --json` distinguishes changed tracked
+sources from matching guest payloads and unavailable ignored inputs.
+
 `scripts/chu_vm.py` obtains checksum-pinned host tools, an Ubuntu 24.04 image,
 and Node; it builds a fresh cloud-init seed and starts QEMU with TCG, a serial
 console, and `-nic none`. The guest service checks the following before it emits

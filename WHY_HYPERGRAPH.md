@@ -29,7 +29,7 @@ flowchart TB
 
 | 기둥 | 하이퍼그래프로 보이는 지점 | 확인된 범위 | 열린 연구 | CHU OS에 가져오는 것 |
 |---|---|---|---|---|
-| **Wolfram** 우주 모형 | 상태 = 관계들의 집합(hyperedge), 동역학 = 규칙 `H₁→H₂` 재작성, 이력 = multiway 그래프 | 모형 자체가 명시적 하이퍼그래프 재작성 체계 ([technical intro](https://www.wolframphysics.org/technical-introduction/)) | 실제 우주 모형으로 확정됐는지 | **커널 그대로**: 상태=하이퍼그래프, 변경=재작성, 이력=multiway. 이미 [`lean/CHU_WolframRewrite.lean`](lean/CHU_WolframRewrite.lean)(9 정리)·[`chu_core.rs`](chu_core_prototype/chu_core.rs)로 구현 |
+| **Wolfram** 우주 모형 | 상태 = 관계들의 집합(hyperedge), 동역학 = 규칙 `H₁→H₂` 재작성, 이력 = multiway 그래프 | 모형 자체가 명시적 하이퍼그래프 재작성 체계 ([technical intro](https://www.wolframphysics.org/technical-introduction/)) | 실제 우주 모형으로 확정됐는지 | **이론/프로토타입에 반영**: 상태=하이퍼그래프, 변경=재작성, 이력=multiway. [`lean/CHU_WolframRewrite.lean`](lean/CHU_WolframRewrite.lean)(9 정리)와 [`chu_core.rs`](chu_core_prototype/chu_core.rs)는 이 층을 다루며, OS kernel·HSWM 실행 완료 증거는 아님 |
 | **ZFC** 수학 기초 | 모든 대상이 `∈` 관계로 쌓인 구조; 집합 = 원소들을 한 번에 묶는 하이퍼엣지 | 원시 관계는 **이항** `∈` 하나이고, 순서쌍·관계·하이퍼그래프는 그 위에서 **정의**된다 ([Oxford §2](https://people.maths.ox.ac.uk/zilber/ast-web.pdf), [mathlib ZFC](https://leanprover-community.github.io/mathlib4_docs/Mathlib/SetTheory/ZFC/Basic.html)) | ZFC가 비용 최적화로 하이퍼그래프에 "수렴"했다는 주장 | **폴더의 올바른 대체물**: 폴더(단일 부모 트리) 대신 집합 = 그룹 하이퍼엣지(다중 소속). 정체성 = 외연(내용)→ CID. CHU 기존 [`axiom CHU : Type`](lean/AirplaneMan.lean) + `CHUPiece := CHU → Prop`이 이 층 |
 | **Transformer** | 한 층의 attention이 모든 토큰을 동시에 묶는 가중 관계; multi-head = 여러 관계 유형 | attention은 그래프로 해석 가능 ([Graph-to-Graph](https://research.google/pubs/transformers-as-graph-to-graph-models/)), 명시적 하이퍼그래프 Transformer도 존재 ([HyperGT](https://arxiv.org/abs/2312.11385)) | 표준 Transformer가 하이퍼그래프로 **수렴진화**했다는 기술사적 사실 | **실행 단위(ROM)**: LLM은 그래프 국소 영역을 읽고 쓰는 연산자. 그래프 ↔ 토큰 문맥 변환이 OS의 표준 syscall. 상세: [HSWM Transformer 수학](../HSWM/docs/research/HSWM_TRANSFORMER_ARCHITECTURE_AND_MATH_2026-09-14.md) |
 | **HSWM** | 큰 Semantic Weight 하이퍼그래프 = AI 상태, LLM = 국소 연산자 | 원칙 ①②③의 계산적 핵심 Lean 검증 (14 모듈, sorry 0 — [3대원칙 문서](canon/AI_NATIVE_THREE_PRINCIPLES.md#증명-상태-2026-09-29-재검증)) | 실모델 효능, 보편 최적성 | **CHU 안의 LLM 전용 AI**. CHU OS는 HSWM이 사는 메모리·파일시스템이자, 비-LLM 월드모델도 담는 더 넓은 기반 |
@@ -63,7 +63,7 @@ CHU는 이것을 **표현 선택 규칙**으로 쓴다: 같은 정보·같은 �
 ## 4. 출처 지도 (가져온 것 / 링크한 것)
 
 - **복사해 가져옴 (CHU가 정본 사본 보유):**
-  - CHU Lean 11개 → [`lean/`](lean/) (MIND `lean_formalization` 10개 + Mac 스냅숏의 `CHU_WolframRewrite.lean`). Lean 4.34.1 재검증 11/11 통과 — 상세 [`docs/STATUS.md`](docs/STATUS.md).
+  - CHU Lean 11개 → [`lean/`](lean/) (MIND `lean_formalization` 10개 + Mac 스냅숏의 `CHU_WolframRewrite.lean`에서 가져온 현재 CHU 사본). Lean 4.34.1의 2026-09-29 재검증 관찰은 [`docs/STATUS.md`](docs/STATUS.md)에 있으며, 현재 상태는 `./chu repo status --json`으로 확인.
   - 사용자 원문 6개 → [`canon/sources/`](canon/sources/).
 - **링크 (HSWM이 정본):** 세 철학 Lean 4개 + 의존 모듈, 최소비용 가설 검토, CHU–HSWM 계산 구조
   ([문서](../HSWM/docs/research/CHU_HSWM_COMPUTATIONAL_ARCHITECTURE_2026-09-27.md)),

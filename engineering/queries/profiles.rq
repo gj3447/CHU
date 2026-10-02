@@ -1,0 +1,10 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?profile ?label ?lifecycle ?check ?scope WHERE {
+  GRAPH eng:inventory {
+    ?profile a eng:Profile ; skos:prefLabel ?label ; eng:lifecycle ?lifecycle ;
+      eng:validatedBy ?check ; eng:scope ?scope .
+  }
+}
+ORDER BY ?profile ?check

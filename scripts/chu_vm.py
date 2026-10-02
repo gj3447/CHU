@@ -23,6 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 WORK = ROOT / '.chu/os'
 HOST = WORK / 'hosts' / hashlib.sha256(json.dumps(json.loads(
     (ROOT / 'os/inputs.lock.json').read_text())['packages'], sort_keys=True).encode()).hexdigest()[:16]
+SHA256 = re.compile(r'[a-f0-9]{64}')
+REQUIRED_HOST_PACKAGES = frozenset({'genisoimage', 'qemu-system-x86', 'qemu-utils', 'seabios'})
 
 
 def digest(path):
@@ -31,7 +33,49 @@ def digest(path):
 
 
 def lock():
-    return json.loads((ROOT / 'os/inputs.lock.json').read_text())
+    manifest = json.loads((ROOT / 'os/inputs.lock.json').read_text())
+    validate_lock(manifest)
+    return manifest
+
+
+def validate_lock(manifest):
+    """Reject malformed VM inputs before any download, extraction, or boot."""
+    if not isinstance(manifest, dict) or manifest.get('schema') != 'chu-vm-inputs/v1':
+        raise ValueError('Invalid VM input lock schema')
+
+    def require_spec(spec, fields, label):
+        if not isinstance(spec, dict):
+            raise ValueError(f'Invalid {label} input')
+        for field in fields:
+            if not isinstance(spec.get(field), str) or not spec[field]:
+                raise ValueError(f'Invalid {label}.{field}')
+        if not spec['url'].startswith('https://'):
+            raise ValueError(f'Invalid {label}.url')
+        if not SHA256.fullmatch(spec['sha256']):
+            raise ValueError(f'Invalid {label}.sha256')
+        if Path(spec['file']).name != spec['file'] or spec['file'] in {'.', '..'}:
+            raise ValueError(f'Invalid {label}.file')
+
+    packages = manifest.get('packages')
+    if not isinstance(packages, list) or not packages:
+        raise ValueError('Invalid host package inputs')
+    names = set()
+    for package in packages:
+        require_spec(package, ('name', 'version', 'url', 'sha256', 'file'), 'package')
+        if package['name'] in names:
+            raise ValueError(f"Duplicate host package: {package['name']}")
+        names.add(package['name'])
+    if not REQUIRED_HOST_PACKAGES <= names:
+        raise ValueError('Missing required host package input')
+
+    require_spec(manifest.get('image'), ('url', 'sha256', 'file'), 'image')
+    require_spec(manifest.get('node'), ('version', 'url', 'sha256', 'file'), 'node')
+    sources = manifest.get('source_artifacts')
+    if not isinstance(sources, list) or not sources:
+        raise ValueError('Invalid source artifact inputs')
+    for source in sources:
+        require_spec(source, ('name', 'version', 'url', 'sha256', 'file'), 'source artifact')
+    return manifest
 
 
 def fetch(spec, destination):
@@ -245,12 +289,23 @@ def write_evidence(report, out, inputs):
     graph.serialize(out / 'evidence.ttl', format='turtle')
 
 
+def source_inputs(out, manifest):
+    """Digest the exact local bytes used to form a new VM-run observation."""
+    paths = [
+        ROOT / 'scripts/chu_vm.py', ROOT / 'os/inputs.lock.json',
+        ROOT / 'os/guest-probe.mjs', ROOT / 'os/chu-probe.service',
+        WORK / manifest['image']['file'], WORK / 'node', HOST / 'receipt.json',
+        out / 'seed.iso',
+    ]
+    return {str(path.relative_to(ROOT)): digest(path) for path in paths}
+
+
 def boot(timeout):
+    manifest = lock()
     if not doctor()['ok']:
         raise ValueError('Run ./chu vm bootstrap first')
     if shutil.disk_usage(WORK).free < 768 * 1024 ** 2:
         raise ValueError('At least 768 MiB free space required for the VM experiment')
-    manifest = lock()
     for key in ('image', 'node'):
         if digest(WORK / manifest[key]['file']) != manifest[key]['sha256']:
             raise ValueError('VM input checksum mismatch')
@@ -278,10 +333,7 @@ def boot(timeout):
                    '-drive', f'file={overlay},format=qcow2,if=virtio',
                    '-drive', f'file={out}/seed.iso,format=raw,media=cdrom,readonly=on')
     started = time.monotonic()
-    inputs = {str(path.relative_to(ROOT)): digest(path) for path in [
-        ROOT / 'scripts/chu_vm.py', ROOT / 'os/inputs.lock.json',
-        ROOT / 'os/guest-probe.mjs', ROOT / 'os/chu-probe.service', WORK / 'node',
-        HOST / 'receipt.json', out / 'seed.iso']}
+    inputs = source_inputs(out, manifest)
     report = {'schema': 'chu-vm-run/v1', 'nonce': nonce, 'ok': False,
               'started_at': datetime.now(timezone.utc).isoformat(),
               'source_sha256': inputs,

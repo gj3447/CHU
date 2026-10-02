@@ -1,6 +1,8 @@
 # CHU User Guide
 
 > How to read, use, and extend the Computable Hyperuniverse type system.
+> Current OS/evidence navigation: [`../engineering/README.md`](../engineering/README.md) and `./chu repo status --json`. This guide covers only the Lean/type-theory layer; it is not a CHU OS or HSWM runtime guide.
+>
 > Quick overview: [`../README.md`](../README.md). Status: [`STATUS.md`](STATUS.md).
 
 ---
@@ -58,7 +60,7 @@ This is the universe. It asserts that some type called `CHU` exists. **It does n
 
 - It is *strictly weaker* than Lean's three standard axioms (`propext` / `Classical.choice` / `Quot.sound`) — it is a *type-level postulate*, not a propositional or quotient axiom.
 - It is consistency-safe: assuming `CHU : Type` introduces no contradiction (PROM 16 C1).
-- The choice of `Type` (universe 0) is the **default** for SYMPOSIUM data-phase semantics. The polymorphic alternative `axiom CHU : Type u` is also sound (see [`AirplaneMan_CHU_Universe.lean`](../../MIND/lean_formalization/AirplaneMan_CHU_Universe.lean)).
+- The choice of `Type` (universe 0) is the **default** for SYMPOSIUM data-phase semantics. The polymorphic alternative `axiom CHU : Type u` is also sound (see [`AirplaneMan_CHU_Universe.lean`](../lean/AirplaneMan_CHU_Universe.lean)).
 
 ### `CHUPiece := CHU → Prop`
 
@@ -110,7 +112,7 @@ end
 
 `covers` defines coverage as **OR-union**: a `governs` JaebaeMan covers `x` iff *any* of its children covers `x`.
 
-This is the **open-cover** semantics (not partition, not sheaf) — see [`AirplaneMan_Gap3_Cover.lean`](../../MIND/lean_formalization/AirplaneMan_Gap3_Cover.lean) for why this is the canonical choice on a structureless CHU.
+This is the **open-cover** semantics (not partition, not sheaf) — see [`AirplaneMan_Gap3_Cover.lean`](../lean/AirplaneMan_Gap3_Cover.lean) for why this is the canonical choice on a structureless CHU.
 
 The mutual recursion via `anyCovers` is the standard Lean 4 idiom for definitions that recurse through `List X` where `X` is the inductive being defined.
 
@@ -149,7 +151,7 @@ So:
 This is *partially isomorphic* to **Wolfram 2020 Physics Project** (everything-is-hypergraph slogan):
 
 - ✅ **Slogan equivalence**: Both axiomatize the universe as a hypergraph.
-- ✅ **Dynamics layer** (2026-07-15 정정 — 이전엔 ⚠ gap "CHU has none"): Wolfram이 rewrite rule을 더하듯, CHU도 이제 갖고 있다. `MIND/lean_formalization/CHU_WolframRewrite.lean`이 `Rewrite := CHU → CHU`(Def 2.2), `Step`(Def 2.4 multiway one-step), `Type`-valued `Path`를 정의하고 `lean` exit 0으로 검증됨 (신규 axiom 0 = I1 보존). 남은 것은 `governs` 인코딩 대응.
+- ✅ **Dynamics layer** (2026-07-15 정정 — 이전엔 ⚠ gap "CHU has none"): Wolfram이 rewrite rule을 더하듯, CHU도 이제 갖고 있다. [`lean/CHU_WolframRewrite.lean`](../lean/CHU_WolframRewrite.lean)이 `Rewrite := CHU → CHU`(Def 2.2), `Step`(Def 2.4 multiway one-step), `Type`-valued `Path`를 정의하고 `lean` exit 0으로 검증됨 (신규 axiom 0 = I1 보존). 남은 것은 `governs` 인코딩 대응.
 - ⚠ **Cardinality gap**: Wolfram is at the computability level (Wolfram Physics Model). CHU is at the type level (`axiom CHU : Type`).
 
 See [`PROM_16_REPORT.md`](../PROM_16_REPORT.md) C3 for the open-question status.
@@ -240,7 +242,7 @@ theorem exists_airplaneman_below (js : List JaebaeMan) :
 
 If *any* child is a 비행기맨, the parent is too.
 
-All 5 recipes are in [`AirplaneMan.lean`](../../MIND/lean_formalization/AirplaneMan.lean), verified Mathlib-free.
+All 5 recipes are in [`AirplaneMan.lean`](../lean/AirplaneMan.lean); the Mathlib-free verification statement is a dated Lean-layer observation, not current OS evidence.
 
 ---
 
@@ -256,7 +258,7 @@ PROM 16 OQ1 resolution (`lesson-chu-universe-resolution-2026-05-02`):
 - **SYMPOSIUM default is `Type` (universe 0)** because the user spec defines CHU as "pure data phase of #8 OM" — first-order data, no embedded types.
 - **`Type u` is available on demand** for future embeddings of type-theoretic apparatus on top of CHU (e.g. embedding categories of types as CHU pieces).
 
-The full proof that both options compile to genuine `Inhabited` JaebaeMan inductives is in [`AirplaneMan_CHU_Universe.lean`](../../MIND/lean_formalization/AirplaneMan_CHU_Universe.lean) — two namespaces `Type0` and `TypeU`, each with a working `trivialAirplaneMan_is`.
+The full proof that both options compile to genuine `Inhabited` JaebaeMan inductives is in [`AirplaneMan_CHU_Universe.lean`](../lean/AirplaneMan_CHU_Universe.lean) — two namespaces `Type0` and `TypeU`, each with a working `trivialAirplaneMan_is`.
 
 ⚠ **Caveat (I5)**: if a future axiom asserts `CHU : CHU → Prop` style self-reference (Russell-style universe-of-universes), **Girard's paradox** strikes both options. The fix is to *not add that axiom*, not to change CHU's universe level.
 
@@ -298,7 +300,7 @@ def covers' : JaebaeMan → CHU → Prop
   | .governs js, x => js.all (fun j => j.covers x)   -- AND, not OR
 ```
 
-CHU coverage is **OR-union (open cover)**. Layer 1 pieces *can* and often *do* overlap. The user's intuition is "resonance" (공명), not "partition" (분할). See [`AirplaneMan_Gap3_Cover.lean`](../../MIND/lean_formalization/AirplaneMan_Gap3_Cover.lean) for the formal argument.
+CHU coverage is **OR-union (open cover)**. Layer 1 pieces *can* and often *do* overlap. The user's intuition is "resonance" (공명), not "partition" (분할). See [`AirplaneMan_Gap3_Cover.lean`](../lean/AirplaneMan_Gap3_Cover.lean) for the formal argument.
 
 ### Pitfall 4 — `∀ x : CHU` without any inhabitant axiom
 
@@ -330,10 +332,10 @@ A: Because we don't want to commit to any concrete model. `axiom CHU : Type` mak
 A: No — Tegmark IV has no formal definition of "structure." CHU is concretely a Lean 4 type. The pairing is held as a poetic resemblance only (NUMEROLOGY_HOLD, see PROM 16 D4).
 
 **Q: Can I have an infinite list of children in `governs`?**
-A: `List JaebaeMan` is always finite. For **infinite families** of Layer 1 pieces, see [`AirplaneMan_Gap3_Cover.lean`](../../MIND/lean_formalization/AirplaneMan_Gap3_Cover.lean) which uses `Set CHUPiece` to express open covers of infinite cardinality.
+A: `List JaebaeMan` is always finite. For **infinite families** of Layer 1 pieces, see [`AirplaneMan_Gap3_Cover.lean`](../lean/AirplaneMan_Gap3_Cover.lean) which uses `Set CHUPiece` to express open covers of infinite cardinality.
 
 **Q: Is CHU a category?**
-A: It is a `Type`, which is an object of the category of types. The inductive `JaebaeMan` over CHUPiece can be viewed as a free monad on the `(- + List -)` functor (μ-recursive initial algebra). See [`AirplaneMan_Gap4_Category.lean`](../../MIND/lean_formalization/AirplaneMan_Gap4_Category.lean) for the categorical interpretation.
+A: It is a `Type`, which is an object of the category of types. The inductive `JaebaeMan` over CHUPiece can be viewed as a free monad on the `(- + List -)` functor (μ-recursive initial algebra). See [`AirplaneMan_Gap4_Category.lean`](../lean/AirplaneMan_Gap4_Category.lean) for the categorical interpretation.
 
 **Q: How does CHU relate to APT?**
 A: APT's `:Anchor`, `:Span`, `:Contract` are all CHU pieces under the hood. CHU is the substrate; APT is one methodology that operates on CHU substrate. See [`../APT/README.md`](../../SYMPOSIUM/THEORY/APT/README.md).
@@ -349,4 +351,4 @@ A: At the **realizability layer overlay**, not in `axiom CHU : Type` itself. Hyl
 
 ---
 
-For more depth see [`../PROM_16_REPORT.md`](../PROM_16_REPORT.md), [`../SOURCES.md`](../SOURCES.md), and the Lean files at `/Users/lagyeongjun/CD/MIND/lean_formalization/AirplaneMan*.lean`.
+For more depth see [`../PROM_16_REPORT.md`](../PROM_16_REPORT.md), [`../SOURCES.md`](../SOURCES.md), and the current local Lean files in [`../lean/`](../lean/). Historical origin: `MIND/lean_formalization/AirplaneMan*.lean` (provenance only).

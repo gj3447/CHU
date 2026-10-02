@@ -468,3 +468,12 @@ dev:os-design a dev:Check ;
     dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
     dev:argv ( "{python}" "scripts/check_os_design.py" "--out" "{out}" ) ;
     dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/gj3447/CHU/blob/main/engineering/README.md>
+    a dev:Source ; dev:reviewedOn "2026-10-02"^^xsd:date .
+dev:repo-graph a dev:Check ;
+    skos:prefLabel "Validate repository CID inventory, graph profiles, named graph isolation and evidence freshness" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/engineering/README.md> ;
+    dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
+    dev:argv ( "{python}" "scripts/chu_repo.py" "check" "--out" "{out}" "--json" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .

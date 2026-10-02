@@ -1,0 +1,11 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+
+SELECT ?representation ?path ?content ?collection ?authority ?lifecycle WHERE {
+  GRAPH eng:inventory {
+    ?representation a eng:Representation ;
+      dev:pathView ?path ; eng:content ?content ; eng:collection ?collection ;
+      eng:authority ?authority ; eng:lifecycle ?lifecycle .
+  }
+}
+ORDER BY ?path

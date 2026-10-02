@@ -1,0 +1,11 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+PREFIX dev: <https://github.com/gj3447/CHU/dev#>
+
+SELECT ?binding ?path ?recorded ?current ?freshness ?report WHERE {
+  GRAPH eng:inventory {
+    ?binding a eng:EvidenceBinding ; dev:pathView ?path ;
+      eng:recordedContent ?recorded ; eng:freshness ?freshness ; eng:sourceReport ?report .
+    OPTIONAL { ?binding eng:currentContent ?current . }
+  }
+}
+ORDER BY ?path

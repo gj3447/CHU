@@ -1,0 +1,10 @@
+PREFIX eng: <https://github.com/gj3447/CHU/engineering#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?gap ?label ?scope ?task WHERE {
+  GRAPH eng:inventory {
+    ?gap a eng:Gap ; skos:prefLabel ?label ; eng:scope ?scope ; eng:gapState "OPEN" .
+    OPTIONAL { ?gap eng:addressesTask ?task . }
+  }
+}
+ORDER BY ?gap ?task

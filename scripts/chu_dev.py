@@ -255,6 +255,10 @@ def main():
     p.add_argument("argv", nargs=argparse.REMAINDER)
     p = sub.add_parser("vm", help="Boot and verify the CHU OS substrate in offline QEMU")
     p.add_argument("argv", nargs=argparse.REMAINDER)
+    p = sub.add_parser("repo", add_help=False,
+                       help="Discover repository artifacts, graph profiles, plan and evidence boundaries")
+    p.add_argument("-h", "--help", dest="repo_help", action="store_true")
+    p.add_argument("argv", nargs=argparse.REMAINDER)
     for name, desc in [("doctor", "Probe installed tools against pins"),
                        ("tools", "List tools, versions and official documentation"),
                        ("checks", "List check IDs, argv, effects and timeouts"),
@@ -272,6 +276,9 @@ def main():
             p.add_argument("--format", choices=["turtle", "json-ld", "nt"], default="turtle")
     args = parser.parse_args()
     try:
+        if args.command == "repo":
+            from chu_repo import main as repo_main
+            return repo_main(["--help"] if args.repo_help else args.argv)
         if args.command == "vm":
             from chu_vm import main as vm_main
             return vm_main(args.argv)
