@@ -8,7 +8,7 @@
 [![Lean 4 Verified](https://img.shields.io/badge/Lean_4-11_files_/_dated_observation-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
 [![KG Lenses](https://img.shields.io/badge/CHU_Lenses-11_SymConcept-6366f1?style=for-the-badge&logoColor=white)](INDEX.md)
 [![Sources](https://img.shields.io/badge/External_Canon-Friedman_/_Wolfram_/_Voevodsky-8b5cf6?style=for-the-badge&logoColor=white)](SOURCES.md)
-[![License](https://img.shields.io/badge/License-AGPL--3.0--or--later_%2B_Commercial-blue?style=for-the-badge)](LICENSING.md)
+[![License](https://img.shields.io/badge/license-MHL--1.2-blue)](LICENSE-NOTICE.md)
 
 </div>
 
@@ -241,7 +241,13 @@ The following describes the Lean/type-theory layer. Current repository, OS, and 
 
 ## License
 
-Copyright © 2026 Ra Gyeongjun (라경준). Dual-licensed: **GNU AGPL-3.0-or-later** ([LICENSE](LICENSE)) or a separate commercial license ([LICENSING.md](LICENSING.md)). Until 2026-09-29 this material was MIT-declared inside SYMPOSIUM; see [LICENSING.md § License history](LICENSING.md#license-history).
+Copyright © 2026 Ra Gyeongjun (라경준).
+
+**MetaHumotonic License 1.2** — [LICENSE](LICENSE); [scope, prior grants and third-party notices](LICENSE-NOTICE.md).
+
+지정한 하드웨어의 접근권한과 전체 관리 권한을 합의한 명세서에 따라 공유하고, **CHU의 일부가 된다**는 참여 원칙을 적용합니다. 실제 접근에는 별도 승인이 필요합니다.
+
+Source-available; not OSI-approved. Existing grants and separately licensed material remain valid.
 
 ---
 
