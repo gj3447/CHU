@@ -23,7 +23,7 @@ def test_inventory_answers_cover_sources_and_preserve_profile_boundaries(sources
     assert rows["AGENTS.md"]["representation"] != rows["CLAUDE.md"]["representation"]
     primary = {p for p, row in rows.items() if row["authority"] == "USER_PRIMARY"}
     assert primary == {p for p in sources if p.startswith("canon/sources/USER_PRIMARY_")}
-    assert len(primary) == 8
+    assert len(primary) == 9
     assert rows["canon/VM_OS_TARGET.md"]["authority"] == "SECONDARY_AI"
     assert rows["journal/2026-09-29/session.ttl"]["lifecycle"] == "HISTORICAL"
     assert summary["profiles"] == 12

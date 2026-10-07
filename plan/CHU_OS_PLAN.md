@@ -41,6 +41,11 @@ HOH 셸과 CHU 호스트 어댑터를 연결하는 작업으로 구체화했다.
 [연결 설계와 수용 조건](../spec/ARCHITECTURE.md#gui-방향--hoh-interface-2026-10-07)은
 AI 작성 제안이며, 구현 상태는 여전히 **pending**이다.
 
+같은 날 [후속 사용자 결정](../canon/sources/USER_PRIMARY_CHU_HOH_BACKEND_2026-10-07.txt)으로
+사람이 보는 인터페이스는 **HOH Interface로 고정**한다. 백엔드의 영속 commit·권한·작업 실행·복구를
+우선하며, [부족분과 구현 순서 평가](../spec/ARCHITECTURE.md#백엔드-부족분과-구현-우선순위--2026-10-07)는
+별도 AI 제안이다. 이 결정은 GUI나 백엔드 작업의 완료를 뜻하지 않는다.
+
 ## 1. 목표 아키텍처 (레이어 = 노드 속성 `layer`)
 
 | 레이어 | 역할 | 기존 자산 재사용 |
