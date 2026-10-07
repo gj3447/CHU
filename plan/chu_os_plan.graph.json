@@ -286,9 +286,10 @@
       "milestone": "M5",
       "layer": "shell",
       "effort": 4,
-      "title": "그래프 작업공간 UI(노드/하이퍼엣지 탐색·편집)",
-      "deliverable": "chu ui",
-      "verify": "CLI와 동일 txn 로그 생성"
+      "title": "HOH Interface 기반 CHU GUI(노드/하이퍼엣지 탐색·편집)",
+      "deliverable": "chu ui: HOH Interface 셸 + CHU 호스트 어댑터; 방향·출처·연결 경계는 spec/ARCHITECTURE.md",
+      "verify": "CLI와 동일 txn 의미·로그 계약, 동일 CID의 다중 뷰, 오래된 화면의 쓰기 거부, backend 확인 후 저장 성공 표시",
+      "status": "pending"
     },
     {
       "id": "T42",

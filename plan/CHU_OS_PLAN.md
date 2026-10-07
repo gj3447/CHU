@@ -35,6 +35,12 @@ update/rollback, fault recovery, 최종 수용을 분리한 M7 게이트다. 현
 probe이며 HSWM을 실행하지 않는다. 입력·증거·정확한
 부팅 계약은 [`../os/README.md`](../os/README.md)에 있다.
 
+2026-10-07: 사용자는 CHU OS의 GUI를 **HOH Interface**로 만들자는 의견을 제시했다
+([원문](../canon/sources/USER_PRIMARY_CHU_HOH_GUI_2026-10-07.txt)). 기존 T41을
+HOH 셸과 CHU 호스트 어댑터를 연결하는 작업으로 구체화했다.
+[연결 설계와 수용 조건](../spec/ARCHITECTURE.md#gui-방향--hoh-interface-2026-10-07)은
+AI 작성 제안이며, 구현 상태는 여전히 **pending**이다.
+
 ## 1. 목표 아키텍처 (레이어 = 노드 속성 `layer`)
 
 | 레이어 | 역할 | 기존 자산 재사용 |
@@ -43,7 +49,7 @@ probe이며 HSWM을 실행하지 않는다. 입력·증거·정확한
 | kernel | 콘텐츠 주소 store, 트랜잭션 = 재작성 규칙, 이력 = multiway | `chu_core.rs` (HyperState, Rule, 4 포트, UnivalentStateStore) |
 | query | 하이퍼엣지 패턴 질의 → 뷰 | `chu_core.rs` 규칙 LHS 매처 |
 | compat | 트리 ingest/export, FUSE 가상 디렉터리 | — (트리는 호환 뷰일 뿐, 정본 아님) |
-| shell | CLI · 그래프 작업공간 UI · 에이전트 포트 | HSPINE (의지/권한도 노드로) |
+| shell | CLI · HOH Interface 기반 그래프 작업공간 GUI · 에이전트 포트 | HOH 공통 UI 셸, HSPINE (의지/권한도 노드로) |
 | dogfood/dist | CHU 저장소를 CHU 안에서 운영, 333 분산 백엔드 | `333_ADAPTER_CONTRACT.md` |
 
 설계 불변식:
@@ -140,7 +146,7 @@ flowchart LR
   T34["T34 Linux 시스템 그래프 ingest: dpkg 절"]
   T06["T06 비용 측정: CHU 저장소를 폴더 트리 vs 하이퍼"]
   T40["T40 CLI: add/link/find/view/log/"]
-  T41["T41 그래프 작업공간 UI(노드/하이퍼엣지 탐색·편집)"]
+  T41["T41 HOH Interface 기반 CHU GUI(노드/"]
   T42["T42 에이전트 포트: 작업/에이전트/HSPINE 의지도 "]
   T50["T50 셀프호스팅: CHU 저장소 문서를 CHU 안에서 관"]
   T51["T51 기존 이론 문서 재배치: 이론 = 커널 근거 문서 "]

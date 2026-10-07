@@ -17,7 +17,7 @@ flowchart LR
   PID1 --> CHU["CHU graph system service"]
   CHU --> Request["typed 요청 + base CID + request ID"]
   HSWM["HSWM runtime adapter"] --> Request
-  Agent["CLI · 에이전트 · UI"] --> Request
+  Agent["CLI · 에이전트 · HOH Interface GUI"] --> Request
   Request --> Gate["권한 집행 · 전제조건 · 타입 검증"]
   Gate --> Rewrite["원자적 H₁ → H₂"]
   Rewrite --> Objects["불변 콘텐츠 · n항 관계 · 상태"]
@@ -43,7 +43,7 @@ Linux 커널 자체와 다른 계층이다. 현재 VM substrate는 systemd·Node
 | 분기·동일시 | 같은 base에서 여러 결과, 사건은 상태 CID와 분리 | 참조 모델 분기 동작; witness 검증·병합 정책은 T14 |
 | 질의·뷰 | snapshot CID를 명시하고 국소 조건으로 탐색 | RDFLib/Oxigraph 두 엔진으로 명세 질의 비교; 커널 매처는 T20 |
 | 분석·개발 | SQL 집계, 구조 검색, 설정 읽기, 시간 측정 | DuckDB, ast-grep, yq/jq, hyperfine는 개발 도구 |
-| 인터페이스 | 같은 typed 요청/결과/오류 계약을 CLI·agent·UI가 공유 | `./chu model`은 명세 데모; 제품 API는 T40/T42 |
+| 인터페이스 | 같은 typed 요청/결과/오류 계약을 CLI·agent·HOH Interface GUI가 공유 | `./chu model`은 명세 데모; 제품 API는 T40/T42, HOH 호스트 연결은 T41 |
 | VM 부팅 | firmware→kernel→initramfs→rootfs→PID 1을 실제 guest에서 통과 | T60–T62; 현재는 substrate probe, HSWM 실행 아님 |
 | guest 서비스 | CHU store/txn을 systemd 서비스로 실행하고 guest 상태와 연결 | T63; 메모리 참조 모델로 대체할 수 없음 |
 | HSWM | 선언된 runtime을 CHU agent port에 연결 | T64–T65; provider·자격증명·원격 리소스는 이미지에 넣지 않음 |
@@ -52,6 +52,39 @@ Oxigraph store와 DuckDB 테이블은 교환·검사·분석용 projection이다
 콘텐츠 정체성 또는 커널 저장 정본으로 선택한 것은 아니다. 공유 KG writer도 추가하지 않는다.
 SQLite의 트랜잭션이나 RocksDB의 배치 저장을 이용할 수 있지만 물리 backend 선택은
 T12에서 재시작·실패 주입·회복·동시성 시험으로 결정한다. 현재 커널에 채택했다고 표시하지 않는다.
+
+## GUI 방향 — HOH Interface (2026-10-07)
+
+사용자는 CHU OS의 GUI를 `HOH_interface`로 만들자는 의견을 제시했다.
+[사용자 원문](../canon/sources/USER_PRIMARY_CHU_HOH_GUI_2026-10-07.txt)은 그대로 보존한다.
+이 방향을 기존 **T41**의 구현 대상으로 반영한다. 아래 연결 설계와 수용 조건은
+`SECONDARY_AI` 제안이며, GUI 연결 완료나 세부 API 확정의 근거가 아니다.
+
+대상은 [HOH Interface](https://github.com/gj3447/HOH-Interface) 저장소의 공통 UI 셸이다.
+확인한 판본은 `940888483f24253491bda4cdfeef55528e6df7a2`이며,
+[개념](https://github.com/gj3447/HOH-Interface/blob/940888483f24253491bda4cdfeef55528e6df7a2/docs/CONCEPT.md)과
+[호스트 어댑터 계약](https://github.com/gj3447/HOH-Interface/blob/940888483f24253491bda4cdfeef55528e6df7a2/docs/ADAPTER.md)을 참조했다.
+기존 HOH 세계관·게임·방송 플랫폼과 이 실행물을 동일시하지 않는다.
+
+| 부분 | CHU에서의 역할과 연결 제안 |
+|---|---|
+| HOH 콘텐츠 영역 | CHU 노드·하이퍼엣지·문서·앱과 작업 결과를 여는 뷰. 그래프 탐색기도 등록된 앱으로 제공한다. |
+| 피드·대시보드 | 같은 객체로 들어가는 질의 투영. 표시 위치·탐색 경로가 바뀌어도 CID를 바꾸거나 단일 부모를 강제하지 않는다. |
+| HOH AI 대화 | 현재 대상과 버전을 지정해 CHU agent port에 작업을 요청하는 표면. 실제 실행 가능 여부는 호스트 상태로 표시한다. |
+| CHU 호스트 어댑터 | HOH의 `open`·`saveState`·`chat` 등을 CHU의 조회·변경·작업 요청으로 변환한다. |
+| CHU 그래프 서비스 | 콘텐츠·상태·권한·재작성·분기 이력을 소유하고 요청의 전제조건을 집행한다. |
+
+첫 연결은 브라우저에서 HOH 셸을 재사용하는 방향이다. VM 안의 화면 실행 환경과
+패키징은 후속 결정이다. `contentId`는 호스트의 객체 참조에 매핑하고 버전 CID와
+snapshot/base CID를 별도로 보존한다. HOH의 `viewRevision`은 화면 맥락 버전이므로
+CHU의 상태 CID와 같다고 가정하지 않는다. 어댑터가 현재 대상·버전·base·request ID를
+묶어 전달하고 백엔드는 권한과 stale base를 검사해야 한다.
+
+T41의 수용 조건은 같은 작업을 CLI와 GUI에서 수행했을 때 같은 재작성 의미와
+로그 계약을 갖는 것, 한 CID를 여러 뷰에서 조회하는 것, 화면 이동 뒤 늦게 도착한
+쓰기가 새 대상을 수정하지 않는 것, 백엔드 확인 뒤에만 저장 성공을 표시하는 것이다.
+서로 다른 실행의 request ID와 사건은 각각 보존하므로 로그 바이트의 동일성을 요구하지 않는다.
+현재 T41은 **pending**이며 CHU 어댑터·GUI 실행·VM 화면 통합은 아직 검증하지 않았다.
 
 ## 실행 가능한 첫 묶음
 
