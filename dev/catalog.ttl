@@ -477,3 +477,12 @@ dev:repo-graph a dev:Check ;
     dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
     dev:argv ( "{python}" "scripts/chu_repo.py" "check" "--out" "{out}" "--json" ) ;
     dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/gj3447/CHU/blob/main/research/storage_atomicity_20261009/README.md>
+    a dev:Source ; dev:reviewedOn "2026-10-09"^^xsd:date .
+dev:storage-probe a dev:Check ;
+    skos:prefLabel "Research SQLite atomic rewrite, SIGKILL, retry, branch CAS and ABA boundaries" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/storage_atomicity_20261009/README.md> ;
+    dev:requires dev:python, dev:rdflib, dev:pyshacl ;
+    dev:argv ( "{python}" "scripts/check_storage_probe.py" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .

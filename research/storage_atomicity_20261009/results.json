@@ -1,0 +1,1062 @@
+{
+  "schema": "chu-storage-research/v1",
+  "authority": "SECONDARY_AI",
+  "observed_at": "2026-10-09T15:54:22.897165+00:00",
+  "git_base": "250d417d12751f62e43e2468e12c31411902e21c",
+  "input_sha256": {
+    "scripts/chu_model.py": "68db146c1aa1592eace1a987b419016ed47fac60a60149d181399c75a8238ec2",
+    "scripts/chu_storage_probe.py": "02c1984900b900d99a3c188cbf0c3d6e69df442a86be0c71788ade892e8d8fbb",
+    "scripts/check_storage_probe.py": "6e669b5854e27fe2229fd27284e1eb504a488aed5eaf3fa560b653b8fb6a6f5d",
+    "spec/IDENTITY.md": "978923028897b197ade4288e0505f53238c2adb04a9f726103b08de480a08f64",
+    "spec/DATA_MODEL.md": "4c27f7f28288a165faf180174d14317f8f2c4caed00cb966de2d97e74e4adf4e",
+    "spec/OPERATIONS.md": "95ca542bb65b1f0dc3acb25f7ffcb465cb1e6450c31d99d13636ca7dae649634"
+  },
+  "argv": [
+    "scripts/check_storage_probe.py",
+    "--out",
+    ".chu/storage-research-20261009-final"
+  ],
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "Linux-7.0.14-5-pve-x86_64-with-glibc2.41",
+  "filesystem": "ext4",
+  "sqlite_version": "3.46.1",
+  "sqlite_source_id": "2024-08-13 09:16:08 c9c2ab54ba1f5f46360f1b4f35d849cd3f080e6fc2b6c60e91b16c63f69aalt1",
+  "configuration": {
+    "journal_mode": "wal",
+    "synchronous": "FULL",
+    "timeout_s": 2,
+    "max_page_count": 1024,
+    "concurrent_workers": 2
+  },
+  "observed_pragmas": {
+    "journal_mode": "wal",
+    "synchronous": 2,
+    "foreign_keys": 1,
+    "page_size": 4096,
+    "max_page_count": 1024,
+    "wal_autocheckpoint": 1000,
+    "read_uncommitted": 0
+  },
+  "wal_reset_fix_status": "NOT_VERIFIED_FOR_THIS_VENDOR_BUILD",
+  "duration_s": 6.459,
+  "temporary_db_bytes": 1040384,
+  "repeats": 3,
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "model-parity-branching-retry-validation",
+      "status": "PASS",
+      "states": {
+        "linked": "urn:sha256:90334f10bfcd7b57282b456c96a429ce6133bb56f88d033da76e7dd58b49baf1",
+        "left": "urn:sha256:34f0b16b38a91986a9a233a84abd8d40bab0df88d29d2a748d9f344cb8c12791",
+        "right": "urn:sha256:9d6af0974ceed5c39dff89f0030f6b52838c7130ee48f62f3b497c94d9c03bba"
+      },
+      "counts": {
+        "objects": 10,
+        "states": 5,
+        "events": 4,
+        "branches": 2
+      }
+    },
+    {
+      "case": "same-state-distinct-event",
+      "status": "PASS",
+      "counts": {
+        "objects": 10,
+        "states": 5,
+        "events": 5,
+        "branches": 2
+      }
+    },
+    {
+      "case": "reopen-historical-snapshot",
+      "status": "PASS"
+    },
+    {
+      "case": "aba-cid-only-negative-control",
+      "status": "PASS",
+      "old": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "current": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 2,
+        "tip": "remove"
+      },
+      "unsafe_cid_only_rows_matched": 1,
+      "state_and_revision_rejected": true
+    },
+    {
+      "case": "reader-snapshot-and-busy",
+      "status": "PASS",
+      "busy_error": "SQLITE_BUSY"
+    },
+    {
+      "case": "content-corruption-detection",
+      "status": "PASS"
+    },
+    {
+      "case": "sigkill-after_objects",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_objects",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 2,
+          "states": 1,
+          "events": 0,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 0
+    },
+    {
+      "case": "sigkill-after_state",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_state",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 0,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 0
+    },
+    {
+      "case": "sigkill-after_event",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_event",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 0
+    },
+    {
+      "case": "sigkill-after_head",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_head",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 0
+    },
+    {
+      "case": "sigkill-before_commit",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "before_commit",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 0
+    },
+    {
+      "case": "sigkill-after_commit_before_reply",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_commit_before_reply",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+        "revision": 1,
+        "tip": "crash"
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 0
+    },
+    {
+      "case": "concurrent-different-requests",
+      "status": "PASS",
+      "outcomes": [
+        {
+          "status": "STALE"
+        },
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:db8d33a2ac49f63750fc1d943b39b2fd7bb4b1fb14afeb7ec54432d8c371ecda"
+        }
+      ],
+      "head": {
+        "state": "urn:sha256:db8d33a2ac49f63750fc1d943b39b2fd7bb4b1fb14afeb7ec54432d8c371ecda",
+        "revision": 1,
+        "tip": "writer-1"
+      },
+      "counts": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "repeat": 0
+    },
+    {
+      "case": "concurrent-same-request",
+      "status": "PASS",
+      "outcomes": [
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9"
+        },
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9"
+        }
+      ],
+      "head": {
+        "state": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9",
+        "revision": 1,
+        "tip": "same"
+      },
+      "counts": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "repeat": 0
+    },
+    {
+      "case": "sigkill-after_objects",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_objects",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 2,
+          "states": 1,
+          "events": 0,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 1
+    },
+    {
+      "case": "sigkill-after_state",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_state",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 0,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 1
+    },
+    {
+      "case": "sigkill-after_event",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_event",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 1
+    },
+    {
+      "case": "sigkill-after_head",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_head",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 1
+    },
+    {
+      "case": "sigkill-before_commit",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "before_commit",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 1
+    },
+    {
+      "case": "sigkill-after_commit_before_reply",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_commit_before_reply",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+        "revision": 1,
+        "tip": "crash"
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 1
+    },
+    {
+      "case": "concurrent-different-requests",
+      "status": "PASS",
+      "outcomes": [
+        {
+          "status": "STALE"
+        },
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:db8d33a2ac49f63750fc1d943b39b2fd7bb4b1fb14afeb7ec54432d8c371ecda"
+        }
+      ],
+      "head": {
+        "state": "urn:sha256:db8d33a2ac49f63750fc1d943b39b2fd7bb4b1fb14afeb7ec54432d8c371ecda",
+        "revision": 1,
+        "tip": "writer-1"
+      },
+      "counts": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "repeat": 1
+    },
+    {
+      "case": "concurrent-same-request",
+      "status": "PASS",
+      "outcomes": [
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9"
+        },
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9"
+        }
+      ],
+      "head": {
+        "state": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9",
+        "revision": 1,
+        "tip": "same"
+      },
+      "counts": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "repeat": 1
+    },
+    {
+      "case": "sigkill-after_objects",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_objects",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 2,
+          "states": 1,
+          "events": 0,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 2
+    },
+    {
+      "case": "sigkill-after_state",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_state",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 0,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 2
+    },
+    {
+      "case": "sigkill-after_event",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_event",
+        "head": {
+          "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+          "revision": 0,
+          "tip": null
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 2
+    },
+    {
+      "case": "sigkill-after_head",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_head",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 2
+    },
+    {
+      "case": "sigkill-before_commit",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "before_commit",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 1,
+        "states": 1,
+        "events": 0,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:a7076dd2d8b1267353bffac3e2620b56e740f3e3e9ad1fe0b57b6dbb39b32e9b",
+        "revision": 0,
+        "tip": null
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 2
+    },
+    {
+      "case": "sigkill-after_commit_before_reply",
+      "status": "PASS",
+      "child_exit": -9,
+      "cut_reached": {
+        "stage": "after_commit_before_reply",
+        "head": {
+          "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+          "revision": 1,
+          "tip": "crash"
+        },
+        "counts": {
+          "objects": 3,
+          "states": 2,
+          "events": 1,
+          "branches": 1
+        }
+      },
+      "visible_before_kill": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "recovered_before_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "head_before_retry": {
+        "state": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+        "revision": 1,
+        "tip": "crash"
+      },
+      "after_retry": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "result": "urn:sha256:590f15f49ca74db1a9c3b0b891262e099b5a0950505c11aa79d1a14f3cdee70c",
+      "repeat": 2
+    },
+    {
+      "case": "concurrent-different-requests",
+      "status": "PASS",
+      "outcomes": [
+        {
+          "status": "STALE"
+        },
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:db8d33a2ac49f63750fc1d943b39b2fd7bb4b1fb14afeb7ec54432d8c371ecda"
+        }
+      ],
+      "head": {
+        "state": "urn:sha256:db8d33a2ac49f63750fc1d943b39b2fd7bb4b1fb14afeb7ec54432d8c371ecda",
+        "revision": 1,
+        "tip": "writer-1"
+      },
+      "counts": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "repeat": 2
+    },
+    {
+      "case": "concurrent-same-request",
+      "status": "PASS",
+      "outcomes": [
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9"
+        },
+        {
+          "status": "COMMITTED",
+          "result": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9"
+        }
+      ],
+      "head": {
+        "state": "urn:sha256:4958283e5c101164676aef1b9c03dcd7b88f2a9b6d93711cc0b48d89e3029dd9",
+        "revision": 1,
+        "tip": "same"
+      },
+      "counts": {
+        "objects": 3,
+        "states": 2,
+        "events": 1,
+        "branches": 1
+      },
+      "repeat": 2
+    }
+  ],
+  "scope": "Synthetic research adapter; process kill, not power-loss/VFS fault testing",
+  "not_tested": [
+    "power loss",
+    "torn writes",
+    "disk full",
+    "SQLite WAL-reset race",
+    "malicious database tampering",
+    "authentication/capabilities",
+    "external effects",
+    "VM boot",
+    "HSWM",
+    "Rust kernel",
+    "backup/restore",
+    "migrations",
+    "GC"
+  ]
+}

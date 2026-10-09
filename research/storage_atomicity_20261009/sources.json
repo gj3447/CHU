@@ -1,0 +1,38 @@
+[
+  {
+    "id": "wal",
+    "url": "https://www.sqlite.org/wal.html",
+    "sections": "2.2, 2.3, 7, 11",
+    "retrieved_on": "2026-10-09",
+    "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "local_path": "/mnt/development/METAHUMOTONIC_SHARED/sources/chu-storage-20261009/wal.html",
+    "authority": "SOURCE_DOCUMENT"
+  },
+  {
+    "id": "transaction",
+    "url": "https://www.sqlite.org/lang_transaction.html",
+    "sections": "2.1, 2.2",
+    "retrieved_on": "2026-10-09",
+    "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+    "local_path": "/mnt/development/METAHUMOTONIC_SHARED/sources/chu-storage-20261009/transaction.html",
+    "authority": "SOURCE_DOCUMENT"
+  },
+  {
+    "id": "isolation",
+    "url": "https://www.sqlite.org/isolation.html",
+    "sections": "Isolation And Concurrency",
+    "retrieved_on": "2026-10-09",
+    "sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7",
+    "local_path": "/mnt/development/METAHUMOTONIC_SHARED/sources/chu-storage-20261009/isolation.html",
+    "authority": "SOURCE_DOCUMENT"
+  },
+  {
+    "id": "pragma",
+    "url": "https://www.sqlite.org/pragma.html",
+    "sections": "synchronous, foreign_keys, max_page_count",
+    "retrieved_on": "2026-10-09",
+    "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+    "local_path": "/mnt/development/METAHUMOTONIC_SHARED/sources/chu-storage-20261009/pragma.html",
+    "authority": "SOURCE_DOCUMENT"
+  }
+]

@@ -26,10 +26,12 @@ def test_inventory_answers_cover_sources_and_preserve_profile_boundaries(sources
     assert len(primary) == 9
     assert rows["canon/VM_OS_TARGET.md"]["authority"] == "SECONDARY_AI"
     assert rows["journal/2026-09-29/session.ttl"]["lifecycle"] == "HISTORICAL"
-    assert summary["profiles"] == 12
+    assert summary["profiles"] == 13
     assets = query(dataset, "assets")
     assert any(r["profile"] == str(ENG["profile-model"]) and r["path"] == "spec/shapes.ttl"
                and r["role"] == "shapes" for r in assets)
+    assert any(r["profile"] == str(ENG["profile-storage-research"])
+               and r["path"] == "scripts/chu_storage_probe.py" for r in assets)
     assert len(dataset.default_graph) == 0
     for path in ("spec/ontology.ttl", "research/linux_os/shapes.ttl", "journal/2026-09-29/session.ttl"):
         assert len(dataset.graph(URIRef(rows[path]["representation"]))) > 0

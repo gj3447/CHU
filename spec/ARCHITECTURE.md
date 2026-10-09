@@ -131,6 +131,14 @@ GC, 작업 취소·재시도, 알림 재접속, 백업 복원에는 아직 독�
 
 ## 실행 가능한 첫 묶음
 
+2026-10-09 [영속 재작성 후보 연구](../research/storage_atomicity_20261009/README.md)는
+기존 모델의 CID/재작성 의미를 SQLite 연구 adapter에 연결했다. 30개 시나리오에서
+프로세스 강제 종료, 재시도, 동시 writer와 분기 보존을 검사했다. A→B→A 뒤에는
+base CID만으로 오래된 쓰기를 구분할 수 없어 별도 branch revision을 함께 검사했다.
+이는 T12/T13/T14의 설계 근거이며 Rust 커널, 전원 장애 회복, 권한 집행의 완료가 아니다.
+호스트 SQLite의 WAL-reset 수정 반영은 미확인이므로 제품 backend 채택도 보류한다.
+재실행: `./chu check --only storage-probe --json`.
+
 ```bash
 ./chu model demo --json
 ./chu model check --json

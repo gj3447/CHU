@@ -51,7 +51,7 @@ flowchart LR
 - **원문과 해석**: 원문 경로를 명시적으로 등록한다. 새 해석이나 비슷한 파일 이름만으로
   `USER_PRIMARY`를 얻지 못한다. 자료 전체의 분류는 AI가 작성한 탐색 메타데이터다.
 - **프로필**: 개발 도구, 실행 모델, OS 설계, 연구 fixture, 과거 결정, journal, 계획, VM,
-  보관 VM 관찰, Rust, Lean, 전체 목록의 12개 검증 범위를 각각 유지한다.
+  보관 VM 관찰, Rust, Lean, 전체 목록 및 영속 저장 연구의 13개 검증 범위를 각각 유지한다.
 - **계획**: 기존 `plan#T…`/`plan#E…` ID를 재사용한다. gate에는 모든 tail과 head를 보존한다.
   질의의 행은 뷰이며 `ALL_TAILS`가 AND 의미를 명시한다. `done`은 계획의 선언 상태다.
 - **과거 증거**: recorded CID와 현재 tracked CID를 비교해 `MATCH`, `CHANGED`, `UNAVAILABLE`로
