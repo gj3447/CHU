@@ -51,6 +51,12 @@
         "source": "canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt",
         "source_sha256": "575ccd910eb351983be21378e47c66ddf7cb99280574a6cfc2afc381767225b2",
         "change": "Philosophy-first scope and separate CHU_OS development owner; legacy OS paths retained only for compatibility. Existing source/task IDs and writer rules preserved."
+      },
+      {
+        "date": "2026-10-12",
+        "source": "canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt",
+        "source_sha256": "9b69c7b9ca43547f8733775c273ccc8e072a4e9c82a0ca6db6967852cf03880b",
+        "change": "Clarify CHU as Computable Hyper Universe encompassing computers, human brains and universe; cognition is not the boundary of the concept. Preserve owner/source/task IDs and CHU_OS implementation ownership."
       }
     ]
   },

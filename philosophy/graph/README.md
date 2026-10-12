@@ -1,7 +1,9 @@
 # CHU / CHU_OS 개념·주장 그래프
 
 2026-10-12 · SECONDARY_AI · CHU 소유 범위의 실제 RDF 그래프.
-[기존 C01–C03](../CLAIMS.md)의 명명·작업 결정·관점을 재사용한다.
+[기존 C01–C03과 후속 C12–C14](../CLAIMS.md)의 명명·작업 결정·관점을 재사용한다.
+CHU는 **Computable Hyper Universe라는 포괄적 철학 개념**이다. 후속 원문의 컴퓨터·
+인간의 뇌·우주 사례를 `viewedAs` 주장으로 각각 표현하며 인지능력체로 한정하지 않는다.
 개념 CHU와 컴퓨터 구현 CHU_OS, 두 소유 저장소, 사용자 원문, 소유자의 이관 관측을
 서로 다른 대상으로 조회한다. HSWM의 실행 상태 그래프나 공유 KG 발행은 이번 범위가 아니다.
 
@@ -26,7 +28,7 @@ Git의 고정 원문 판본을 읽으므로 해당 이력이 필요하다. CI ch
 | 질문 | 질의와 기대 답 |
 |---|---|
 | 무엇이 개념이고 무엇이 컴퓨터 구현인가? | `distinction`: C01의 CHU_OS → CHU, 명명 원문·CID |
-| 우주에 관한 문장은 누구의 어떤 주장인가? | `viewpoint`: C03, 사용자 원문, WorldModel 문맥, USER_VIEWPOINT / NOT_EMPIRICALLY_VALIDATED |
+| 어떤 대상을 CHU라고 보는가? | `viewpoint`: C12–C14의 컴퓨터·뇌·우주, 최신 원문과 PhilosophicalScope 문맥; C03의 앞선 WorldModel 문맥도 보존 |
 | 저장소 소유와 분리 진행 상태는 무엇인가? | `separation`: C02의 지시, 개념·구현 소유, 초기 이관 기록, 소비자 전환 미수행 관측 |
 | 어떤 원문·판본·바이트가 각각을 뒷받침하는가? | `sources`: 각 claim의 source record, 경로·commit·CID·원문 발췌 |
 
@@ -35,14 +37,20 @@ Git의 고정 원문 판본을 읽으므로 해당 이력이 필요하다. CI ch
 `claims.ttl`이 데이터이고 `ontology.ttl`이 로컬 어휘의 방향·domain/range·의미를,
 `shapes.ttl`이 기수·타입·명명과 관점의 제약을 정의한다. CHU와 CHU_OS는 별도 concept IRI다.
 GitHub 저장소 주소는 이 개념을 소유·구현하는 저장소 식별자이며 개념과 동일시하지 않는다.
-`pc:C01`, `pc:C02`, `pc:C03`는 기존 문서 ID의 RDF 표현이다.
+`pc:C01`–`pc:C03`, `pc:C12`–`pc:C14`는 문서의 같은 claim ID를 사용한다.
+C11의 일반적인 범위 설명은 문서와 CHU의 현재 라벨에 두며, 모든 문서 주장이 RDF로 변환됐다는 뜻은 아니다.
 
 주장은 `rdf:Statement`로 주어·술어·목적어를 명시하고, C03에는 `pc:context WorldModel`을
-붙인다. 원문에 대한 AI의 정규화는 SECONDARY_AI, 인용된 원문만 USER_PRIMARY다.
+붙인다. C12–C14에는 `pc:context PhilosophicalScope`를 붙인다. 최신 원문의 세 사례를
+과거의 인지/월드모델 문맥으로 다시 축소하지 않는다. `NOT_EMPIRICALLY_VALIDATED`는 사용자
+철학을 보존하면서 별도의 실험 검증을 했다고 주장하지 않는 상태다.
+원문에 대한 AI의 정규화는 SECONDARY_AI, 인용된 원문만 USER_PRIMARY다.
 원문 기록에는 작성 주체와 정확한 Git 판본, 경로, 실제 바이트 CID를 결속한다.
 `pc:conceptClaims`의 날짜는 그래프 작성 날짜이고 원래 발화·이관의 정확한 발생 시각을
 추정하지 않는다. 이관 상태는 `806258fe9a7974cf9bb237d6578d2c61094eabe0`의
-소유 기록을 읽은 SOURCE_REPORTED 관측으로 남긴다. 매 조회마다 원격을 점검하는 기능은 아니다.
+소유 기록을 읽은 SOURCE_REPORTED 관측으로 남긴다. 새 범위 원문은
+`d4fd5b619f3b1b87792b1dbe75b463f0688e47eb`에 별도로 고정한다. 이전 원문·관측의 pin은
+유지한다. 매 조회마다 원격을 점검하는 기능은 아니다.
 
 CHU_OS의 초기 이관은 기록돼 있지만 소비자 전환은 남아 있다. 초기 이관 상태를 전체
 이관 완료로 바꾸거나, “우주도 CHU”를 검증된 물리적 동일성으로 승격하면 실패한다.

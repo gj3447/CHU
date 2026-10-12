@@ -5,7 +5,7 @@ import sys
 import pytest
 from rdflib import Graph, Literal, RDF, URIRef
 from rdflib.compare import isomorphic
-from rdflib.namespace import OWL, PROV
+from rdflib.namespace import OWL, PROV, SKOS
 
 from check_concept_graph import (PC, ROOT, QUERIES, claim_graph, check_answers,
                                  query, source_id, validate_graph)
@@ -28,6 +28,7 @@ def test_scoped_claims_answer_questions_with_original_sources():
     "bare-viewpoint", "cosmic-type", "repository-as-concept", "untyped-endpoint", "unknown-predicate",
     "forged-quote", "wrong-source", "source-authority", "source-cid", "source-revision", "outside-path",
     "extra-object", "missing-claim", "false-consumer-completion", "observation-as-user-direction",
+    "cognition-only-label", "lost-brain", "brain-as-os", "scope-as-world-model", "scope-old-source",
 ])
 def test_rejects_identity_evidence_and_handoff_conflation(mutation):
     graph = claim_graph()
@@ -74,6 +75,16 @@ def test_rejects_identity_evidence_and_handoff_conflation(mutation):
         graph.set((PC["consumer-switch-20261012"], RDF.object, PC.InitialHandoffRecorded))
     elif mutation == "observation-as-user-direction":
         graph.set((PC["handoff-20261012"], PC.kind, Literal("USER_DIRECTION")))
+    elif mutation == "cognition-only-label":
+        graph.set((PC.CHU, SKOS.prefLabel, Literal("CHU — 인지능력체 개념")))
+    elif mutation == "lost-brain":
+        graph.remove((PC.C13, None, None))
+    elif mutation == "brain-as-os":
+        graph.set((PC.C13, RDF.object, PC.CHU_OS))
+    elif mutation == "scope-as-world-model":
+        graph.set((PC.C13, PC.context, PC.WorldModel))
+    elif mutation == "scope-old-source":
+        graph.set((source_id("scope"), PC.revision, graph.value(source_id("naming"), PC.revision)))
     assert validate_graph(graph), mutation
 
 
@@ -81,9 +92,14 @@ def test_cli_returns_sources_from_outside_checkout_and_rejects_unknown_query(tmp
     argv = [sys.executable, str(ROOT / "scripts/chu_dev.py"), "concept", "query"]
     result = subprocess.run([*argv, "viewpoint"], cwd=tmp_path, capture_output=True, text=True,
                             check=True, timeout=15)
-    row = json.loads(result.stdout)["results"]["bindings"][0]
+    rows = json.loads(result.stdout)["results"]["bindings"]
+    row = next(r for r in rows if r["claim"]["value"] == str(PC.C03))
     assert row["epistemicStatus"]["value"] == "NOT_EMPIRICALLY_VALIDATED"
     assert row["source"]["value"] == str(source_id("naming"))
+    scope = {r["subject"]["value"]: r for r in rows
+             if r["context"]["value"] == str(PC.PhilosophicalScope)}
+    assert set(scope) == {str(PC.Computer), str(PC.HumanBrain), str(PC.Universe)}
+    assert all(r["source"]["value"] == str(source_id("scope")) for r in scope.values())
     invalid = subprocess.run([*argv, "missing"], cwd=tmp_path, capture_output=True, text=True,
                              timeout=15)
     assert invalid.returncode != 0

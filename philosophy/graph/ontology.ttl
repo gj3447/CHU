@@ -19,7 +19,7 @@ pc:ClaimPredicate a rdfs:Class ; rdfs:subClassOf rdf:Property .
 
 pc:computerImplementationOf a rdf:Property, pc:ClaimPredicate ;
     rdfs:domain pc:Concept ; rdfs:range pc:Concept ;
-    rdfs:comment "Implementation concept -> target cognition concept. Exactly one subject/object per claim; neither identity nor proof of implemented cognition." .
+    rdfs:comment "Specific implementation concept -> broader philosophical concept. Exactly one subject/object per claim; neither identity nor a restriction of CHU to cognition or software." .
 pc:separateRepositoryFrom a rdf:Property, pc:ClaimPredicate ;
     rdfs:domain pc:Repository ; rdfs:range pc:Repository ;
     rdfs:comment "Implementation repository -> concept repository in the user-directed separation. One subject/object per claim; a direction, not an execution receipt." .

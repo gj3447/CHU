@@ -18,24 +18,32 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "philosophy/graph"
 PC = Namespace("https://github.com/gj3447/CHU/philosophy#")
 REVISION = "806258fe9a7974cf9bb237d6578d2c61094eabe0"
+SCOPE_REVISION = "d4fd5b619f3b1b87792b1dbe75b463f0688e47eb"
+CHU_LABEL = "CHU — Computable Hyper Universe · 포괄적 철학 개념"
 QUERIES = {"distinction", "viewpoint", "separation", "sources"}
 SOURCES = {
-    "naming": ("canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt", "USER_PRIMARY"),
-    "direction": ("canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt", "USER_PRIMARY"),
-    "handoff": ("docs/CHU_CHU_OS_REPOSITORY_SPLIT.md", "SECONDARY_AI"),
+    "naming": ("canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt", "USER_PRIMARY", REVISION),
+    "direction": ("canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt", "USER_PRIMARY", REVISION),
+    "handoff": ("docs/CHU_CHU_OS_REPOSITORY_SPLIT.md", "SECONDARY_AI", REVISION),
+    "scope": ("canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt", "USER_PRIMARY", SCOPE_REVISION),
 }
 REPO = URIRef("https://github.com/gj3447/CHU")
 OS_REPO = URIRef("https://github.com/gj3447/CHU_OS")
-# Acceptance expectations use existing C01/C02/C03 claim IDs and owner-reported handoff scope.
+# Stable claim IDs keep the earlier viewpoint and the later scope clarification distinct.
 EXPECTED = {
     "C01": (PC.CHU_OS, PC.computerImplementationOf, PC.CHU, "naming", "USER_NAMING", "SOURCE_SUPPORTED"),
     "C02": (OS_REPO, PC.separateRepositoryFrom, REPO, "direction", "USER_DIRECTION", "SOURCE_SUPPORTED"),
     "C03": (PC.Universe, PC.viewedAs, PC.CHU, "naming", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
+    "C12": (PC.Computer, PC.viewedAs, PC.CHU, "scope", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
+    "C13": (PC.HumanBrain, PC.viewedAs, PC.CHU, "scope", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
+    "C14": (PC.Universe, PC.viewedAs, PC.CHU, "scope", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
     "owner-chu-20261012": (REPO, PC.ownsScope, PC.ConceptTheoryCanon, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
     "owner-os-20261012": (OS_REPO, PC.ownsScope, PC.OSImplementation, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
     "handoff-20261012": (OS_REPO, PC.handoffStatus, PC.InitialHandoffRecorded, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
     "consumer-switch-20261012": (PC.ConsumerMigration, PC.workStatus, PC.PendingConsumerSwitch, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
 }
+CONTEXTS = {"C03": PC.WorldModel, "C12": PC.PhilosophicalScope,
+            "C13": PC.PhilosophicalScope, "C14": PC.PhilosophicalScope}
 
 
 def source_id(name):
@@ -91,7 +99,9 @@ def validate_graph(graph):
         if predicate == RDF.type and obj not in known_types:
             errors.append(f"Undeclared type or unqualified membership: {obj}")
     if set(graph.subjects(RDF.type, PC.Claim)) != {PC[k] for k in EXPECTED}:
-        errors.append("Claim IDs differ from the scoped C01–C03 and handoff contract")
+        errors.append("Claim IDs differ from the naming, universal scope and handoff contract")
+    if graph.value(PC.CHU, SKOS.prefLabel) != Literal(CHU_LABEL):
+        errors.append("CHU label lost the current universal philosophical scope")
     if set(graph.subjects(RDF.type, PC.Source)) != {source_id(k) for k in SOURCES}:
         errors.append("Missing or extra source records")
     for key, (subject, relation, obj, source, kind, status) in EXPECTED.items():
@@ -105,18 +115,18 @@ def validate_graph(graph):
             if not has_class(endpoint, ontology.value(relation, boundary)):
                 errors.append(f"Wrong claim endpoint type: {key}")
         contexts = set(graph.objects(node, PC.context))
-        if contexts != ({PC.WorldModel} if key == "C03" else set()):
+        if contexts != ({CONTEXTS[key]} if key in CONTEXTS else set()):
             errors.append(f"Lost or unsupported qualification: {key}")
-    for key, (path, authority) in SOURCES.items():
+    for key, (path, authority, revision) in SOURCES.items():
         node = source_id(key)
-        expected = (Literal(path), Literal(REVISION), Literal(authority),
+        expected = (Literal(path), Literal(revision), Literal(authority),
                     PC.User if authority == "USER_PRIMARY" else PC.Codex,
-                    URIRef(f"{REPO}/blob/{REVISION}/{path}"))
+                    URIRef(f"{REPO}/blob/{revision}/{path}"))
         fields = (PC.pathView, PC.revision, PC.authority, PROV.wasAttributedTo, PROV.atLocation)
         if tuple(graph.value(node, p) for p in fields) != expected:
             errors.append(f"Source provenance differs: {key}")
             continue
-        raw = source_bytes(path, REVISION)
+        raw = source_bytes(path, revision)
         if graph.value(node, PC.content) != URIRef("urn:sha256:" + hashlib.sha256(raw).hexdigest()):
             errors.append(f"Source byte CID differs: {key}")
         for claim in graph.subjects(PROV.wasDerivedFrom, node):
@@ -142,12 +152,14 @@ def check_answers(answers):
                                naming[0]["concept"], naming[0]["authority"]) == (
         str(PC.C01), str(PC.CHU_OS), str(PC.CHU), "SECONDARY_AI")
     view = values(answers["viewpoint"])
-    assert len(view) == 1 and tuple(view[0][k] for k in (
-        "claim", "subject", "object", "context", "kind", "epistemicStatus", "speaker")) == (
-        str(PC.C03), str(PC.Universe), str(PC.CHU), str(PC.WorldModel),
-        "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED", str(PC.User))
-    expected = {(str(PC[k]), str(s), str(p), str(o), kind, state, str(source_id(src)), REVISION)
-                for k, (s, p, o, src, kind, state) in EXPECTED.items() if k not in {"C01", "C03"}}
+    assert len(view) == len(CONTEXTS)
+    assert {tuple(row[k] for k in ("claim", "subject", "object", "context", "kind",
+                                  "epistemicStatus", "speaker", "source")) for row in view} == {
+        (str(PC[key]), str(EXPECTED[key][0]), str(PC.CHU), str(context),
+         "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED", str(PC.User), str(source_id(EXPECTED[key][3])))
+        for key, context in CONTEXTS.items()}
+    expected = {(str(PC[k]), str(s), str(p), str(o), kind, state, str(source_id(src)), SOURCES[src][2])
+                for k, (s, p, o, src, kind, state) in EXPECTED.items() if k != "C01" and k not in CONTEXTS}
     assert {tuple(row[k] for k in ("claim", "subject", "relation", "object", "kind",
                                    "epistemicStatus", "source", "revision"))
             for row in values(answers["separation"])} == expected
@@ -157,10 +169,10 @@ def check_answers(answers):
     for row in source_rows:
         key = row["claim"].removeprefix(str(PC))
         source = EXPECTED[key][3]
-        path, authority = SOURCES[source]
-        expected_cid = "urn:sha256:" + hashlib.sha256(source_bytes(path, REVISION)).hexdigest()
+        path, authority, revision = SOURCES[source]
+        expected_cid = "urn:sha256:" + hashlib.sha256(source_bytes(path, revision)).hexdigest()
         assert (row["source"], row["path"], row["revision"], row["content"], row["sourceAuthority"]) == (
-            str(source_id(source)), path, REVISION, expected_cid, authority)
+            str(source_id(source)), path, revision, expected_cid, authority)
 
 
 def check(out):

@@ -1,6 +1,6 @@
 # CHU — agent entry
 
-CHU names the cognitive entity; CHU_OS is its computer-based operating-system implementation. Read [the current distinction](canon/CHU_AND_CHU_OS.md). New OS development belongs in the separate CHU_OS repository; this checkout retains old implementation paths for compatibility during consumer migration. Paths are query projections, not identity. Preserve user-primary sources and commit verified changes.
+CHU means Computable Hyper Universe: a broad philosophical concept encompassing computers, human brains and the universe in the user's framing. Do not restrict it to cognitive entities or software. CHU_OS is a particular computer-based operating-system implementation project. Read [the current distinction](canon/CHU_AND_CHU_OS.md). New OS development belongs in the separate CHU_OS repository; this checkout retains old implementation paths for compatibility during consumer migration. Paths are query projections, not identity. Preserve user-primary sources and commit verified changes.
 
 Detailed owner rules: [OWNER.md](docs/agent-rules/OWNER.md).
 Task/source graph: [routes.json](docs/agent-rules/routes.json).

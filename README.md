@@ -1,18 +1,21 @@
-# CHU — 인지능력체 · Computable Hyperuniverse
+# CHU — Computable Hyper Universe
 
-**CHU는 인지능력체 자체에 대한 개념·철학·공통 이론을 정리한다.**
-컴퓨터 기반 운영체제 구현은 별도 **[CHU_OS](https://github.com/gj3447/CHU_OS)**가 맡는다.
+**CHU는 컴퓨터·인간의 뇌·우주까지 포괄하는 철학적 개념, Computable Hyper Universe다.**
+[사용자의 범위 명확화](canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt)에 따라
+인지능력체라는 한 범주로 한정하지 않는다. 관계·구조·변화·계산의 관점에서 서로 다른
+세계를 이해하는 틀을 연구한다. 컴퓨터 기반 운영체제 구현 프로젝트는 별도
+**[CHU_OS](https://github.com/gj3447/CHU_OS)**가 맡는다.
 사용자 명명과 AI 해석은 [현재 구분](canon/CHU_AND_CHU_OS.md)에 따로 기록한다.
 
 ## 현재 읽는 순서
 
-- [CHU 철학 v1](philosophy/README.md): 대상·표현·동일성·사건·관찰·인지·계산가능성.
+- [CHU 철학 v1.1](philosophy/README.md): 포괄 개념·사례·관계·동일성·사건·관찰·인지·계산가능성.
 - [주장과 열린 질문](philosophy/CLAIMS.md): 사용자 관점, 정의 제안, 증명/관측, 미해결 문제.
 - [형식화 경계 점검](philosophy/FORMAL_BOUNDARY.md): 기존 Lean 코드의 실제 의미와 네 가지 반례/구분.
 - [CHU_OS 구현 계약](philosophy/IMPLEMENTATION_CONTRACT.md): 공통 개념이 구현에 요구하는 검증.
 - [저장소 분리 상태](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md): 정본 소유·초기 이관·호환 경로·남은 전환.
 
-철학 v1은 검토 가능한 정리본이며, 의식·인지의 충분조건이나 물리 우주에 대한 최종 증명이 아니다.
+철학 v1.1은 검토 가능한 정리본이며, 의식·인지의 충분조건이나 물리 우주에 대한 최종 증명이 아니다.
 “우주 자체도 월드모델 CHU”는 사용자에게 귀속된 철학적 관점으로 보존한다.
 
 ## 정본과 기존 자산

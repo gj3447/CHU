@@ -49,6 +49,51 @@ pc:C03 a rdf:Statement,
     pc:kind "USER_VIEWPOINT" ;
     pc:sourceExcerpt "내생각에는 그냥 우리 우주 자체도 월드모델 CHU 임" .
 
+pc:C12 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:CHU ;
+    rdf:predicate pc:viewedAs ;
+    rdf:subject pc:Computer ;
+    skos:prefLabel "컴퓨터도 CHU가 될 수 있다는 사용자 사례" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-scope-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:context pc:PhilosophicalScope ;
+    pc:epistemicStatus "NOT_EMPIRICALLY_VALIDATED" ;
+    pc:kind "USER_VIEWPOINT" ;
+    pc:sourceExcerpt "컴퓨터도 chu 가 될수있고" .
+
+pc:C13 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:CHU ;
+    rdf:predicate pc:viewedAs ;
+    rdf:subject pc:HumanBrain ;
+    skos:prefLabel "인간의 뇌도 CHU라는 사용자 사례" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-scope-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:context pc:PhilosophicalScope ;
+    pc:epistemicStatus "NOT_EMPIRICALLY_VALIDATED" ;
+    pc:kind "USER_VIEWPOINT" ;
+    pc:sourceExcerpt "인간의 뇌도 chu 이고" .
+
+pc:C14 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:CHU ;
+    rdf:predicate pc:viewedAs ;
+    rdf:subject pc:Universe ;
+    skos:prefLabel "우주도 CHU라는 후속 포괄 범위" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-scope-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:context pc:PhilosophicalScope ;
+    pc:epistemicStatus "NOT_EMPIRICALLY_VALIDATED" ;
+    pc:kind "USER_VIEWPOINT" ;
+    pc:sourceExcerpt "우주도 chu 이고" .
+
 pc:conceptClaims a prov:Entity ;
     dct:date "2026-10-12"^^xsd:date ;
     prov:wasAttributedTo pc:Codex ;
@@ -118,6 +163,12 @@ pc:CHU_OS a skos:Concept,
         pc:Subject ;
     skos:prefLabel "CHU_OS — 컴퓨터 기반 운영체제 구현" .
 
+pc:Computer a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "컴퓨터 — CHU가 될 수 있는 사용자 사례" .
+
 pc:ConceptTheoryCanon a skos:Concept,
         prov:Entity,
         pc:Concept,
@@ -128,6 +179,12 @@ pc:ConsumerMigration a prov:Entity,
         pc:Subject,
         pc:WorkItem ;
     skos:prefLabel "HOH·OMC·HSWM·USL 소비자 참조 전환" .
+
+pc:HumanBrain a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "인간의 뇌 — 사용자의 CHU 사례" .
 
 pc:InitialHandoffRecorded a prov:Entity,
         pc:State,
@@ -144,12 +201,6 @@ pc:PendingConsumerSwitch a prov:Entity,
         pc:State,
         pc:Subject ;
     skos:prefLabel "소비자 전환 미수행으로 기록됨" .
-
-pc:Universe a skos:Concept,
-        prov:Entity,
-        pc:Concept,
-        pc:Subject ;
-    skos:prefLabel "우리 우주 — 사용자 관점의 대상" .
 
 pc:WorldModel a skos:Concept,
         prov:Entity,
@@ -170,6 +221,8 @@ pc:source-direction-20261012 a prov:Entity,
 
 <urn:sha256:5fee0c1c7fcb536fd81eda5681a9bb502d8ccb8d93a54a48e34ab95dcfd63f50> a prov:Entity .
 
+<urn:sha256:9b69c7b9ca43547f8733775c273ccc8e072a4e9c82a0ca6db6967852cf03880b> a prov:Entity .
+
 <urn:sha256:e1434cc8b558bb46725bd47b97034a9fccda52334eec4a7d799d4d99698ddd51> a prov:Entity .
 
 <https://github.com/gj3447/CHU> a prov:Entity,
@@ -177,16 +230,11 @@ pc:source-direction-20261012 a prov:Entity,
         pc:Subject ;
     skos:prefLabel "CHU 소유 저장소" .
 
-pc:CHU a skos:Concept,
+pc:Universe a skos:Concept,
         prov:Entity,
         pc:Concept,
         pc:Subject ;
-    rdfs:seeAlso <urn:symposium-kg:sym:Concept:computable_hyper_universe_(chu)> ;
-    skos:prefLabel "CHU — 인지능력체 개념" .
-
-pc:User a prov:Agent,
-        prov:Person ;
-    skos:prefLabel "User — original utterance author" .
+    skos:prefLabel "우리 우주 — 사용자 관점의 대상" .
 
 pc:source-naming-20261012 a prov:Entity,
         pc:Source ;
@@ -196,6 +244,25 @@ pc:source-naming-20261012 a prov:Entity,
     pc:content <urn:sha256:e1434cc8b558bb46725bd47b97034a9fccda52334eec4a7d799d4d99698ddd51> ;
     pc:pathView "canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt" ;
     pc:revision "806258fe9a7974cf9bb237d6578d2c61094eabe0" .
+
+pc:PhilosophicalScope a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "Computable Hyper Universe — 포괄적 철학 관점" .
+
+pc:User a prov:Agent,
+        prov:Person ;
+    skos:prefLabel "User — original utterance author" .
+
+pc:source-scope-20261012 a prov:Entity,
+        pc:Source ;
+    prov:atLocation <https://github.com/gj3447/CHU/blob/d4fd5b619f3b1b87792b1dbe75b463f0688e47eb/canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt> ;
+    prov:wasAttributedTo pc:User ;
+    pc:authority "USER_PRIMARY" ;
+    pc:content <urn:sha256:9b69c7b9ca43547f8733775c273ccc8e072a4e9c82a0ca6db6967852cf03880b> ;
+    pc:pathView "canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt" ;
+    pc:revision "d4fd5b619f3b1b87792b1dbe75b463f0688e47eb" .
 
 <https://github.com/gj3447/CHU_OS> a prov:Entity,
         pc:Repository,
@@ -210,6 +277,13 @@ pc:source-handoff-20261012 a prov:Entity,
     pc:content <urn:sha256:5fee0c1c7fcb536fd81eda5681a9bb502d8ccb8d93a54a48e34ab95dcfd63f50> ;
     pc:pathView "docs/CHU_CHU_OS_REPOSITORY_SPLIT.md" ;
     pc:revision "806258fe9a7974cf9bb237d6578d2c61094eabe0" .
+
+pc:CHU a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    rdfs:seeAlso <urn:symposium-kg:sym:Concept:computable_hyper_universe_(chu)> ;
+    skos:prefLabel "CHU — Computable Hyper Universe · 포괄적 철학 개념" .
 
 pc:Codex a prov:Agent,
         prov:SoftwareAgent ;

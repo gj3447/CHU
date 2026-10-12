@@ -5,6 +5,11 @@
   "git_base": "77e56048bb4b5965eb84dc8466abc66aca6c2ef9",
   "local_sources": [
     {
+      "path": "canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt",
+      "authority": "USER_PRIMARY",
+      "sha256": "9b69c7b9ca43547f8733775c273ccc8e072a4e9c82a0ca6db6967852cf03880b"
+    },
+    {
       "path": "canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt",
       "authority": "USER_PRIMARY",
       "sha256": "e1434cc8b558bb46725bd47b97034a9fccda52334eec4a7d799d4d99698ddd51"
@@ -84,5 +89,6 @@
       "reviewed_on": "2026-10-12",
       "scope": "Model design reference, not validation of physical reality"
     }
-  ]
+  ],
+  "scope_revision": "Universal scope clarification, philosophy v1.1; earlier evidence pins retained"
 }

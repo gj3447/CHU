@@ -1,8 +1,10 @@
 # CHU 정체성 (사용자 정전 2026-09-29 — 최우선)
 
-**2026-10-12 명명 정정이 현재 작업에 우선한다.** CHU는 인지능력체 자체를 가리키는 개념이고,
-CHU_OS는 그 컴퓨터 기반 운영체제 구현이다. [현재 구분](../../canon/CHU_AND_CHU_OS.md)과
-[사용자 원문](../../canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt)을 보존한다.
+**2026-10-12 후속 범위 명확화가 현재 작업에 우선한다.** CHU는 **Computable Hyper Universe**라는
+포괄적 철학 개념이며 컴퓨터·인간의 뇌·우주를 포함하는 사용자 관점이다. 인지능력체·소프트웨어·OS로
+범위를 한정하지 않는다. CHU_OS는 그 관점을 컴퓨터에서 구현하는 특정 운영체제 프로젝트다.
+[현재 구분](../../canon/CHU_AND_CHU_OS.md)과
+[최신 사용자 원문](../../canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt)을 보존한다.
 우주도 월드모델 CHU라는 관점은 사용자에게 귀속하며 실험 결과로 승격하지 않는다.
 새 OS 개발의 정본은 별도 gj3447/CHU_OS 저장소다. 이 CHU checkout의 기존 OS 경로는 소비자 이관 중 호환용으로 보존한다. CHU는 철학·사용자 원문·Lean의 정본을 유지한다. 실제 이관 상태는 docs/CHU_CHU_OS_REPOSITORY_SPLIT.md를 따른다. 아래 OS 구조 규칙은 CHU_OS 구현에 적용한다.
 
