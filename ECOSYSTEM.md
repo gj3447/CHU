@@ -1,16 +1,19 @@
 # CHU · HSWM · USL — 하나의 하이퍼그래프 생태계
 
-2026-09-29 · 사용자 정의의 개념적 관계 지도. 실행·통합 완료 여부는 [current engineering view](engineering/README.md)와 [`os/README.md`](os/README.md)의 증거 범위로 확인한다.
+2026-10-12 명명 정정 · [CHU / CHU_OS 원문과 해석](canon/CHU_AND_CHU_OS.md). CHU는 인지능력체 자체를 가리키는 개념, CHU_OS는 그 컴퓨터 기반 구현이다. 우주도 월드모델 CHU라는 관점은 사용자에게 귀속한다. 아래 기존 관계 지도는 이 명명 구분으로 읽는다. 실행·통합 완료 여부는 [current engineering view](engineering/README.md)와 [`os/README.md`](os/README.md)의 증거 범위로 확인한다.
 
 | 저장소 | 한 줄 정체성 | 권위 |
 |---|---|---|
-| [**CHU**](https://github.com/gj3447/CHU) | 계산가능 하이퍼우주 — 월드모델과 HSWM을 모두 포함하는 가장 넓은 개념이자, 그것을 작업환경으로 실현하는 **하이퍼그래프 OS** | USER_PRIMARY ([범위](canon/sources/USER_PRIMARY_CHU_HSWM_SCOPE_2026-09-27.txt), [OS](canon/sources/USER_PRIMARY_CHU_HYPERGRAPH_OS_2026-09-29.txt)) |
+| [**CHU**](https://github.com/gj3447/CHU) | 인지능력체 자체를 가리키는 상위 개념; 월드모델과 HSWM을 포함하는 사용자 관점 | SECONDARY_AI 해석 ([최신 원문](canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt), [과거 범위](canon/sources/USER_PRIMARY_CHU_HSWM_SCOPE_2026-09-27.txt)) |
+| **CHU_OS** (현재 CHU 저장소에 함께 있음) | 컴퓨터 기반 운영체제 구현 | SECONDARY_AI 해석 ([최신 원문](canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt), [분리안](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)) |
 | [**HSWM**](https://github.com/gj3447/HSWM) | CHU 안의 **LLM 전용** 하이퍼그래프 AI — Semantic Weight 그래프가 상태, LLM이 국소 연산자 | USER_PRIMARY ([범위](canon/sources/USER_PRIMARY_CHU_HSWM_SCOPE_2026-09-27.txt)) |
 | [**USL**](https://github.com/gj3447/USL) | Universal Semantic Link — 서로 다른 시스템의 자원을 **의미 + 이름 있는 역할 + 실제 참조**로 묶는 n항 연결 문법·바인딩 도구 (자체 DB 없음) | USL README |
 
 ```mermaid
 flowchart TB
-  CHU["CHU — 하이퍼그래프 OS / 계산가능 하이퍼우주"]
+  CHU["CHU — 인지능력체 / 상위 개념"]
+  CHU_OS["CHU_OS — 컴퓨터 기반 운영체제 구현"]
+  CHU_OS -->|"구현 대상 (동일성 아님)"| CHU
   HSWM["HSWM — LLM 하이퍼그래프 AI"]
   WM["비-LLM 월드모델·시뮬레이터"]
   USL["USL — n항 의미 연결 문법·바인딩"]

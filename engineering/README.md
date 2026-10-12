@@ -2,7 +2,8 @@
 
 2026-10-02 · `SECONDARY_AI` 정리. 범위는 **이 CHU Git 저장소의 추적 파일과 ignore되지 않은
 새 파일 전체**다. `.chu`, `.venv`, 빌드 캐시, 형제 저장소, 공유 KG는 수집하지 않는다.
-사용자 정전은 [원문](../canon/sources/)에 있고, CHU의 목표는
+현재 명명은 [CHU / CHU_OS 구분](../canon/CHU_AND_CHU_OS.md)을 따른다. 두 저장소의 실제 분리는 아직 수행하지 않았다.
+사용자 정전은 [원문](../canon/sources/)에 있고, CHU_OS의 구현 목표는
 [VM에서 부팅하며 HSWM을 실행하는 하이퍼그래프 OS](../canon/VM_OS_TARGET.md)다.
 아직 구현된 것은 실행 명세·프로토타입·개발 도구와 과거 Ubuntu 부팅 실험까지다.
 

@@ -1,8 +1,8 @@
 <div align="center">
 
-# CHU — Computable Hyperuniverse · Hypergraph OS
+# CHU — 인지능력체 · Computable Hyperuniverse
 
-**VM OS under development · Agent-native graph workspace · Formal foundations**
+**CHU concept and theory · CHU_OS computer implementation under development**
 
 [![Type System](https://img.shields.io/badge/Type_System-CHU_v1-D97757?style=for-the-badge&logoColor=white)](docs/STATUS.md)
 [![Lean 4 Verified](https://img.shields.io/badge/Lean_4-11_files_/_dated_observation-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
@@ -12,7 +12,9 @@
 
 </div>
 
-> **현재 사용자 목표 (2026-09-29/30 USER_PRIMARY)**: CHU = **하이퍼그래프 기반 OS**. 파일·문서·코드·모델은 노드와 역할 있는 n항 하이퍼엣지로 다루며, VM에서 부팅해 HSWM을 실행할 수 있어야 한다. 현재 목표·근거·작업 상태는 [engineering README](engineering/README.md), [OS 설계](os/README.md), [계획](plan/CHU_OS_PLAN.md), [사용자 원문](canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt)에서 확인한다.
+> **현재 명명 구분 (2026-10-12)**: **CHU는 인지능력체 자체, CHU_OS는 컴퓨터 기반 운영체제 구현**이다. 사용자에게는 우주 자체도 월드모델 CHU라는 관점이 있다. [원문과 해석](canon/CHU_AND_CHU_OS.md)을 구별해 읽는다. 현재 저장소에는 두 범위가 함께 있으며 [저장소 분리안](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)을 마련했다. 실제 Git/원격 이관은 아직 수행하지 않았다.
+
+> **기존 OS 구현 목표 (2026-09-29/30 USER_PRIMARY)**: **하이퍼그래프 기반 CHU_OS**. 파일·문서·코드·모델은 노드와 역할 있는 n항 하이퍼엣지로 다루며, VM에서 부팅해 HSWM을 실행할 수 있어야 한다. 현재 목표·근거·작업 상태는 [engineering README](engineering/README.md), [OS 설계](os/README.md), [계획](plan/CHU_OS_PLAN.md), [사용자 원문](canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt)에서 확인한다.
 
 > **Lean/type-theory 층 (역사적·현재의 보조 자산)**: `axiom CHU : Type`, `CHUPiece := CHU → Prop`, `JaebaeMan`은 CHU의 형식적 이론·프로토타입 층이다. 이는 완성된 OS 커널이나 HSWM 실행 증거가 아니다. 2026-04-28의 SYMPOSIUM TIER 2 해석은 [역사적 이론 맥락](docs/index.md#historical-theory-context)으로 보존한다.
 > 생태계: [CHU · HSWM · USL](ECOSYSTEM.md) — CHU ⊇ HSWM(LLM AI), USL = n항 의미 연결 문법.
@@ -61,7 +63,7 @@ Start with [engineering README](engineering/README.md) for the current graph-eng
 
 `./chu doctor --json`, `./chu tools --json`, and `./chu check --json` provide environment and verification views. The RDF development registry is [dev/catalog.ttl](dev/catalog.ttl).
 
-CHU's current OS target is a VM-booting environment capable of running HSWM.
+CHU_OS's current implementation target is a VM-booting environment capable of running HSWM.
 The present Ubuntu/QEMU substrate and its strict boundary are documented in
 [os/README.md](os/README.md): it verifies a guest boot contract but does **not**
 yet run HSWM or constitute a complete CHU OS.
