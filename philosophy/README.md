@@ -16,6 +16,9 @@
 3. [형식화 점검](FORMAL_BOUNDARY.md)에서 Lean이 실제 검사한 것과 설명의 간극을 읽는다.
 4. [구현 계약](IMPLEMENTATION_CONTRACT.md)으로 CHU_OS의 검증 의무를 연결한다.
 
+[개념·주장 그래프](graph/README.md)는 위 명명·관점·분리 상태를 출처에 연결해 RDF로 조회·검증한다.
+`./chu concept query distinction`에서 시작한다. 철학적 참이나 HSWM 실행 상태의 검증과 구별한다.
+
 ## 1. 대상, 표현, 구현
 
 세 가지를 구분한다. (a) 우리가 말하는 인지능력체, (b) 그것을 설명하는 수학적/계산적

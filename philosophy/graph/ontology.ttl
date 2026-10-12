@@ -1,0 +1,54 @@
+@prefix pc: <https://github.com/gj3447/CHU/philosophy#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+pc: a owl:Ontology ; owl:versionInfo "1.0.0" ;
+    rdfs:comment "CHU-owned attributed concept claims, separate from OS runtime state and shared KG. Claims reify statements; they do not assert the unqualified statement. Cardinalities in shapes.ttl." .
+pc:Subject a rdfs:Class ; rdfs:subClassOf prov:Entity .
+pc:Concept a rdfs:Class ; rdfs:subClassOf pc:Subject, skos:Concept .
+pc:Repository a rdfs:Class ; rdfs:subClassOf pc:Subject .
+pc:WorkItem a rdfs:Class ; rdfs:subClassOf pc:Subject .
+pc:State a rdfs:Class ; rdfs:subClassOf pc:Subject .
+pc:Claim a rdfs:Class ; rdfs:subClassOf rdf:Statement, prov:Entity .
+pc:Source a rdfs:Class ; rdfs:subClassOf prov:Entity .
+pc:ClaimPredicate a rdfs:Class ; rdfs:subClassOf rdf:Property .
+
+pc:computerImplementationOf a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Concept ; rdfs:range pc:Concept ;
+    rdfs:comment "Implementation concept -> target cognition concept. Exactly one subject/object per claim; neither identity nor proof of implemented cognition." .
+pc:separateRepositoryFrom a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Repository ; rdfs:range pc:Repository ;
+    rdfs:comment "Implementation repository -> concept repository in the user-directed separation. One subject/object per claim; a direction, not an execution receipt." .
+pc:viewedAs a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Concept ; rdfs:range pc:Concept ;
+    rdfs:comment "Subject of a viewpoint -> interpreted concept, qualified by exactly one context on its claim. Does not assert class membership or empirical identity." .
+pc:ownsScope a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Repository ; rdfs:range pc:Concept ;
+    rdfs:comment "Repository -> one owner scope per attributed claim; does not imply exclusive physical file residence or access permission." .
+pc:handoffStatus a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Repository ; rdfs:range pc:State ;
+    rdfs:comment "Repository -> one source-reported initial handoff state; distinct from complete consumer migration." .
+pc:workStatus a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:WorkItem ; rdfs:range pc:State ;
+    rdfs:comment "Work item -> one status in a pinned owner observation; not a live service check." .
+
+pc:authority a rdf:Property ; rdfs:domain prov:Entity ; rdfs:range xsd:string ;
+    rdfs:comment "Record -> exactly one provenance authority. Normalized claims are always SECONDARY_AI; original utterance sources can be USER_PRIMARY." .
+pc:kind a rdf:Property ; rdfs:domain pc:Claim ; rdfs:range xsd:string ;
+    rdfs:comment "Claim -> exactly one attribution category, independent of empirical support." .
+pc:epistemicStatus a rdf:Property ; rdfs:domain pc:Claim ; rdfs:range xsd:string ;
+    rdfs:comment "Claim -> exactly one evidence status; a user viewpoint is not an empirical result." .
+pc:context a rdf:Property ; rdfs:domain pc:Claim ; rdfs:range pc:Concept ;
+    rdfs:comment "Claim -> zero or one qualification concept; exactly one for viewedAs. Context is retained during retrieval." .
+pc:sourceExcerpt a rdf:Property ; rdfs:domain pc:Claim ; rdfs:range xsd:string ;
+    rdfs:comment "Claim -> exactly one verbatim substring of its sole pinned source; not the normalized label." .
+pc:pathView a rdf:Property ; rdfs:domain pc:Source ; rdfs:range xsd:string ;
+    rdfs:comment "Source record -> exactly one owner-relative path at source revision. Not entity identity." .
+pc:revision a rdf:Property ; rdfs:domain pc:Source ; rdfs:range xsd:string ;
+    rdfs:comment "Source record -> exactly one full Git commit. Verified offline against owner Git bytes." .
+pc:content a rdf:Property ; rdfs:domain pc:Source ; rdfs:range prov:Entity ;
+    rdfs:comment "Source record -> exactly one raw-byte SHA-256 CID. Source context and content identity remain distinct." .

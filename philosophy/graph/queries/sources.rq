@@ -1,0 +1,7 @@
+PREFIX pc: <https://github.com/gj3447/CHU/philosophy#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?claim ?source ?path ?revision ?content ?sourceAuthority ?excerpt WHERE {
+  ?claim a pc:Claim ; prov:wasDerivedFrom ?source ; pc:sourceExcerpt ?excerpt .
+  ?source pc:pathView ?path ; pc:revision ?revision ; pc:content ?content ;
+    pc:authority ?sourceAuthority .
+}

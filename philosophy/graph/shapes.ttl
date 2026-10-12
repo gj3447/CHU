@@ -1,0 +1,55 @@
+@prefix pc: <https://github.com/gj3447/CHU/philosophy#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+pc:SubjectShape a sh:NodeShape ; sh:targetClass pc:Subject ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+    sh:xone ( [ sh:class pc:Concept ] [ sh:class pc:Repository ] [ sh:class pc:WorkItem ] [ sh:class pc:State ] ) .
+pc:ClaimShape a sh:NodeShape ; sh:targetClass pc:Claim ; sh:targetSubjectsOf rdf:subject ;
+    sh:nodeKind sh:IRI ; sh:class rdf:Statement ; sh:class pc:Claim ;
+    sh:property [ sh:path rdf:subject ; sh:class pc:Subject ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ; sh:disjoint rdf:object ] ;
+    sh:property [ sh:path rdf:predicate ; sh:in ( pc:computerImplementationOf pc:separateRepositoryFrom pc:viewedAs pc:ownsScope pc:handoffStatus pc:workStatus ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path rdf:object ; sh:class pc:Subject ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:authority ; sh:hasValue "SECONDARY_AI" ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:kind ; sh:in ( "USER_NAMING" "USER_DIRECTION" "USER_VIEWPOINT" "OWNER_REPORTED_OBSERVATION" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:epistemicStatus ; sh:in ( "SOURCE_SUPPORTED" "NOT_EMPIRICALLY_VALIDATED" "SOURCE_REPORTED" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path prov:wasAttributedTo ; sh:hasValue pc:Codex ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:class pc:Source ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:sourceExcerpt ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:context ; sh:class pc:Concept ; sh:maxCount 1 ] .
+pc:SourceShape a sh:NodeShape ; sh:targetClass pc:Source ; sh:nodeKind sh:IRI ;
+    sh:property [ sh:path pc:pathView ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:revision ; sh:datatype xsd:string ; sh:pattern "^[0-9a-f]{40}$" ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:content ; sh:nodeKind sh:IRI ; sh:class prov:Entity ; sh:pattern "^urn:sha256:[0-9a-f]{64}$" ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:authority ; sh:in ( "USER_PRIMARY" "SECONDARY_AI" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path prov:wasAttributedTo ; sh:class prov:Agent ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path prov:atLocation ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+# Local acceptance contract for the named user claims, not an ontology of all cognition.
+pc:NamingShape a sh:NodeShape ; sh:targetNode pc:C01 ;
+    sh:property [ sh:path rdf:subject ; sh:hasValue pc:CHU_OS ] ;
+    sh:property [ sh:path rdf:predicate ; sh:hasValue pc:computerImplementationOf ] ;
+    sh:property [ sh:path rdf:object ; sh:hasValue pc:CHU ] ;
+    sh:property [ sh:path pc:kind ; sh:hasValue "USER_NAMING" ] ;
+    sh:property [ sh:path pc:epistemicStatus ; sh:hasValue "SOURCE_SUPPORTED" ] .
+pc:DirectionShape a sh:NodeShape ; sh:targetNode pc:C02 ;
+    sh:property [ sh:path rdf:subject ; sh:hasValue <https://github.com/gj3447/CHU_OS> ] ;
+    sh:property [ sh:path rdf:predicate ; sh:hasValue pc:separateRepositoryFrom ] ;
+    sh:property [ sh:path rdf:object ; sh:hasValue <https://github.com/gj3447/CHU> ] ;
+    sh:property [ sh:path pc:kind ; sh:hasValue "USER_DIRECTION" ] ;
+    sh:property [ sh:path pc:epistemicStatus ; sh:hasValue "SOURCE_SUPPORTED" ] .
+pc:ViewpointShape a sh:NodeShape ; sh:targetNode pc:C03 ;
+    sh:property [ sh:path rdf:subject ; sh:hasValue pc:Universe ] ;
+    sh:property [ sh:path rdf:predicate ; sh:hasValue pc:viewedAs ] ;
+    sh:property [ sh:path rdf:object ; sh:hasValue pc:CHU ] ;
+    sh:property [ sh:path pc:context ; sh:hasValue pc:WorldModel ; sh:minCount 1 ] ;
+    sh:property [ sh:path pc:kind ; sh:hasValue "USER_VIEWPOINT" ] ;
+    sh:property [ sh:path pc:epistemicStatus ; sh:hasValue "NOT_EMPIRICALLY_VALIDATED" ] .
+pc:CatalogShape a sh:NodeShape ; sh:targetNode pc:conceptClaims ;
+    sh:property [ sh:path pc:authority ; sh:hasValue "SECONDARY_AI" ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dct:date ; sh:datatype xsd:date ; sh:minCount 1 ; sh:maxCount 1 ] .

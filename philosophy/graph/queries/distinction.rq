@@ -1,0 +1,9 @@
+PREFIX pc: <https://github.com/gj3447/CHU/philosophy#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?claim ?implementation ?concept ?kind ?authority ?source ?content WHERE {
+  ?claim a pc:Claim ; rdf:predicate pc:computerImplementationOf ;
+    rdf:subject ?implementation ; rdf:object ?concept ; pc:kind ?kind ;
+    pc:authority ?authority ; prov:wasDerivedFrom ?source .
+  ?source pc:content ?content .
+}

@@ -1,0 +1,217 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix pc: <https://github.com/gj3447/CHU/philosophy#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+pc:C01 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:CHU ;
+    rdf:predicate pc:computerImplementationOf ;
+    rdf:subject pc:CHU_OS ;
+    skos:prefLabel "CHU와 CHU_OS의 명명 구분" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-naming-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:epistemicStatus "SOURCE_SUPPORTED" ;
+    pc:kind "USER_NAMING" ;
+    pc:sourceExcerpt "CHU_OS 랑 CHU 랑 분리해야함 cHU 는 그냥 그 인지능력체 그자체를 cHU 라고 부르는거같음 컴퓨터 기반으로 구현체가 CHU_OS 이고 ㅇㅇ 레포 분리도 해야할듯 내생각에는 그냥 우리 우주 자체도 월드모델 CHU 임" .
+
+pc:C02 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object <https://github.com/gj3447/CHU> ;
+    rdf:predicate pc:separateRepositoryFrom ;
+    rdf:subject <https://github.com/gj3447/CHU_OS> ;
+    skos:prefLabel "철학을 먼저 정리하고 CHU_OS를 별도 저장소로 둔다" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-direction-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:epistemicStatus "SOURCE_SUPPORTED" ;
+    pc:kind "USER_DIRECTION" ;
+    pc:sourceExcerpt "철학적 chu 를 일단 정리하고 그 os chy 는 CHU_OS 로 레포한게 따로파서 하는게 맞는거같은데 ㅇㅇ; 일단 CHU_OS 레포는 별개로 파는걸로 일다ㅣㄴ 알고있어주고 순서대로 쭉쭉 진행해줘볼래 ㅇㅇ?" .
+
+pc:C03 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:CHU ;
+    rdf:predicate pc:viewedAs ;
+    rdf:subject pc:Universe ;
+    skos:prefLabel "우주 자체도 월드모델 CHU라는 사용자 관점" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-naming-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:context pc:WorldModel ;
+    pc:epistemicStatus "NOT_EMPIRICALLY_VALIDATED" ;
+    pc:kind "USER_VIEWPOINT" ;
+    pc:sourceExcerpt "내생각에는 그냥 우리 우주 자체도 월드모델 CHU 임" .
+
+pc:conceptClaims a prov:Entity ;
+    dct:date "2026-10-12"^^xsd:date ;
+    prov:wasAttributedTo pc:Codex ;
+    pc:authority "SECONDARY_AI" .
+
+pc:consumer-switch-20261012 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:PendingConsumerSwitch ;
+    rdf:predicate pc:workStatus ;
+    rdf:subject pc:ConsumerMigration ;
+    skos:prefLabel "소비자 전환은 아직 수행하지 않았다는 관측" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-handoff-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:epistemicStatus "SOURCE_REPORTED" ;
+    pc:kind "OWNER_REPORTED_OBSERVATION" ;
+    pc:sourceExcerpt "| HOH · OMC · HSWM · USL 소비자 참조 전환 | 아직 수행하지 않음 |" .
+
+pc:handoff-20261012 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:InitialHandoffRecorded ;
+    rdf:predicate pc:handoffStatus ;
+    rdf:subject <https://github.com/gj3447/CHU_OS> ;
+    skos:prefLabel "초기 이관 완료라는 소유 저장소 관측" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-handoff-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:epistemicStatus "SOURCE_REPORTED" ;
+    pc:kind "OWNER_REPORTED_OBSERVATION" ;
+    pc:sourceExcerpt "초기 이관 commit **`dab627045382330f5b1bdd91a6497ea8fea88585`**를 `main`에 push했다." .
+
+pc:owner-chu-20261012 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:ConceptTheoryCanon ;
+    rdf:predicate pc:ownsScope ;
+    rdf:subject <https://github.com/gj3447/CHU> ;
+    skos:prefLabel "CHU의 개념·철학 정본 소유" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-handoff-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:epistemicStatus "SOURCE_REPORTED" ;
+    pc:kind "OWNER_REPORTED_OBSERVATION" ;
+    pc:sourceExcerpt """CHU는 개념·철학·사용자 원문·Lean의 정본이고,
+새 OS 구현 개발의 정본은 CHU_OS다.""" .
+
+pc:owner-os-20261012 a rdf:Statement,
+        prov:Entity,
+        pc:Claim ;
+    rdf:object pc:OSImplementation ;
+    rdf:predicate pc:ownsScope ;
+    rdf:subject <https://github.com/gj3447/CHU_OS> ;
+    skos:prefLabel "CHU_OS의 새 구현 정본 소유" ;
+    prov:wasAttributedTo pc:Codex ;
+    prov:wasDerivedFrom pc:source-handoff-20261012 ;
+    pc:authority "SECONDARY_AI" ;
+    pc:epistemicStatus "SOURCE_REPORTED" ;
+    pc:kind "OWNER_REPORTED_OBSERVATION" ;
+    pc:sourceExcerpt """CHU는 개념·철학·사용자 원문·Lean의 정본이고,
+새 OS 구현 개발의 정본은 CHU_OS다.""" .
+
+pc:CHU_OS a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "CHU_OS — 컴퓨터 기반 운영체제 구현" .
+
+pc:ConceptTheoryCanon a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "개념·철학·사용자 원문·Lean 정본" .
+
+pc:ConsumerMigration a prov:Entity,
+        pc:Subject,
+        pc:WorkItem ;
+    skos:prefLabel "HOH·OMC·HSWM·USL 소비자 참조 전환" .
+
+pc:InitialHandoffRecorded a prov:Entity,
+        pc:State,
+        pc:Subject ;
+    skos:prefLabel "별도 저장소 생성·초기 이관 기록됨" .
+
+pc:OSImplementation a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "새 OS 구현 개발 정본" .
+
+pc:PendingConsumerSwitch a prov:Entity,
+        pc:State,
+        pc:Subject ;
+    skos:prefLabel "소비자 전환 미수행으로 기록됨" .
+
+pc:Universe a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "우리 우주 — 사용자 관점의 대상" .
+
+pc:WorldModel a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    skos:prefLabel "월드모델 — 관점의 문맥" .
+
+pc:source-direction-20261012 a prov:Entity,
+        pc:Source ;
+    prov:atLocation <https://github.com/gj3447/CHU/blob/806258fe9a7974cf9bb237d6578d2c61094eabe0/canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt> ;
+    prov:wasAttributedTo pc:User ;
+    pc:authority "USER_PRIMARY" ;
+    pc:content <urn:sha256:575ccd910eb351983be21378e47c66ddf7cb99280574a6cfc2afc381767225b2> ;
+    pc:pathView "canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt" ;
+    pc:revision "806258fe9a7974cf9bb237d6578d2c61094eabe0" .
+
+<urn:sha256:575ccd910eb351983be21378e47c66ddf7cb99280574a6cfc2afc381767225b2> a prov:Entity .
+
+<urn:sha256:5fee0c1c7fcb536fd81eda5681a9bb502d8ccb8d93a54a48e34ab95dcfd63f50> a prov:Entity .
+
+<urn:sha256:e1434cc8b558bb46725bd47b97034a9fccda52334eec4a7d799d4d99698ddd51> a prov:Entity .
+
+<https://github.com/gj3447/CHU> a prov:Entity,
+        pc:Repository,
+        pc:Subject ;
+    skos:prefLabel "CHU 소유 저장소" .
+
+pc:CHU a skos:Concept,
+        prov:Entity,
+        pc:Concept,
+        pc:Subject ;
+    rdfs:seeAlso <urn:symposium-kg:sym:Concept:computable_hyper_universe_(chu)> ;
+    skos:prefLabel "CHU — 인지능력체 개념" .
+
+pc:User a prov:Agent,
+        prov:Person ;
+    skos:prefLabel "User — original utterance author" .
+
+pc:source-naming-20261012 a prov:Entity,
+        pc:Source ;
+    prov:atLocation <https://github.com/gj3447/CHU/blob/806258fe9a7974cf9bb237d6578d2c61094eabe0/canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt> ;
+    prov:wasAttributedTo pc:User ;
+    pc:authority "USER_PRIMARY" ;
+    pc:content <urn:sha256:e1434cc8b558bb46725bd47b97034a9fccda52334eec4a7d799d4d99698ddd51> ;
+    pc:pathView "canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt" ;
+    pc:revision "806258fe9a7974cf9bb237d6578d2c61094eabe0" .
+
+<https://github.com/gj3447/CHU_OS> a prov:Entity,
+        pc:Repository,
+        pc:Subject ;
+    skos:prefLabel "CHU_OS 구현 저장소" .
+
+pc:source-handoff-20261012 a prov:Entity,
+        pc:Source ;
+    prov:atLocation <https://github.com/gj3447/CHU/blob/806258fe9a7974cf9bb237d6578d2c61094eabe0/docs/CHU_CHU_OS_REPOSITORY_SPLIT.md> ;
+    prov:wasAttributedTo pc:Codex ;
+    pc:authority "SECONDARY_AI" ;
+    pc:content <urn:sha256:5fee0c1c7fcb536fd81eda5681a9bb502d8ccb8d93a54a48e34ab95dcfd63f50> ;
+    pc:pathView "docs/CHU_CHU_OS_REPOSITORY_SPLIT.md" ;
+    pc:revision "806258fe9a7974cf9bb237d6578d2c61094eabe0" .
+
+pc:Codex a prov:Agent,
+        prov:SoftwareAgent ;
+    skos:prefLabel "Codex — graph author" .
+

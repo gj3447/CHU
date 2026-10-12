@@ -495,3 +495,12 @@ dev:philosophy-boundaries a dev:Check ;
     dev:requires dev:python, dev:lean ;
     dev:argv ( "{python}" "scripts/check_philosophy.py" "--out" "{out}" ) ;
     dev:effect "build" ; dev:timeout 45 ; dev:workingDirectory "repository-root" .
+
+<https://github.com/gj3447/CHU/blob/main/philosophy/graph/README.md>
+    a dev:Source ; dev:reviewedOn "2026-10-12"^^xsd:date .
+dev:concept-claims a dev:Check ;
+    skos:prefLabel "Validate attributed CHU concept claims, source pins and handoff boundaries" ;
+    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/philosophy/graph/README.md> ;
+    dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
+    dev:argv ( "{python}" "scripts/check_concept_graph.py" "check" "--out" "{out}" ) ;
+    dev:effect "build" ; dev:timeout 60 ; dev:workingDirectory "repository-root" .

@@ -259,6 +259,9 @@ def main():
                        help="Discover repository artifacts, graph profiles, plan and evidence boundaries")
     p.add_argument("-h", "--help", dest="repo_help", action="store_true")
     p.add_argument("argv", nargs=argparse.REMAINDER)
+    p = sub.add_parser("concept", add_help=False, help="Query/export CHU concept claims and provenance")
+    p.add_argument("-h", "--help", dest="concept_help", action="store_true")
+    p.add_argument("argv", nargs=argparse.REMAINDER)
     for name, desc in [("doctor", "Probe installed tools against pins"),
                        ("tools", "List tools, versions and official documentation"),
                        ("checks", "List check IDs, argv, effects and timeouts"),
@@ -276,6 +279,9 @@ def main():
             p.add_argument("--format", choices=["turtle", "json-ld", "nt"], default="turtle")
     args = parser.parse_args()
     try:
+        if args.command == "concept":
+            from check_concept_graph import main as concept_main
+            return concept_main(["--help"] if args.concept_help else args.argv)
         if args.command == "repo":
             from chu_repo import main as repo_main
             return repo_main(["--help"] if args.repo_help else args.argv)
