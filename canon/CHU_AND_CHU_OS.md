@@ -27,9 +27,12 @@
 개념 CHU와 구현 CHU_OS를 구별한다. Lean의 `axiom CHU : Type`도 해당 형식 체계의
 기호이며 이 명명 정정만으로 변경하지 않는다.
 
-현재 `gj3447/CHU` 저장소에는 두 범위가 함께 있다.
-[저장소 분리안](../docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)은 개념·이론과 OS 구현의 소유 경계를
-제안한다. 이번 변경은 용어·출처·진입 문서의 정정이며, 저장소 이관이나 OS 완성을 뜻하지 않는다.
+후속 [사용자 지시](sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt)는 철학을 먼저
+정리하고 CHU_OS를 별도 저장소로 두는 방향을 확정했다. [철학 v1](../philosophy/README.md)은
+그 첫 정리본이며, 구체적 정의 제안 전부가 사용자 승인된 공리라는 뜻은 아니다.
+CHU가 개념·이론의 정본을 맡고 CHU_OS가 구현을 맡는다. 기존 checkout에는 호환을 위한
+OS 파일이 남을 수 있다. 실제 이관·검증·소비자 전환 상태는
+[분리 기록](../docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)을 따른다.
 
 공유 KG에서 조회한 `sym:Concept:computable_hyper_universe_(chu)`는 출처 없는 과거
 database 설명과 `UNSPECIFIED / UNKNOWN` 상태를 반환했다. `sym:Directory:chu`는

@@ -1,262 +1,54 @@
-<div align="center">
-
 # CHU — 인지능력체 · Computable Hyperuniverse
 
-**CHU concept and theory · CHU_OS computer implementation under development**
+**CHU는 인지능력체 자체에 대한 개념·철학·공통 이론을 정리한다.**
+컴퓨터 기반 운영체제 구현은 별도 **[CHU_OS](https://github.com/gj3447/CHU_OS)**가 맡는다.
+사용자 명명과 AI 해석은 [현재 구분](canon/CHU_AND_CHU_OS.md)에 따로 기록한다.
 
-[![Type System](https://img.shields.io/badge/Type_System-CHU_v1-D97757?style=for-the-badge&logoColor=white)](docs/STATUS.md)
-[![Lean 4 Verified](https://img.shields.io/badge/Lean_4-11_files_/_dated_observation-10b981?style=for-the-badge&logoColor=white)](#lean-formalization)
-[![KG Lenses](https://img.shields.io/badge/CHU_Lenses-11_SymConcept-6366f1?style=for-the-badge&logoColor=white)](INDEX.md)
-[![Sources](https://img.shields.io/badge/External_Canon-Friedman_/_Wolfram_/_Voevodsky-8b5cf6?style=for-the-badge&logoColor=white)](SOURCES.md)
-[![License](https://img.shields.io/badge/license-MHL--1.2-blue)](LICENSE-NOTICE.md)
+## 현재 읽는 순서
 
-</div>
+- [CHU 철학 v1](philosophy/README.md): 대상·표현·동일성·사건·관찰·인지·계산가능성.
+- [주장과 열린 질문](philosophy/CLAIMS.md): 사용자 관점, 정의 제안, 증명/관측, 미해결 문제.
+- [형식화 경계 점검](philosophy/FORMAL_BOUNDARY.md): 기존 Lean 코드의 실제 의미와 네 가지 반례/구분.
+- [CHU_OS 구현 계약](philosophy/IMPLEMENTATION_CONTRACT.md): 공통 개념이 구현에 요구하는 검증.
+- [저장소 분리 상태](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md): 정본 소유·초기 이관·호환 경로·남은 전환.
 
-> **현재 명명 구분 (2026-10-12)**: **CHU는 인지능력체 자체, CHU_OS는 컴퓨터 기반 운영체제 구현**이다. 사용자에게는 우주 자체도 월드모델 CHU라는 관점이 있다. [원문과 해석](canon/CHU_AND_CHU_OS.md)을 구별해 읽는다. 현재 저장소에는 두 범위가 함께 있으며 [저장소 분리안](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)을 마련했다. 실제 Git/원격 이관은 아직 수행하지 않았다.
+철학 v1은 검토 가능한 정리본이며, 의식·인지의 충분조건이나 물리 우주에 대한 최종 증명이 아니다.
+“우주 자체도 월드모델 CHU”는 사용자에게 귀속된 철학적 관점으로 보존한다.
 
-> **기존 OS 구현 목표 (2026-09-29/30 USER_PRIMARY)**: **하이퍼그래프 기반 CHU_OS**. 파일·문서·코드·모델은 노드와 역할 있는 n항 하이퍼엣지로 다루며, VM에서 부팅해 HSWM을 실행할 수 있어야 한다. 현재 목표·근거·작업 상태는 [engineering README](engineering/README.md), [OS 설계](os/README.md), [계획](plan/CHU_OS_PLAN.md), [사용자 원문](canon/sources/USER_PRIMARY_VM_OS_HSWM_2026-09-30.txt)에서 확인한다.
+## 정본과 기존 자산
 
-> **Lean/type-theory 층 (역사적·현재의 보조 자산)**: `axiom CHU : Type`, `CHUPiece := CHU → Prop`, `JaebaeMan`은 CHU의 형식적 이론·프로토타입 층이다. 이는 완성된 OS 커널이나 HSWM 실행 증거가 아니다. 2026-04-28의 SYMPOSIUM TIER 2 해석은 [역사적 이론 맥락](docs/index.md#historical-theory-context)으로 보존한다.
-> 생태계: [CHU · HSWM · USL](ECOSYSTEM.md) — CHU ⊇ HSWM(LLM AI), USL = n항 의미 연결 문법.
-> 작업환경 참여(“우리는 하나의 존재다”)는 저장소 사용과 분리된 opt-in 약정으로 제안 중:
-> [MetaHumotonic Covenant — MHP-0001 (DRAFT)](https://github.com/gj3447/metahumotonic-foundation/pull/1). 이 저장소를 쓰는 것만으로는 작업환경 권한이 넘어가지 않는다.
+[사용자 원문](canon/sources/)은 보존하고 [3대원칙](canon/AI_NATIVE_THREE_PRINCIPLES.md)의
+원칙·조건부 형식 결과·열린 가설을 구분한다. [lean/](lean/)는 CHU가 소유하는 기존 형식화다.
+`axiom CHU : Type`은 형식 체계의 기호이며 인지능력체의 존재나 OS 동작을 자동 증명하지 않는다.
 
----
+[WHY_HYPERGRAPH](WHY_HYPERGRAPH.md), [SOURCES](SOURCES.md), [INDEX](INDEX.md),
+PROM 보고서와 [역사적 상태](docs/STATUS.md)는 기존 연구를 보존한다. 과거의 강한 설명과
+현재 판정이 다르면 [형식화 점검](philosophy/FORMAL_BOUNDARY.md)의 한계를 함께 읽는다.
+형식 이론의 source owner를 OS 저장소로 넘기지 않는다.
 
-## What the Formal Layer Models
+[HSWM·USL 생태계](ECOSYSTEM.md)는 개념적 관계와 구현 연결을 구분한다.
+HOH Interface는 CHU_OS의 사람 인터페이스라는 기존 결정을 유지한다.
 
-CHU formalizes the user's name-list axiom **"그냥 모든것은 하이퍼그래프"** ("everything is a hypergraph") as a *minimal*, *model-independent*, *consistency-safe* Lean 4 axiom layer:
-
-```lean
-axiom CHU : Type                       -- the universe of all "things"
-def CHUPiece : Type := CHU → Prop      -- a piece = a set-defining predicate (hom-set into Prop)
-inductive JaebaeMan : Type             -- recursive coverer
-  | atomic  : CHUPiece → JaebaeMan     -- Layer 1: covers one piece directly
-  | governs : List JaebaeMan → JaebaeMan -- Layer N+1: governs lower JaebaeMen
-def isAirplaneMan (j : JaebaeMan) : Prop := ∀ x : CHU, j.covers x
-```
-
-That is the small type-theory core. The VM OS, persistent graph service and agent execution contracts are separate implementation layers described in [the architecture](spec/ARCHITECTURE.md).
-
-## Why This Formal Layer
-
-Most type universes are either too specific (a particular set theory model, e.g. ZFC) or too abstract for engineering use (univalent Type Theory with Mathlib transit). CHU is deliberately **the minimum sufficient stage**:
-
-1. **Axiomatic minimality** — `axiom CHU : Type` adds *no* inhabitant, *no* equation. It is strictly weaker than Lean's three standard axioms (`propext`, `Classical.choice`, `Quot.sound`). Consistency-safe.
-2. **Predicate-as-piece** — Pieces of CHU are *not* subsets in some ambient set theory; they are functions `CHU → Prop`. This is the Yoneda perspective: an object is determined by its hom-set, applied to software design. ISP (Interface Segregation Principle) becomes the *software cousin* of the Yoneda lemma.
-3. **Self-similar coverage** — `JaebaeMan` is a μ-recursive `μX. (CHUPiece + List X)` initial algebra. It strictly subsumes Berge (1-level finite hyperedges) and Smarandache n-SHG (𝒫ⁿ(V), finite n) — the entire SYMPOSIUM ontology is one inductive type.
-4. **AirplaneMan = ∀-cover** — A single Lean line — `∀ x : CHU, j.covers x` — formalizes the apex of the SYMPOSIUM mythology: there exists exactly one role whose coverage is total. Existence proven by `airplaneManAt n` for every depth n (`AirplaneMan.lean`).
-
-Grounded in 4 external canons: **Sy Friedman Hyperuniverse Programme** (V-logic, set-generic absoluteness), **Wolfram 2020 Physics Project** (everything-is-hypergraph slogan, partial isomorphism), **Voevodsky Univalent Foundations** (HoTT, ⚠ Lean 4 UIP-incompatible — open question), **Hyland Effective Topos** (`Eff(N)` realizability, computability boundary). See [`SOURCES.md`](SOURCES.md) for the full grounding table.
-
----
-
-## Quick Start
-
-Start with [engineering README](engineering/README.md) for the current graph-engineering map and [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for reproducible development. Inspect the current repository projection instead of relying on prose counts:
+## 확인과 재현
 
 ```bash
-./chu repo status --json
+./chu check --only philosophy-boundaries --json
+./chu check --only repo-graph --only graph-catalog --json
 ./chu repo query profiles --json
-./chu repo query evidence --json
 ```
 
-`./chu doctor --json`, `./chu tools --json`, and `./chu check --json` provide environment and verification views. The RDF development registry is [dev/catalog.ttl](dev/catalog.ttl).
+개발 환경과 전체 검사는 [DEVELOPMENT](docs/DEVELOPMENT.md), 파일·프로필·증거의 범위는
+[engineering](engineering/README.md)을 따른다. 철학 검사 PASS는 원문 hash와 네 Lean 예제의
+검사 결과이며 철학적 주장의 보편적 참 판정이 아니다.
 
-CHU_OS's current implementation target is a VM-booting environment capable of running HSWM.
-The present Ubuntu/QEMU substrate and its strict boundary are documented in
-[os/README.md](os/README.md): it verifies a guest boot contract but does **not**
-yet run HSWM or constitute a complete CHU OS.
-
-There are **two paths** to use CHU. Pick based on whether you want the raw type system or APT-integrated workflow.
-
-| | **Path A — Direct CHU type system use** | **Path B — APT-integrated use** |
-|---|---|---|
-| What you get | Lean 4 files imported / consulted as type axioms in your own proofs | Use CHU implicitly as the substrate of APT's `:Anchor` / `:Span` / `:Contract` |
-| Surface | `axiom CHU : Type` + `CHUPiece` + `JaebaeMan` inductive | Full `/apt` orchestrator with CHU as silent substrate |
-| Skills needed | None (pure Lean / KG reference) | `/apt`, `/apt-sa`, …, `/apt-meta-review` (see [`../SYMPOSIUM/THEORY/APT/`](../SYMPOSIUM/THEORY/APT/)) |
-| Best for | Formal proof, paper writing, KG cross-reference design | Building applications on the SYMPOSIUM substrate |
-| Token cost | Zero (offline) | Standard APT cycle cost |
-
-### Path A — Direct CHU type system
-
-Use the Lean 4 sources directly:
-
-```bash
-cd lean/
-lean AirplaneMan.lean                  # core axioms + JaebaeMan + isAirplaneMan + 8 theorems
-lean AirplaneMan_CHU_Universe.lean     # universe-level resolution (Type 0 + Type u)
-lean AirplaneMan_Gap3_Cover.lean       # Set CHUPiece (infinite family) cover semantics
-lean AirplaneMan_Gap4_Category.lean    # categorical interpretation
-lean AirplaneMan_Uniqueness.lean       # essential uniqueness on CHU
-lean JaebaeManInf.lean                 # infinite JaebaeMan generalization
-```
-
-**2026-09-29 observation:** all 11 files verified with pinned Lean 4.34.1, **Mathlib-free**, **0 sorry**. Run `./chu check --json` for fresh verification; `./chu repo status --json` is inventory discovery only.
-
-For paper / KG use, cite the axioms by their canonical file path. The README of any SYMPOSIUM-derivative project can pull CHU as a one-line `axiom CHU : Type` postulate.
-
-### Path B — APT-integrated use
-
-CHU is the *silent substrate* of APT. When you run:
-
-```
-/apt "Add OAuth2 login with PKCE flow"
-```
-
-`/apt-sa` creates a `:Anchor`, `/apt-sp` decomposes into `:Span`s — all of these are CHU pieces (`CHUPiece := CHU → Prop`) under the hood. You don't *call* CHU; CHU *holds up* APT. See [`../SYMPOSIUM/THEORY/APT/README.md`](../SYMPOSIUM/THEORY/APT/README.md).
-
-### Hello-World: prove "there exists a JaebaeMan covering all of CHU"
-
-```lean
--- in AirplaneMan.lean
-def wholeCHU : CHUPiece := fun _ => True
-def trivialAirplaneMan : JaebaeMan := .atomic wholeCHU
-theorem trivialAirplaneMan_is : isAirplaneMan trivialAirplaneMan := by
-  intro _; trivial
-```
-
-That's the simplest 비행기맨 witness. `airplaneManAt n` extends it to any depth n.
-
----
-
-## Architecture
-
-### Type Primitives (formal-layer surface)
-
-| Primitive | Lean signature | Role |
-|-----------|----------------|------|
-| `CHU` | `axiom CHU : Type` | The universe. Everything else quantifies over `x : CHU`. |
-| `CHUPiece` | `def CHUPiece : Type := CHU → Prop` | A predicate (= a "piece" / hyperedge characteristic function). |
-| `JaebaeMan` | `inductive JaebaeMan` with `atomic`/`governs` | μ-recursive coverer. Strictly subsumes Berge/Smarandache. |
-| `JaebaeMan.covers` | `JaebaeMan → CHU → Prop` | Coverage as OR-union of atomic predicates. |
-| `JaebaeMan.depth` | `JaebaeMan → Nat` | Layer depth in the self-similar hierarchy. |
-| `isAirplaneMan` | `JaebaeMan → Prop` | `∀ x : CHU, j.covers x` — the apex predicate. |
-
-That's the **entire** declarative surface. 6 primitives, 1 axiom, 1 inductive, 2 functions, 1 predicate. Everything in SYMPOSIUM is composition over this.
-
-### Invariants
-
-5 invariants hold across every CHU-using construction:
-
-| # | Invariant | What it forbids |
-|---|-----------|-----------------|
-| **I1** | **Axiomatic minimality** | Adding any inhabitant or equation to `CHU` (`axiom CHU : Type` only) |
-| **I2** | **Predicate-as-piece** | Treating `CHUPiece` as anything other than a function `CHU → Prop` |
-| **I3** | **Self-similar coverage** | Defining a coverer outside the `atomic`/`governs` inductive (no second JaebaeMan variant) |
-| **I4** | **OR-union coverage** | Replacing the `∨` in `governs_covers_cons` with AND/XOR (changes semantics from open-cover to partition; see `AirplaneMan_Gap3_Cover.lean` for the rationale) |
-| **I5** | **Russell avoidance** | Asserting `CHU : CHU → Prop` or similar self-reference (`Girard paradox`; see [`NATURE_RUSSELL_AVOIDANCE.md`](NATURE_RUSSELL_AVOIDANCE.md)) |
-
-Violate any → the inductive becomes unsound or the cover semantics drift. See [`AirplaneMan_CHU_Universe.lean`](lean/AirplaneMan_CHU_Universe.lean) for the universe-level proof that both `Type 0` and `Type u` satisfy I1–I5.
-
-### CHU Lenses (11 :SymConcept)
-
-CHU is observed through 11 lenses (each one a `:SymConcept` KG node) — these are *not* extensions of CHU, but viewpoints onto it:
-
-| Lens | Reading of CHU |
-|------|----------------|
-| `CHU_Lens_HumanThought` | Human cognition = hypergraph writing on CHU |
-| `CHU_Lens_ContextWindow` | LLM context = subgraph of CHU |
-| `CHU_Lens_Manifold` | Manifold = continuous shadow of CHU |
-| `CHU_Lens_EmbeddingVector` | Embedding = lossy projection of a CHU node |
-| `CHU_Lens_LLMModel` | LLM = frozen manifold, replaceable engine |
-| `CHU_Lens_GPU` | GPU = manifold-universe substrate hardware |
-| `CHU_Lens_Token` | Token = NL→manifold discretization compiler |
-| `CHU_Lens_Attention` | Attention = dynamic hyperedge generation |
-| `CHU_Lens_TrainingData` | Training data = brain-CHU 1D serialization |
-| `CHU_Lens_Inference` | Inference = writing onto the manifold universe |
-| `CHU_Lens_Internet` | **Internet = CHU instance, 11th lens** (2026-04-29 user canon) |
-
-See [`SOURCES.md`](SOURCES.md) §"CHU-Internet binding" for the 11th lens grounding (Common Crawl + WDC + PageRank-as-PF eigenvector).
-
-### Lean Formalization
-
-**2026-09-29 observation:** 11 verified Lean 4 files (Mathlib-free standalone, Lean 4.34.1, **0 sorry**):
-
-- [`AirplaneMan.lean`](lean/AirplaneMan.lean) — core axioms + 8 theorems (canonical entry point)
-- [`AirplaneMan_v2.lean`](lean/AirplaneMan_v2.lean) — v2 refinements
-- [`AirplaneMan_CHU_Universe.lean`](lean/AirplaneMan_CHU_Universe.lean) — Type 0 vs Type u resolution
-- [`AirplaneMan_Gap3_Cover.lean`](lean/AirplaneMan_Gap3_Cover.lean) — `Set CHUPiece` infinite family open-cover semantics
-- [`AirplaneMan_Gap4_Category.lean`](lean/AirplaneMan_Gap4_Category.lean) — categorical interpretation
-- [`AirplaneMan_Gap5_Cost.lean`](lean/AirplaneMan_Gap5_Cost.lean) — cost-tagged JaebaeMan
-- [`AirplaneMan_Gap6_MAB.lean`](lean/AirplaneMan_Gap6_MAB.lean) — multi-armed bandit cover selection
-- [`AirplaneMan_Uniqueness.lean`](lean/AirplaneMan_Uniqueness.lean) — essential uniqueness on CHU
-- [`JaebaeManInf.lean`](lean/JaebaeManInf.lean) — infinite JaebaeMan generalization
-- [`CompositeJaebaeECSTripleIso.lean`](lean/CompositeJaebaeECSTripleIso.lean) — ECS-JaebaeMan triple isomorphism
-- [`CHU_WolframRewrite.lean`](lean/CHU_WolframRewrite.lean) — rewrite dynamics and truncation overlay
-
-Current CHU copy: [`lean/`](lean/). Historical origin: `MIND/lean_formalization/AirplaneMan*.lean` + `JaebaeMan*.lean` (provenance only, not the current navigation path).
-
----
-
-## Documentation
-
-| Doc | Purpose |
-|-----|---------|
-| [`docs/USERGUIDE.md`](docs/USERGUIDE.md) | CHU type definition + usage patterns + ∀-cover proof recipes + pitfalls |
-| [`docs/STATUS.md`](docs/STATUS.md) | Lean formalization status, OQ resolution, external grounding tier |
-| [`docs/index.md`](docs/index.md) | Documentation hub: current OS route and historical theory route |
-| [`engineering/README.md`](engineering/README.md) | Current graph-engineering profiles, evidence and query entry |
-| [`CHANGELOG.md`](CHANGELOG.md) | Type-system evolution history |
-| [`SOURCES.md`](SOURCES.md) | 1차 sources + 핵심 주장 + 인용 + 발전축 (a)~(n) |
-| [`INDEX.md`](INDEX.md) | Folder navigation (PROM cycles + axis findings + raw _findings) |
-| [`PROM_16_REPORT.md`](PROM_16_REPORT.md) | PROM 16 axiom-foundation cycle (4 axis × 4 sub-axis = 16 cells) |
-| [`PROM_64_REPORT.md`](PROM_64_REPORT.md) | PROM 64 CHU-Internet binding cycle (8 × 8 = 64 cells) |
-| [`PROM_16_RANK_ALGEBRA_REPORT.md`](PROM_16_RANK_ALGEBRA_REPORT.md) | PageRank as PF eigenvector + Lie group action formalization |
-| [`MU_NU_DUALITY.md`](MU_NU_DUALITY.md) | μ/ν fixed-point duality on CHU |
-| [`NATURE_RUSSELL_AVOIDANCE.md`](NATURE_RUSSELL_AVOIDANCE.md) | Russell-paradox / Girard avoidance discipline |
-| [`PARK_INDUCTION.md`](PARK_INDUCTION.md) | Park induction principle for JaebaeMan coverage |
-| [`AFA_SELFLOOP_MODEL.md`](AFA_SELFLOOP_MODEL.md) | Aczel AFA self-loop model interpretation |
-| [`IGINJONJAE_FIXPOINT.md`](IGINJONJAE_FIXPOINT.md) | 이긴존재 (winning-existence) fixpoint construction |
-
-For the SYMPOSIUM context (12 사도 ↔ 5 무기 myth-engineering bridge): [`../SYMPOSIUM/CLAUDE.md`](../SYMPOSIUM/CLAUDE.md).
-
----
-
-## Comparison
-
-| | CHU | ZFC | HoTT (Voevodsky) | Tegmark IV MUH | Wolfram Hypergraph |
-|---|---|---|---|---|---|
-| Foundational layer | `axiom CHU : Type` | Sets + axioms | Univalent types | All consistent math structures | Hypergraph + rewrite rules |
-| Inhabitants asserted | None (axiom only) | ∅ + pairing + … | Identity types as paths | All structures exist | Vertices + hyperedges |
-| Self-reference safety | Disciplined (I5 avoidance) | Foundation axiom | UIP-compatible | Undefined ("structure" undefined) | Term-rewrite confluence |
-| Computability tier | Hyland Eff(N) realizability layer overlay | Set-theoretic, generally non-constructive | Constructive (cubical) | Beyond computability | Computable rewrite |
-| Engineering use | SYMPOSIUM substrate (12 apostles, 5 weapons) | Mathematics foundations | Proof assistants (Coq-HoTT, Cubical Agda) | Speculative cosmology | Physics project |
-| Lean 4 native | **Yes** (Mathlib-free) | Implicit in classical logic | ⚠ UIP-incompatible (Carneiro 2025) | N/A | Indirectly via rewrite tactics |
-
-Detail: [`PROM_16_REPORT.md`](PROM_16_REPORT.md) and [`SOURCES.md`](SOURCES.md).
-
----
-
-## Status
-
-The following describes the Lean/type-theory layer. Current repository, OS, and evidence status must be queried through the commands above.
-
-- **Type system version**: v1 (canonical, no breaking change since 2026-04-29 PROM 16 axiom-foundation lock-in)
-- **Lean layer evidence**: 2026-09-29 observation: 11 files, 0 sorry; run `./chu check --json` for fresh verification.
-- **External canon grounding tier**: A (4 canons cross-referenced: Friedman / Wolfram / Voevodsky / Hyland)
-- **OQ1 (universe level)**: RESOLVED (`lesson-chu-universe-resolution-2026-05-02`, both Type 0 and Type u sound)
-- **OQ4 (Tegmark IV pairing)**: NUMEROLOGY_HOLD (form-iso unprovable; held as poetic pair)
-- **Detailed status**: [`docs/STATUS.md`](docs/STATUS.md)
-
----
+CHU_OS 초기 이관 후에도 기존 `spec/`, `os/`, `plan/`, 프로토타입과 `./chu`는 소비자 호환과
+과거 관측 재현을 위해 당분간 남긴다. 새 OS 개발의 정본 위치와 상세 전환 상태는
+[분리 기록](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)에 명시한다. 부팅·HSWM 실행·전원 장애 복구의
+미완료 상태를 저장소 생성만으로 완료 처리하지 않는다.
 
 ## License
 
 Copyright © 2026 Ra Gyeongjun (라경준).
 
-**MetaHumotonic License 1.2** — [LICENSE](LICENSE); [scope, prior grants and third-party notices](LICENSE-NOTICE.md).
-
-지정한 하드웨어의 접근권한과 전체 관리 권한을 합의한 명세서에 따라 공유하고, **CHU의 일부가 된다**는 참여 원칙을 적용합니다. 실제 접근에는 별도 승인이 필요합니다.
-
-Source-available; not OSI-approved. Existing grants and separately licensed material remain valid.
-
----
-
-<div align="center">
-
-**Everything is a hypergraph. CHU is the stage. JaebaeMan is the cover. 비행기맨 is the apex.**
-
-[Documentation](docs/index.md) · [Lean Sources](#lean-formalization) · [Changelog](CHANGELOG.md) · [SYMPOSIUM](../SYMPOSIUM/CLAUDE.md)
-
-</div>
+[MetaHumotonic License 1.2](LICENSE)와 [적용 범위·기존 허락·제3자 고지](LICENSE-NOTICE.md)를 따른다.
+기존 허락과 별도 라이선스 자료의 조건은 유지된다. 실제 장치 접근에는 별도 승인이 필요하다.

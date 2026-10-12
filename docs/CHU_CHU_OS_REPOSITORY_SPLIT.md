@@ -1,12 +1,14 @@
 # CHU / CHU_OS 저장소 분리안
 
-2026-10-12 · SECONDARY_AI · 상태: **분리안 작성, 파일·Git·원격 이관 미실행**.
+2026-10-12 · SECONDARY_AI · 상태: **분리 방향 확정, 철학 v1 정리; 이관 관측은 아래에 누적**.
 [현재 용어](../canon/CHU_AND_CHU_OS.md)와 [사용자 원문](../canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt)이 근거다.
-사용자의 “레포 분리도 해야할듯”은 분리 방향으로 기록하며 완료된 이관으로 표시하지 않는다.
+후속 [사용자 지시](../canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt)에 따라
+철학을 먼저 정리하고 별도 CHU_OS 저장소를 만든다. [철학 v1](../philosophy/README.md)과
+[구현 계약](../philosophy/IMPLEMENTATION_CONTRACT.md)이 이번 작업의 경계다.
 
 기준 관측은 현재 `gj3447/CHU`의 `236d5395600f4d2e8dc2509d71e276940b31973f`다.
 개념·Lean·OS 명세·Python 모델·Rust 프로토타입·VM 도구가 한 저장소에 있다.
-새 이름은 목표 위치이며 현재 원격이 존재한다는 주장이 아니다.
+이 기준 관측 이후 상태는 이 문서의 후속 이관 기록으로 구분한다.
 
 | 목표 저장소 | 주된 소유 범위 | 현재 경로와 분리 방식 |
 |---|---|---|
