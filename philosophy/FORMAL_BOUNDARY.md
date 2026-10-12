@@ -39,3 +39,6 @@
 
 재현: `./chu check --only philosophy-boundaries --json`.
 반례를 보여 주는 검사이며 철학 전체가 참임을 판정하는 검사가 아니다.
+
+2026-10-12 실제 실행: 네 예제 PASS, 원문 9개 byte pin 일치.
+[보존된 관측](verification-20261012.json)은 입력 SHA-256과 Lean 버전을 기록한다.

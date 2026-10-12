@@ -1,6 +1,6 @@
-# CHU / CHU_OS 저장소 분리안
+# CHU / CHU_OS 저장소 분리 기록
 
-2026-10-12 · SECONDARY_AI · 상태: **분리 방향 확정, 철학 v1 정리; 이관 관측은 아래에 누적**.
+2026-10-12 · SECONDARY_AI · 상태: **철학 v1과 별도 CHU_OS 초기 이관 완료; 소비자 전환 진행 전**.
 [현재 용어](../canon/CHU_AND_CHU_OS.md)와 [사용자 원문](../canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt)이 근거다.
 후속 [사용자 지시](../canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt)에 따라
 철학을 먼저 정리하고 별도 CHU_OS 저장소를 만든다. [철학 v1](../philosophy/README.md)과
@@ -44,4 +44,52 @@
 분리 완료는 두 저장소의 생성만으로 판정하지 않는다. 개념과 구현의 정본 소유가 명시되고,
 참조 판본이 해석되며, 독립 검사와 실제 소비자 조회가 통과해야 한다. 실패하면 기존
 소비자 참조를 유지하거나 되돌리고 후보 저장소를 별도로 남긴다. 원본·이력 삭제나 force
-push는 필요하지 않다. 현재는 이 경계와 이관 순서까지 작성했으며 실제 분리는 남아 있다.
+push는 필요하지 않다.
+
+## 2026-10-12 초기 이관 관측
+
+철학 v1을 먼저 CHU의 `371ff7602ae69a74f14facad1e2942b1aefeaa3d`에 기록했다.
+이를 기준으로 별도 **[gj3447/CHU_OS](https://github.com/gj3447/CHU_OS)** 저장소를 생성하고,
+초기 이관 commit **`dab627045382330f5b1bdd91a6497ea8fea88585`**를 `main`에 push했다.
+생성 시점 공개 범위는 **private**다. CHU는 개념·철학·사용자 원문·Lean의 정본이고,
+새 OS 구현 개발의 정본은 CHU_OS다.
+
+초기 이관은 Git 이력을 필터링하지 않고 그대로 이어받았다. 상대 경로와 기존 검사 의존성을
+유지하기 위해 기준 판본의 tracked 파일 283개를 출발점으로 삼았다. CHU의 기존 구현 파일은
+소비자 호환용으로 남아 있으며, 두 저장소의 파일을 모두 물리적으로 분할한 상태는 아니다.
+CHU_OS의 [출처 목록](https://github.com/gj3447/CHU_OS/blob/dab627045382330f5b1bdd91a6497ea8fea88585/engineering/upstream-chu.json)은
+기존 collection을 이용해 각 파일의 원소유자·commit·경로·SHA-256과 다음 역할을 구분한다.
+
+- `PINNED_REFERENCE`: 사용자 원문, 개념·철학, 이론·증명, 과거 연구·관측의 고정 참조.
+  CHU_OS가 독립 정본으로 수정하지 않으며, 변경은 CHU의 새 판본을 검토해 가져온다.
+- `IMPLEMENTATION_BASELINE`: OS 명세·모델·코드·개발 도구 등의 구현 출발점.
+  CHU_OS에서 이후 구현을 발전시킬 수 있다.
+
+CHU_OS의 출처 검사는 Git 선조 관계와 기준 파일 목록의 완전성, 원본 Git blob 해시,
+collection별 역할, 고정 참조의 현재 바이트를 검사한다. 인접 CHU checkout이나 네트워크가
+없어도 검사할 수 있다. 이름 변경 때문에 기존 CID, RDF IRI, task ID를 재발급하지 않았다.
+독립 Python 환경과 자체 도구 경로로 실행했으며 CHU의 실행 환경을 심볼릭 링크하지 않았다.
+
+| 단계 | 이번 관측 |
+|---|---|
+| 철학 v1 · 주장 분류 · 구현 계약 | 완료. 철학적 최종 증명이라는 뜻은 아님 |
+| 별도 CHU_OS 생성 · 이력 보존 · push | 완료 |
+| 파일별 출처 고정 · 독립 실행 검사 | 아래 범위에서 PASS |
+| HOH · OMC · HSWM · USL 소비자 참조 전환 | 아직 수행하지 않음 |
+| CHU의 기존 OS 경로 정리 | 소비자 전환 확인 이후 수행 |
+
+로컬 검증 결과는 다음과 같다. 서로 다른 검사 묶음의 결과를 합쳐 적었으며 전체 OS 인수
+검사가 완료됐다는 뜻은 아니다.
+
+- CHU: Python 테스트 **150개 PASS**, lint·그래프 목록·저장소 그래프 PASS.
+  [보존된 철학 검사](../philosophy/verification-20261012.json)는 기존 Lean에 연결한
+  **네 예제**와 **원문/근거 9개 해시**의 PASS 및 실제 입력과 도구 버전을 기록한다.
+- CHU_OS: Python 테스트 **155개 PASS**. 그래프 목록·저장소 그래프·커널 계약·OS 설계·
+  철학 경계·lint·출처 검사·저장 실험 PASS. 저장 실험은 로컬 ext4의 프로세스 중단,
+  동시성, ABA를 포함한 **30개 사례**이며 전원 장애 복구 검증으로 확대하지 않는다.
+  [독립 실행 기록](https://github.com/gj3447/CHU_OS/blob/dab627045382330f5b1bdd91a6497ea8fea88585/engineering/initial-verification.json)에
+  실행 식별자·시각·입력 해시·관측 범위가 있다.
+
+이번 이관에서 새 VM 부팅, HSWM 실행, 전원 장애 복구, 전체 Rust/WASM 도구체인 검사를
+수행하지 않았다. 저장소 독립 실행과 선택한 계약 검증까지를 완료 범위로 삼는다.
+다음 전환은 소비자별 새 CHU_OS 판본의 검증 근거를 만들고 참조를 바꾸는 순서다.

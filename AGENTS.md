@@ -1,6 +1,6 @@
 # CHU — agent entry
 
-CHU names the cognitive entity; CHU_OS is its computer-based operating-system implementation. Read [the current distinction](canon/CHU_AND_CHU_OS.md). This checkout still contains both scopes pending repository separation. Paths are query projections, not identity. Preserve user-primary sources and commit verified changes.
+CHU names the cognitive entity; CHU_OS is its computer-based operating-system implementation. Read [the current distinction](canon/CHU_AND_CHU_OS.md). New OS development belongs in the separate CHU_OS repository; this checkout retains old implementation paths for compatibility during consumer migration. Paths are query projections, not identity. Preserve user-primary sources and commit verified changes.
 
 Detailed owner rules: [OWNER.md](docs/agent-rules/OWNER.md).
 Task/source graph: [routes.json](docs/agent-rules/routes.json).

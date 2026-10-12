@@ -1,0 +1,35 @@
+{
+  "schema": "chu-philosophy-boundaries/v1",
+  "status": "PASS",
+  "observed_at": "2026-10-12T01:55:45.959761+00:00",
+  "authority": "SECONDARY_AI",
+  "formal_examples": 4,
+  "lean_version": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+  "argv": [
+    "lean",
+    "--stdin",
+    "-j",
+    "2",
+    "-M",
+    "768"
+  ],
+  "stdin_sha256": "3359cda2a14bc025b8e59308d5d3fe6c63f5e6be661ba8acbd59b47e7a6270c2",
+  "input_sha256": {
+    "lean/CHU_WolframRewrite.lean": "2a9cf6cff37132b05e202d57bba5bb85824a05dd2f53efbddd4e980ed6f13b91",
+    "philosophy/boundary_probes.lean": "0c74d65fb908a7bb53bc55138483465ab947b37d44e6d4b82e4b668ae803caa7"
+  },
+  "verified_local_sources": {
+    "canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt": "e1434cc8b558bb46725bd47b97034a9fccda52334eec4a7d799d4d99698ddd51",
+    "canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt": "575ccd910eb351983be21378e47c66ddf7cb99280574a6cfc2afc381767225b2",
+    "canon/sources/USER_PRIMARY_CHU_HSWM_SCOPE_2026-09-27.txt": "a9b1ea40876a3e9134a8585bab75742b8e4884038967b4f494da906aa75a0014",
+    "canon/sources/USER_PRIMARY_HSWM_MINIMUM_COST_HYPERGRAPH_2026-09-27.txt": "35a8a9c791d722ccca08a0999decc74f8a6c6690f492fea0ac25fe9d6e961641",
+    "canon/sources/USER_PRIMARY_HSWM_CROSS_LAYER_MAP_2026-09-27.txt": "9e3cb1562e77fd7cb9c2e83fbea26e4dd2e4625a81d84f7ab34847b351edb0a4",
+    "canon/sources/USER_PRIMARY_CHU_SOFTWARE_ARCHITECTURE_2026-09-27.txt": "a403b110090d748b21bb5db0b0429a582aceda10b23eab92a0dfb2957188c598",
+    "lean/CHU_WolframRewrite.lean": "2a9cf6cff37132b05e202d57bba5bb85824a05dd2f53efbddd4e980ed6f13b91",
+    "spec/LEAN_MAP.md": "7031973635ad10631dfcf343bd9876e576371237bec59cf4ba8f5d465c4ac849",
+    "research/storage_atomicity_20261009/results.json": "acd316bfcbba8066982e56780144297c532c61eb6893c5b7b7bc22479b4682ba"
+  },
+  "scope": "Source integrity and proof boundaries; not a proof of cognition, physical universe, universal cost optimality or OS implementation",
+  "stdout": "",
+  "stderr": ""
+}
