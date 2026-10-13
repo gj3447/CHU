@@ -29,6 +29,8 @@ def test_scoped_claims_answer_questions_with_original_sources():
     "forged-quote", "wrong-source", "source-authority", "source-cid", "source-revision", "outside-path",
     "extra-object", "missing-claim", "false-consumer-completion", "observation-as-user-direction",
     "cognition-only-label", "lost-brain", "brain-as-os", "scope-as-world-model", "scope-old-source",
+    "cognition-required", "reversed-computable-scope", "computability-old-source",
+    "hypergraph-view-as-fact", "bare-computable-scope",
 ])
 def test_rejects_identity_evidence_and_handoff_conflation(mutation):
     graph = claim_graph()
@@ -85,6 +87,17 @@ def test_rejects_identity_evidence_and_handoff_conflation(mutation):
         graph.set((PC.C13, PC.context, PC.WorldModel))
     elif mutation == "scope-old-source":
         graph.set((source_id("scope"), PC.revision, graph.value(source_id("naming"), PC.revision)))
+    elif mutation == "cognition-required":
+        graph.set((PC.C16, RDF.predicate, PC.includesAllOf))
+    elif mutation == "reversed-computable-scope":
+        graph.set((PC.C15, RDF.subject, PC.ComputableThings))
+        graph.set((PC.C15, RDF.object, PC.CHU))
+    elif mutation == "computability-old-source":
+        graph.set((PC.C15, PROV.wasDerivedFrom, source_id("scope")))
+    elif mutation == "hypergraph-view-as-fact":
+        graph.set((PC.C17, PC.epistemicStatus, Literal("SOURCE_SUPPORTED")))
+    elif mutation == "bare-computable-scope":
+        graph.add((PC.CHU, PC.includesAllOf, PC.ComputableThings))
     assert validate_graph(graph), mutation
 
 
@@ -97,12 +110,33 @@ def test_cli_returns_sources_from_outside_checkout_and_rejects_unknown_query(tmp
     assert row["epistemicStatus"]["value"] == "NOT_EMPIRICALLY_VALIDATED"
     assert row["source"]["value"] == str(source_id("naming"))
     scope = {r["subject"]["value"]: r for r in rows
-             if r["context"]["value"] == str(PC.PhilosophicalScope)}
+             if r["context"]["value"] == str(PC.PhilosophicalScope)
+             and r["object"]["value"] == str(PC.CHU)}
     assert set(scope) == {str(PC.Computer), str(PC.HumanBrain), str(PC.Universe)}
     assert all(r["source"]["value"] == str(source_id("scope")) for r in scope.values())
+    worldview = next(r for r in rows if r["claim"]["value"] == str(PC.C17))
+    assert worldview["subject"]["value"] == str(PC.Everything)
+    assert worldview["object"]["value"] == str(PC.HypergraphStructure)
+    assert worldview["source"]["value"] == str(source_id("computability"))
     invalid = subprocess.run([*argv, "missing"], cwd=tmp_path, capture_output=True, text=True,
                              timeout=15)
     assert invalid.returncode != 0
+
+
+def test_cli_answers_computable_scope_without_cognitive_membership_or_truth_promotion(tmp_path):
+    result = subprocess.run([sys.executable, str(ROOT / "scripts/chu_dev.py"),
+                             "concept", "query", "scope"], cwd=tmp_path,
+                            capture_output=True, text=True, check=True, timeout=15)
+    rows = {row["claim"]["value"]: row for row in json.loads(result.stdout)["results"]["bindings"]}
+    included, optional, worldview = (rows[str(PC[key])] for key in ["C15", "C16", "C17"])
+    assert (included["relation"]["value"], included["object"]["value"]) == (
+        str(PC.includesAllOf), str(PC.ComputableThings))
+    assert (optional["relation"]["value"], optional["object"]["value"]) == (
+        str(PC.doesNotRequire), str(PC.Cognition))
+    assert worldview["epistemicStatus"]["value"] == "NOT_EMPIRICALLY_VALIDATED"
+    assert all(row["authority"]["value"] == "SECONDARY_AI" for row in rows.values())
+    assert all(row["speaker"]["value"] == str(PC.User) for row in rows.values())
+    assert all(row["source"]["value"] == str(source_id("computability")) for row in rows.values())
 
 
 def test_cli_exports_qualified_graph_only(tmp_path):

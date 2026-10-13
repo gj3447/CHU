@@ -1,6 +1,8 @@
 # CHU — Computable Hyper Universe
 
 **CHU는 컴퓨터·인간의 뇌·우주까지 포괄하는 철학적 개념, Computable Hyper Universe다.**
+사용자의 [계산가능성 기준](canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt)에 따라,
+모든 것을 하이퍼그래프로 보는 관점에서 **계산가능한 것은 모두 CHU**이며 인지는 필수조건이 아니다.
 [사용자의 범위 명확화](canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt)에 따라
 인지능력체라는 한 범주로 한정하지 않는다. 관계·구조·변화·계산의 관점에서 서로 다른
 세계를 이해하는 틀을 연구한다. 컴퓨터 기반 운영체제 구현 프로젝트는 별도
@@ -35,6 +37,7 @@ HOH Interface는 CHU_OS의 사람 인터페이스라는 기존 결정을 유지�
 ## 확인과 재현
 
 ```bash
+./chu concept query scope
 ./chu check --only philosophy-boundaries --json
 ./chu check --only repo-graph --only graph-catalog --json
 ./chu repo query profiles --json

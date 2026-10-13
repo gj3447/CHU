@@ -19,13 +19,15 @@ BASE = ROOT / "philosophy/graph"
 PC = Namespace("https://github.com/gj3447/CHU/philosophy#")
 REVISION = "806258fe9a7974cf9bb237d6578d2c61094eabe0"
 SCOPE_REVISION = "d4fd5b619f3b1b87792b1dbe75b463f0688e47eb"
+COMPUTABILITY_REVISION = "d7aaf99055d10ade7a6d6748ae5fa78d9902df07"
 CHU_LABEL = "CHU — Computable Hyper Universe · 포괄적 철학 개념"
-QUERIES = {"distinction", "viewpoint", "separation", "sources"}
+QUERIES = {"distinction", "viewpoint", "separation", "sources", "scope"}
 SOURCES = {
     "naming": ("canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt", "USER_PRIMARY", REVISION),
     "direction": ("canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt", "USER_PRIMARY", REVISION),
     "handoff": ("docs/CHU_CHU_OS_REPOSITORY_SPLIT.md", "SECONDARY_AI", REVISION),
     "scope": ("canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt", "USER_PRIMARY", SCOPE_REVISION),
+    "computability": ("canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt", "USER_PRIMARY", COMPUTABILITY_REVISION),
 }
 REPO = URIRef("https://github.com/gj3447/CHU")
 OS_REPO = URIRef("https://github.com/gj3447/CHU_OS")
@@ -37,13 +39,17 @@ EXPECTED = {
     "C12": (PC.Computer, PC.viewedAs, PC.CHU, "scope", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
     "C13": (PC.HumanBrain, PC.viewedAs, PC.CHU, "scope", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
     "C14": (PC.Universe, PC.viewedAs, PC.CHU, "scope", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
+    "C15": (PC.CHU, PC.includesAllOf, PC.ComputableThings, "computability", "USER_DEFINITION", "SOURCE_SUPPORTED"),
+    "C16": (PC.CHU, PC.doesNotRequire, PC.Cognition, "computability", "USER_DEFINITION", "SOURCE_SUPPORTED"),
+    "C17": (PC.Everything, PC.viewedAs, PC.HypergraphStructure, "computability", "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED"),
     "owner-chu-20261012": (REPO, PC.ownsScope, PC.ConceptTheoryCanon, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
     "owner-os-20261012": (OS_REPO, PC.ownsScope, PC.OSImplementation, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
     "handoff-20261012": (OS_REPO, PC.handoffStatus, PC.InitialHandoffRecorded, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
     "consumer-switch-20261012": (PC.ConsumerMigration, PC.workStatus, PC.PendingConsumerSwitch, "handoff", "OWNER_REPORTED_OBSERVATION", "SOURCE_REPORTED"),
 }
 CONTEXTS = {"C03": PC.WorldModel, "C12": PC.PhilosophicalScope,
-            "C13": PC.PhilosophicalScope, "C14": PC.PhilosophicalScope}
+            "C13": PC.PhilosophicalScope, "C14": PC.PhilosophicalScope,
+            "C15": PC.PhilosophicalScope, "C16": PC.PhilosophicalScope, "C17": PC.PhilosophicalScope}
 
 
 def source_id(name):
@@ -152,12 +158,21 @@ def check_answers(answers):
                                naming[0]["concept"], naming[0]["authority"]) == (
         str(PC.C01), str(PC.CHU_OS), str(PC.CHU), "SECONDARY_AI")
     view = values(answers["viewpoint"])
-    assert len(view) == len(CONTEXTS)
+    viewpoints = {key: row for key, row in EXPECTED.items() if row[1] == PC.viewedAs}
+    assert len(view) == len(viewpoints)
     assert {tuple(row[k] for k in ("claim", "subject", "object", "context", "kind",
                                   "epistemicStatus", "speaker", "source")) for row in view} == {
-        (str(PC[key]), str(EXPECTED[key][0]), str(PC.CHU), str(context),
+        (str(PC[key]), str(row[0]), str(row[2]), str(CONTEXTS[key]),
          "USER_VIEWPOINT", "NOT_EMPIRICALLY_VALIDATED", str(PC.User), str(source_id(EXPECTED[key][3])))
-        for key, context in CONTEXTS.items()}
+        for key, row in viewpoints.items()}
+    scope = values(answers["scope"])
+    assert len(scope) == 3
+    assert {tuple(row[k] for k in ("claim", "subject", "relation", "object", "context", "kind",
+                                   "epistemicStatus", "authority", "speaker", "source", "revision"))
+            for row in scope} == {
+        (str(PC[key]), str(s), str(p), str(o), str(PC.PhilosophicalScope), kind, state,
+         "SECONDARY_AI", str(PC.User), str(source_id(src)), SOURCES[src][2])
+        for key, (s, p, o, src, kind, state) in EXPECTED.items() if key in {"C15", "C16", "C17"}}
     expected = {(str(PC[k]), str(s), str(p), str(o), kind, state, str(source_id(src)), SOURCES[src][2])
                 for k, (s, p, o, src, kind, state) in EXPECTED.items() if k != "C01" and k not in CONTEXTS}
     assert {tuple(row[k] for k in ("claim", "subject", "relation", "object", "kind",
@@ -173,6 +188,10 @@ def check_answers(answers):
         expected_cid = "urn:sha256:" + hashlib.sha256(source_bytes(path, revision)).hexdigest()
         assert (row["source"], row["path"], row["revision"], row["content"], row["sourceAuthority"]) == (
             str(source_id(source)), path, revision, expected_cid, authority)
+    source_answers = {row["claim"]: row for row in source_rows}
+    for row in scope:
+        source = source_answers[row["claim"]]
+        assert (row["content"], row["excerpt"]) == (source["content"], source["excerpt"])
 
 
 def check(out):

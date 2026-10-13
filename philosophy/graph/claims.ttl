@@ -289,3 +289,44 @@ pc:Codex a prov:Agent,
         prov:SoftwareAgent ;
     skos:prefLabel "Codex — graph author" .
 
+pc:C15 a rdf:Statement, prov:Entity, pc:Claim ;
+    rdf:subject pc:CHU ; rdf:predicate pc:includesAllOf ; rdf:object pc:ComputableThings ;
+    skos:prefLabel "계산가능한 것은 모두 CHU라는 사용자 정의" ;
+    prov:wasAttributedTo pc:Codex ; prov:wasDerivedFrom pc:source-computability-20261012 ;
+    pc:authority "SECONDARY_AI" ; pc:kind "USER_DEFINITION" ;
+    pc:epistemicStatus "SOURCE_SUPPORTED" ; pc:context pc:PhilosophicalScope ;
+    pc:sourceExcerpt "그 computable 하면 싹다 chu 라고 보는거야" .
+
+pc:C16 a rdf:Statement, prov:Entity, pc:Claim ;
+    rdf:subject pc:CHU ; rdf:predicate pc:doesNotRequire ; rdf:object pc:Cognition ;
+    skos:prefLabel "인지능력은 CHU의 필수조건이 아니라는 범위 정정" ;
+    prov:wasAttributedTo pc:Codex ; prov:wasDerivedFrom pc:source-computability-20261012 ;
+    pc:authority "SECONDARY_AI" ; pc:kind "USER_DEFINITION" ;
+    pc:epistemicStatus "SOURCE_SUPPORTED" ; pc:context pc:PhilosophicalScope ;
+    pc:sourceExcerpt "좀 CHU 라는게 인지능력체? computable hyper universe 면 싹다 chu 인데 사실 하이퍼그래프로 안 이뤄진게 없다고 생각해서 그 computable 하면 싹다 chu 라고 보는거야 이해되냐 ㅇㅇ?" .
+
+pc:C17 a rdf:Statement, prov:Entity, pc:Claim ;
+    rdf:subject pc:Everything ; rdf:predicate pc:viewedAs ; rdf:object pc:HypergraphStructure ;
+    skos:prefLabel "모든 것이 하이퍼그래프로 이루어져 있다는 사용자 관점" ;
+    prov:wasAttributedTo pc:Codex ; prov:wasDerivedFrom pc:source-computability-20261012 ;
+    pc:authority "SECONDARY_AI" ; pc:kind "USER_VIEWPOINT" ;
+    pc:epistemicStatus "NOT_EMPIRICALLY_VALIDATED" ; pc:context pc:PhilosophicalScope ;
+    pc:sourceExcerpt "사실 하이퍼그래프로 안 이뤄진게 없다고 생각해서" .
+
+pc:ComputableThings a skos:Concept, prov:Entity, pc:Concept, pc:Subject ;
+    skos:prefLabel "계산가능한 모든 것 — 구체적 계산가능성 형식은 미명세" .
+pc:Cognition a skos:Concept, prov:Entity, pc:Concept, pc:Subject ;
+    skos:prefLabel "인지능력 — CHU에서 필수로 요구하지 않는 성질" .
+pc:Everything a skos:Concept, prov:Entity, pc:Concept, pc:Subject ;
+    skos:prefLabel "모든 것 — 사용자 관점의 범위" .
+pc:HypergraphStructure a skos:Concept, prov:Entity, pc:Concept, pc:Subject ;
+    skos:prefLabel "하이퍼그래프로 이루어진 구조 — 사용자 관점" .
+
+pc:source-computability-20261012 a prov:Entity, pc:Source ;
+    prov:atLocation <https://github.com/gj3447/CHU/blob/d7aaf99055d10ade7a6d6748ae5fa78d9902df07/canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt> ;
+    prov:wasAttributedTo pc:User ; pc:authority "USER_PRIMARY" ;
+    pc:content <urn:sha256:1994cf5c255c6c82c06e5ad179bb51cdfcfb77b047c07d819e300ca899b5976f> ;
+    pc:pathView "canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt" ;
+    pc:revision "d7aaf99055d10ade7a6d6748ae5fa78d9902df07" .
+<urn:sha256:1994cf5c255c6c82c06e5ad179bb51cdfcfb77b047c07d819e300ca899b5976f> a prov:Entity .
+

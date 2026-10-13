@@ -1,9 +1,11 @@
 # CHU / CHU_OS 개념·주장 그래프
 
-2026-10-12 · SECONDARY_AI · CHU 소유 범위의 실제 RDF 그래프.
-[기존 C01–C03과 후속 C12–C14](../CLAIMS.md)의 명명·작업 결정·관점을 재사용한다.
+2026-10-13 갱신 · SECONDARY_AI · CHU 소유 범위의 실제 RDF 그래프.
+[기존 C01–C03과 후속 C12–C17](../CLAIMS.md)의 명명·작업 결정·관점·정의를 재사용한다.
 CHU는 **Computable Hyper Universe라는 포괄적 철학 개념**이다. 후속 원문의 컴퓨터·
 인간의 뇌·우주 사례를 `viewedAs` 주장으로 각각 표현하며 인지능력체로 한정하지 않는다.
+**계산가능한 것은 모두 CHU**라는 포괄 기준(C15), 인지 비필수(C16), 모든 것이
+하이퍼그래프로 이루어져 있다는 사용자 관점(C17)을 별도 주장으로 연결한다.
 개념 CHU와 컴퓨터 구현 CHU_OS, 두 소유 저장소, 사용자 원문, 소유자의 이관 관측을
 서로 다른 대상으로 조회한다. HSWM의 실행 상태 그래프나 공유 KG 발행은 이번 범위가 아니다.
 
@@ -12,6 +14,7 @@ CHU는 **Computable Hyper Universe라는 포괄적 철학 개념**이다. 후속
 저장소 루트에서 기존 환경과 `./chu`를 사용한다. 새 DB나 패키지는 설치하지 않는다.
 
 ```bash
+./chu concept query scope
 ./chu concept query distinction
 ./chu concept query viewpoint
 ./chu concept query separation
@@ -27,8 +30,9 @@ Git의 고정 원문 판본을 읽으므로 해당 이력이 필요하다. CI ch
 
 | 질문 | 질의와 기대 답 |
 |---|---|
+| CHU는 무엇을 포괄하고 인지는 필수인가? | `scope`: C15의 CHU → includesAllOf → ComputableThings, C16의 CHU → doesNotRequire → Cognition, C17의 사용자 하이퍼그래프 관점과 각각의 원문·판본·CID |
 | 무엇이 개념이고 무엇이 컴퓨터 구현인가? | `distinction`: C01의 CHU_OS → CHU, 명명 원문·CID |
-| 어떤 대상을 CHU라고 보는가? | `viewpoint`: C12–C14의 컴퓨터·뇌·우주, 최신 원문과 PhilosophicalScope 문맥; C03의 앞선 WorldModel 문맥도 보존 |
+| 어떤 철학적 관점이 기록돼 있는가? | `viewpoint`: C12–C14의 컴퓨터·뇌·우주, C03의 앞선 WorldModel 문맥, C17의 모든 것 → HypergraphStructure를 서로 다른 출처와 함께 반환 |
 | 저장소 소유와 분리 진행 상태는 무엇인가? | `separation`: C02의 지시, 개념·구현 소유, 초기 이관 기록, 소비자 전환 미수행 관측 |
 | 어떤 원문·판본·바이트가 각각을 뒷받침하는가? | `sources`: 각 claim의 source record, 경로·commit·CID·원문 발췌 |
 
@@ -37,8 +41,15 @@ Git의 고정 원문 판본을 읽으므로 해당 이력이 필요하다. CI ch
 `claims.ttl`이 데이터이고 `ontology.ttl`이 로컬 어휘의 방향·domain/range·의미를,
 `shapes.ttl`이 기수·타입·명명과 관점의 제약을 정의한다. CHU와 CHU_OS는 별도 concept IRI다.
 GitHub 저장소 주소는 이 개념을 소유·구현하는 저장소 식별자이며 개념과 동일시하지 않는다.
-`pc:C01`–`pc:C03`, `pc:C12`–`pc:C14`는 문서의 같은 claim ID를 사용한다.
+`pc:C01`–`pc:C03`, `pc:C12`–`pc:C17`은 문서의 같은 claim ID를 사용한다.
 C11의 일반적인 범위 설명은 문서와 CHU의 현재 라벨에 두며, 모든 문서 주장이 RDF로 변환됐다는 뜻은 아니다.
+
+`includesAllOf`는 정의에서 포괄하는 범주를 가리키며, 역방향 함의나 개별 대상의 계산가능성
+증명을 추가하지 않는다. `doesNotRequire`는 필수조건이 아님을 표현하며 인지가 없다는 뜻이
+아니다. 두 술어는 Concept → Concept이고 주장 하나에 주어·목적어가 각각 하나다.
+C15/C16은 `USER_DEFINITION / SOURCE_SUPPORTED`, C17은
+`USER_VIEWPOINT / NOT_EMPIRICALLY_VALIDATED`로 구별한다. 모두 PhilosophicalScope 문맥을 유지한다.
+구체적인 계산가능성 형식은 원문에 미명세이며 이 온톨로지가 대신 정하지 않는다.
 
 주장은 `rdf:Statement`로 주어·술어·목적어를 명시하고, C03에는 `pc:context WorldModel`을
 붙인다. C12–C14에는 `pc:context PhilosophicalScope`를 붙인다. 최신 원문의 세 사례를
@@ -51,6 +62,8 @@ C11의 일반적인 범위 설명은 문서와 CHU의 현재 라벨에 두며, �
 소유 기록을 읽은 SOURCE_REPORTED 관측으로 남긴다. 새 범위 원문은
 `d4fd5b619f3b1b87792b1dbe75b463f0688e47eb`에 별도로 고정한다. 이전 원문·관측의 pin은
 유지한다. 매 조회마다 원격을 점검하는 기능은 아니다.
+계산가능성 원문은 `d7aaf99055d10ade7a6d6748ae5fa78d9902df07`에 고정했다.
+OMC에 먼저 보존된 원문과 동일한 바이트이며 기존 [출처 목록](../sources.json)에 원래 저장소·판본을 기록했다.
 
 CHU_OS의 초기 이관은 기록돼 있지만 소비자 전환은 남아 있다. 초기 이관 상태를 전체
 이관 완료로 바꾸거나, “우주도 CHU”를 검증된 물리적 동일성으로 승격하면 실패한다.
@@ -61,7 +74,7 @@ RDF의 재진술은 원래 문장 자체를 참으로 단언하지 않는다.
 실제 사용하는 표준은 [RDF 1.1](https://www.w3.org/TR/rdf11-concepts/),
 [SHACL](https://www.w3.org/TR/shacl/), [SPARQL 1.1](https://www.w3.org/TR/sparql11-query/),
 [PROV-O](https://www.w3.org/TR/prov-o/)다. 이 표준들의 전체 적합성 인증이나 철학적 참의
-증명이라는 뜻은 아니다. 검사 범위는 이 문서의 네 질의와 로컬 계약이다.
+증명이라는 뜻은 아니다. 검사 범위는 이 문서의 다섯 질의와 로컬 계약이다.
 
 공유 KG의 옛 `sym:Concept:computable_hyper_universe_(chu)`는 현재도 출처 없는 database
 설명을 반환했다. 기존 관례의 `urn:symposium-kg:…` 참조를 `rdfs:seeAlso`로 보존한다.

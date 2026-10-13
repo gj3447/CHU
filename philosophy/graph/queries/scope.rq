@@ -1,0 +1,12 @@
+PREFIX pc: <https://github.com/gj3447/CHU/philosophy#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?claim ?subject ?relation ?object ?context ?kind ?epistemicStatus
+       ?authority ?speaker ?source ?revision ?content ?excerpt WHERE {
+  VALUES ?claim { pc:C15 pc:C16 pc:C17 }
+  ?claim a pc:Claim ; rdf:subject ?subject ; rdf:predicate ?relation ; rdf:object ?object ;
+    pc:context ?context ; pc:kind ?kind ; pc:epistemicStatus ?epistemicStatus ;
+    pc:authority ?authority ; pc:sourceExcerpt ?excerpt ; prov:wasDerivedFrom ?source .
+  ?source prov:wasAttributedTo ?speaker ; pc:revision ?revision ; pc:content ?content .
+}
+ORDER BY ?claim

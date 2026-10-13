@@ -12,10 +12,10 @@ pc:SubjectShape a sh:NodeShape ; sh:targetClass pc:Subject ; sh:nodeKind sh:IRI 
 pc:ClaimShape a sh:NodeShape ; sh:targetClass pc:Claim ; sh:targetSubjectsOf rdf:subject ;
     sh:nodeKind sh:IRI ; sh:class rdf:Statement ; sh:class pc:Claim ;
     sh:property [ sh:path rdf:subject ; sh:class pc:Subject ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ; sh:disjoint rdf:object ] ;
-    sh:property [ sh:path rdf:predicate ; sh:in ( pc:computerImplementationOf pc:separateRepositoryFrom pc:viewedAs pc:ownsScope pc:handoffStatus pc:workStatus ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path rdf:predicate ; sh:in ( pc:computerImplementationOf pc:separateRepositoryFrom pc:viewedAs pc:ownsScope pc:handoffStatus pc:workStatus pc:includesAllOf pc:doesNotRequire ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path rdf:object ; sh:class pc:Subject ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path pc:authority ; sh:hasValue "SECONDARY_AI" ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path pc:kind ; sh:in ( "USER_NAMING" "USER_DIRECTION" "USER_VIEWPOINT" "OWNER_REPORTED_OBSERVATION" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path pc:kind ; sh:in ( "USER_NAMING" "USER_DIRECTION" "USER_DEFINITION" "USER_VIEWPOINT" "OWNER_REPORTED_OBSERVATION" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path pc:epistemicStatus ; sh:in ( "SOURCE_SUPPORTED" "NOT_EMPIRICALLY_VALIDATED" "SOURCE_REPORTED" ) ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path prov:wasAttributedTo ; sh:hasValue pc:Codex ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path prov:wasDerivedFrom ; sh:class pc:Source ; sh:minCount 1 ; sh:maxCount 1 ] ;
@@ -60,3 +60,24 @@ pc:UniversalScopeShape a sh:NodeShape ; sh:targetNode pc:C12, pc:C13, pc:C14 ;
     sh:property [ sh:path pc:context ; sh:hasValue pc:PhilosophicalScope ; sh:minCount 1 ] ;
     sh:property [ sh:path pc:kind ; sh:hasValue "USER_VIEWPOINT" ] ;
     sh:property [ sh:path pc:epistemicStatus ; sh:hasValue "NOT_EMPIRICALLY_VALIDATED" ] .
+
+pc:ComputableDefinitionShape a sh:NodeShape ; sh:targetNode pc:C15, pc:C16 ;
+    sh:property [ sh:path rdf:subject ; sh:hasValue pc:CHU ] ;
+    sh:property [ sh:path pc:context ; sh:hasValue pc:PhilosophicalScope ; sh:minCount 1 ] ;
+    sh:property [ sh:path pc:kind ; sh:hasValue "USER_DEFINITION" ] ;
+    sh:property [ sh:path pc:epistemicStatus ; sh:hasValue "SOURCE_SUPPORTED" ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:hasValue pc:source-computability-20261012 ] .
+pc:ComputableInclusionShape a sh:NodeShape ; sh:targetNode pc:C15 ;
+    sh:property [ sh:path rdf:predicate ; sh:hasValue pc:includesAllOf ] ;
+    sh:property [ sh:path rdf:object ; sh:hasValue pc:ComputableThings ] .
+pc:CognitionNotRequiredShape a sh:NodeShape ; sh:targetNode pc:C16 ;
+    sh:property [ sh:path rdf:predicate ; sh:hasValue pc:doesNotRequire ] ;
+    sh:property [ sh:path rdf:object ; sh:hasValue pc:Cognition ] .
+pc:HypergraphViewShape a sh:NodeShape ; sh:targetNode pc:C17 ;
+    sh:property [ sh:path rdf:subject ; sh:hasValue pc:Everything ] ;
+    sh:property [ sh:path rdf:predicate ; sh:hasValue pc:viewedAs ] ;
+    sh:property [ sh:path rdf:object ; sh:hasValue pc:HypergraphStructure ] ;
+    sh:property [ sh:path pc:context ; sh:hasValue pc:PhilosophicalScope ; sh:minCount 1 ] ;
+    sh:property [ sh:path pc:kind ; sh:hasValue "USER_VIEWPOINT" ] ;
+    sh:property [ sh:path pc:epistemicStatus ; sh:hasValue "NOT_EMPIRICALLY_VALIDATED" ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:hasValue pc:source-computability-20261012 ] .

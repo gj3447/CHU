@@ -6,7 +6,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-pc: a owl:Ontology ; owl:versionInfo "1.0.0" ;
+pc: a owl:Ontology ; owl:versionInfo "1.1.0" ;
     rdfs:comment "CHU-owned attributed concept claims, separate from OS runtime state and shared KG. Claims reify statements; they do not assert the unqualified statement. Cardinalities in shapes.ttl." .
 pc:Subject a rdfs:Class ; rdfs:subClassOf prov:Entity .
 pc:Concept a rdfs:Class ; rdfs:subClassOf pc:Subject, skos:Concept .
@@ -35,6 +35,12 @@ pc:handoffStatus a rdf:Property, pc:ClaimPredicate ;
 pc:workStatus a rdf:Property, pc:ClaimPredicate ;
     rdfs:domain pc:WorkItem ; rdfs:range pc:State ;
     rdfs:comment "Work item -> one status in a pinned owner observation; not a live service check." .
+pc:includesAllOf a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Concept ; rdfs:range pc:Concept ;
+    rdfs:comment "Defined concept -> category whose members are all included under the attributed definition. Exactly one subject/object per claim. No converse, individual computability proof, or formal decision procedure is implied." .
+pc:doesNotRequire a rdf:Property, pc:ClaimPredicate ;
+    rdfs:domain pc:Concept ; rdfs:range pc:Concept ;
+    rdfs:comment "Defined concept -> property that is not a membership requirement. Exactly one subject/object per claim. This does not say that members lack that property; retains explicit negation under attribution." .
 
 pc:authority a rdf:Property ; rdfs:domain prov:Entity ; rdfs:range xsd:string ;
     rdfs:comment "Record -> exactly one provenance authority. Normalized claims are always SECONDARY_AI; original utterance sources can be USER_PRIMARY." .
