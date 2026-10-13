@@ -5,6 +5,16 @@
   "git_base": "77e56048bb4b5965eb84dc8466abc66aca6c2ef9",
   "local_sources": [
     {
+      "path": "canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt",
+      "authority": "USER_PRIMARY",
+      "sha256": "1994cf5c255c6c82c06e5ad179bb51cdfcfb77b047c07d819e300ca899b5976f",
+      "origin": {
+        "repository": "https://github.com/gj3447/orbital-motion-cloud",
+        "revision": "b7af588c5779206247a9c7483ceb57f9035e09c7",
+        "path": "records/2026-10-12/chu-computable-scope/user-verbatim.txt"
+      }
+    },
+    {
       "path": "canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt",
       "authority": "USER_PRIMARY",
       "sha256": "9b69c7b9ca43547f8733775c273ccc8e072a4e9c82a0ca6db6967852cf03880b"
@@ -90,5 +100,5 @@
       "scope": "Model design reference, not validation of physical reality"
     }
   ],
-  "scope_revision": "Universal scope clarification, philosophy v1.1; earlier evidence pins retained"
+  "scope_revision": "Computable scope clarification; prior universal examples and evidence pins retained"
 }
