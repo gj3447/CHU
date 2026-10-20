@@ -5,6 +5,11 @@
   "git_base": "77e56048bb4b5965eb84dc8466abc66aca6c2ef9",
   "local_sources": [
     {
+      "path": "canon/sources/USER_PRIMARY_CHU_THREE_THESES_2026-10-20.txt",
+      "authority": "USER_PRIMARY",
+      "sha256": "f5966f538df09de2c6e3319d0a1b5a7c54a9c4dbc4b68ffe199310ea24dfb1b7"
+    },
+    {
       "path": "canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt",
       "authority": "USER_PRIMARY",
       "sha256": "1994cf5c255c6c82c06e5ad179bb51cdfcfb77b047c07d819e300ca899b5976f",

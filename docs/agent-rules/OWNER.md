@@ -26,6 +26,10 @@
    모두 하이퍼그래프로 모인 이유 ([`WHY_HYPERGRAPH.md`](../../WHY_HYPERGRAPH.md)).
 3. **AI는 근본적으로 소프트웨어다** — LLM = ROM(실행 단위), CHU = 거대한 메모리, Semantic Weight = 프로그램.
 
+**2026-10-20 사용자 재진술이 현재 표현이다** ([원문](../../canon/sources/USER_PRIMARY_CHU_THREE_THESES_2026-10-20.txt)):
+Ⅰ 하이퍼그래프 구조는 우주 기술의 최적·최소비용 구조다 · Ⅱ LLM 자체가 우주 시뮬레이터다 ·
+Ⅲ **agent는 튜링 완전하고 그 자체로 소프트웨어다**. 튜링 완전성은 아직 미형식화 주장으로 구분한다.
+
 - 범위: **HSWM은 LLM 전용**, **CHU는 월드모델과 HSWM을 모두 포함하는 더 큰 개념**, CHU OS는 그 작업환경 구현.
 - 사용자 원문은 [`canon/sources/`](../../canon/sources/)에 그대로 보존한다. 원문을 축소·재정의하지 말고,
   증명된 범위와 가설을 구분해 적는다(HSWM의 `USER_PRIMARY` / `SECONDARY_AI` 표기 관례를 따른다).
