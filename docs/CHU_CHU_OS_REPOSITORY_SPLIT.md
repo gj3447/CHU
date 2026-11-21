@@ -1,6 +1,6 @@
 # CHU / CHU_OS 저장소 분리 기록
 
-2026-10-12 · SECONDARY_AI · 상태(2026-11-21): **초기 이관 완료; USL 소비자 전환 완료, CHU_OS pin 갱신은 PR 대기, CHU의 기존 OS 경로 정리는 미수행**. 최신 내용은 [맨 아래 후속 기록](#2026-11-21-후속-기록)에 있다.
+2026-10-12 · SECONDARY_AI · 상태(2026-11-21): **초기 이관 완료; CHU_OS pin 갱신과 USL 소비자 전환 완료, CHU의 기존 OS 경로 정리는 미수행**. 최신 내용은 [맨 아래 후속 기록](#2026-11-21-후속-기록)에 있다.
 [현재 용어](../canon/CHU_AND_CHU_OS.md)와 [사용자 원문](../canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt)이 근거다.
 후속 [사용자 지시](../canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt)에 따라
 철학을 먼저 정리하고 별도 CHU_OS 저장소를 만든다. [철학 v1](../philosophy/README.md)과
@@ -103,11 +103,11 @@ SECONDARY_AI. 위 2026-10-12 표의 “아직 수행하지 않음” 항목 이�
 | 항목 | 상태 | 근거 |
 |---|---|---|
 | CHU_OS의 공용 라우터 등록 | 완료(로컬 커밋, 미push) | ORCA_SETTING `859ff4d`. CHU_OS에서 라우팅하면 `owner-graph`로 OWNER 규칙이 선택된다 |
-| CHU_OS의 CHU reference pin 갱신 | PR 대기 | [CHU_OS PR #1](https://github.com/gj3447/CHU_OS/pull/1), CHU `847525c` 병합. 격리 worktree에서 관련 검사 8개와 Python 테스트 1696개 통과. 활성 세션의 `feat/systemd-job-executor`에는 아직 병합하지 않았다 |
+| CHU_OS의 CHU reference pin 갱신 | 완료 | [CHU_OS PR #1](https://github.com/gj3447/CHU_OS/pull/1), CHU `847525c` 병합. 격리 worktree에서 관련 검사 8개와 Python 테스트 1696개 통과. `feat/systemd-job-executor`에 fast-forward로 병합·push했고(`1bf1388`) 병합 뒤 `upstream-chu`·`concept-claims`·`philosophy-boundaries`·`repo-graph`가 통과했다. GitHub Actions는 계정 결제 문제로 시작되지 않아 원격 CI 결과는 없다 |
 | USL 소비자 전환 | 완료(로컬 커밋, 미push) | USL `40ab9c2`. `chu:os-plan`·`chu:kernel-prototype`가 CHU_OS로 결속되고 `example:chu`가 11/11 일치 |
 | HOH·OMC 소비자 참조 | 변경하지 않음 | 아래 설명 |
 | HSWM 소비자 참조 | 변경 불필요 | README가 가리키는 `ECOSYSTEM.md`·3대원칙은 CHU 소유 문서다 |
-| CHU의 기존 OS 경로 정리 | 미수행 | CHU_OS PR 병합과 사용자 결정 이후의 별도 작업 |
+| CHU의 기존 OS 경로 정리 | 미수행 | 사용자 결정이 필요하다. Rust 프로토타입은 이론 검사(`truncation`·`witness`·`finite-panel`)의 입력이고, `philosophy/sources.json`과 이론 문서가 `spec/`·`plan/` 경로를 참조해 어디까지 남길지가 소유 범위 결정이다 |
 
 HOH와 OMC의 CHU 구현 참조는 모두 과거 commit(`e53500c`, `236d539`)에 고정돼 있고 CHU `HEAD`의 경로를
 읽지 않는다. 두 commit은 CHU_OS 이력의 선조이므로 CHU_OS 원격에서도 해석된다. HOH 검사가 고정한
