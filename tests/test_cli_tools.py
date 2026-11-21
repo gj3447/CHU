@@ -85,3 +85,21 @@ def test_tool_wrapper_forwards_json_and_failure_without_shell(tmp_path):
     failure = subprocess.run([*command, "-n", "-e", "false"], cwd=tmp_path,
                              capture_output=True, text=True, timeout=60)
     assert failure.returncode == 1 and json.loads(failure.stdout) is False
+
+
+def test_every_bootstrap_tool_has_an_explicit_pinned_asset_per_supported_platform():
+    from download_tool import platform_spec
+    lock = json.loads((ROOT / "dev/downloads.json").read_text())
+    tools = [name for name, spec in lock.items() if isinstance(spec, dict)]
+    assert lock["variant_platforms"] == ["Linux-aarch64"]
+    for name in tools:
+        default = platform_spec(lock, name, "Linux-x86_64")
+        arm = platform_spec(lock, name, "Linux-aarch64")
+        assert "Linux-aarch64" not in default and "Linux-aarch64" not in arm
+        assert default["version"] == arm["version"] and default.get("format") == arm.get("format")
+        assert default["sha256"] != arm["sha256"] and len(arm["sha256"]) == 64
+        assert arm["url"].startswith("https://github.com/") and ("arm64" in arm["url"] or "aarch64" in arm["url"])
+        assert ("member" in default) == ("member" in arm)
+    # An unpinned host fails loudly instead of falling back to another architecture's binary.
+    with pytest.raises(RuntimeError, match="No pinned"):
+        platform_spec(lock, "jq", "Darwin-arm64")

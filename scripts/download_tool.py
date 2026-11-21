@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download one official, checksum-pinned Linux x86_64 tool into .chu/tools."""
+"""Download one official, checksum-pinned Linux x86_64 or aarch64 tool into .chu/tools."""
 import argparse
 import gzip
 import hashlib
@@ -38,11 +38,24 @@ def extract_verified(data, spec):
         return archive.extractfile(member).read()
 
 
+def platform_spec(lock, name, host=None):
+    """The pinned asset for this host: the default platform entry or an explicit variant, never a guess."""
+    host = host or f"{platform.system()}-{platform.machine()}"
+    spec = lock[name]
+    if host == lock["platform"]:
+        return {key: value for key, value in spec.items() if key not in lock.get("variant_platforms", [])}
+    if host in lock.get("variant_platforms", []) and isinstance(spec.get(host), dict):
+        variant = spec[host]
+        base = {key: value for key, value in spec.items()
+                if key not in lock["variant_platforms"] and key not in {"url", "sha256", "member"}}
+        return {**base, **variant}
+    raise RuntimeError(f"No pinned {name} asset for {host}; supported: "
+                       + ", ".join([lock["platform"], *lock.get("variant_platforms", [])]))
+
+
 def install(name):
     lock = json.loads((ROOT / "dev/downloads.json").read_text())
-    if f"{platform.system()}-{platform.machine()}" != lock["platform"]:
-        raise RuntimeError("Pinned binary bootstrap currently supports Linux x86_64 only")
-    spec = lock[name]
+    spec = platform_spec(lock, name)
     cache = ROOT / ".chu/downloads" / spec["sha256"]
     if cache.exists():
         data = cache.read_bytes()

@@ -1,6 +1,7 @@
 # CHU agent-native development
 
-The supported development baseline is Linux x86_64, Python 3.13.5, Rust 1.97.1,
+The supported development baseline is Linux x86_64 (Linux aarch64 has pinned tool assets
+since 2026-11-21; a complete aarch64 `./chu check` has not been observed yet), Python 3.13.5, Rust 1.97.1,
 Lean 4.34.1 and uv 0.12.3. Version files and `uv.lock` are executable requirements.
 This prepares the Rust prototype used by the theory checks, Lean proofs and graph
 engineering tools. OS implementation, its plan, VM harness and storage experiments
