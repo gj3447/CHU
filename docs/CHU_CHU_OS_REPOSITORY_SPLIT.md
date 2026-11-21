@@ -104,7 +104,7 @@ SECONDARY_AI. 위 2026-10-12 표의 “아직 수행하지 않음” 항목 이�
 |---|---|---|
 | CHU_OS의 공용 라우터 등록 | 완료(로컬 커밋, 미push) | ORCA_SETTING `859ff4d`. CHU_OS에서 라우팅하면 `owner-graph`로 OWNER 규칙이 선택된다 |
 | CHU_OS의 CHU reference pin 갱신 | 완료 | [CHU_OS PR #1](https://github.com/gj3447/CHU_OS/pull/1), CHU `847525c` 병합. 격리 worktree에서 관련 검사 8개와 Python 테스트 1696개 통과. `feat/systemd-job-executor`에 fast-forward로 병합·push했고(`1bf1388`) 병합 뒤 `upstream-chu`·`concept-claims`·`philosophy-boundaries`·`repo-graph`가 통과했다. GitHub Actions는 계정 결제 문제로 시작되지 않아 원격 CI 결과는 없다 |
-| USL 소비자 전환 | 완료(로컬 커밋, 미push) | USL `40ab9c2`. `chu:os-plan`·`chu:kernel-prototype`가 CHU_OS로 결속되고 `example:chu`가 11/11 일치 |
+| USL 소비자 전환 | 완료(로컬 커밋, 미push) | USL `40ab9c2`, OS 경로 정리 뒤 `8a6a3a9`로 재고정. `chu:os-plan`·`chu:kernel-prototype`가 CHU_OS로 결속되고 `example:chu`가 11/11 일치 |
 | HOH·OMC 소비자 참조 | 변경하지 않음 | 아래 설명 |
 | HSWM 소비자 참조 | 변경 불필요 | README가 가리키는 `ECOSYSTEM.md`·3대원칙은 CHU 소유 문서다 |
 | CHU의 기존 OS 경로 정리 | 완료 | [아래 정리 기록](#2026-11-21-os-전용-경로-정리). AI가 제시한 권장안(OS 전용만 제거, Rust 프로토타입과 `spec/`은 유지)에 대해 사용자가 2026-11-21 대화에서 “다음 작업 진행해줘”라고 답했고, 이를 권장안 승인으로 읽고 진행했다(이 독해는 AI의 해석이며 대화는 `canon/sources/`에 수록하지 않았다) |
@@ -144,3 +144,11 @@ commit은 CHU_OS가 pin을 갱신하는 병합에서 선조가 된다.
 참조본으로 표시했으며(`engineering/catalog.json`의 `REFERENCE`), 계획 파일 의존을 끊기 위해 `scripts/chu_model.py`의
 예제 입력 두 개와 `roadmap`만 고쳤다. 참조본까지 CHU_OS로 넘길지는 후속 결정이다. HOH·OMC의 과거 commit 고정
 참조는 이번 삭제의 영향을 받지 않는다.
+
+후속 반영(같은 날). CHU_OS는 이 정리를 이 저장소 쪽 파일을 유지하는 병합으로 받아 `os/`·`plan/` 등을 정본으로 계속
+소유하고, reference pin을 CHU `0871ce0`으로 갱신했다(CHU_OS `61990a0`, `feat/systemd-job-executor`에 push). 일반
+`git merge`는 upstream의 삭제를 CHU_OS에도 적용하므로, pin 갱신은 `scripts/check_upstream_chu.py --refresh`를 쓰는
+절차로 바꿨다(CHU_OS `docs/UPSTREAM_CHU.md`). CHU_OS의 로컬 Python 테스트는 1700개 통과, 70개 건너뜀이었다.
+USL 연결은 9/11 표류가 생겨 CHU `0871ce0`·CHU_OS `61990a0`으로 다시 고정했고 11/11 일치를 확인했다(USL `8a6a3a9`, 로컬 커밋).
+`philosophy-boundaries`의 Lean 실행 제한 30초는 공유 호스트 부하(load 약 30–39)에서 시간 초과가 반복돼 180초로
+늘렸다. 검사 입력과 판정 조건은 바꾸지 않았다.

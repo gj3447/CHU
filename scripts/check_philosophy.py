@@ -25,7 +25,7 @@ def check(out):
     source = "\n".join((ROOT / path).read_text() for path in inputs)
     argv = ["lean", "--stdin", "-j", "2", "-M", "768"]
     result = subprocess.run(argv, input=source, text=True, capture_output=True,
-                            cwd=ROOT, timeout=30)
+                            cwd=ROOT, timeout=180)
     if result.returncode or "sorry" in (result.stdout + result.stderr).lower():
         raise ValueError(f"Lean boundary check failed: {result.stdout}\n{result.stderr}")
     report = {"schema": "chu-philosophy-boundaries/v1", "status": "PASS",

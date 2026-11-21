@@ -467,7 +467,7 @@ dev:philosophy-boundaries a dev:Check ;
     prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/philosophy/FORMAL_BOUNDARY.md> ;
     dev:requires dev:python, dev:lean ;
     dev:argv ( "{python}" "scripts/check_philosophy.py" "--out" "{out}" ) ;
-    dev:effect "build" ; dev:timeout 45 ; dev:workingDirectory "repository-root" .
+    dev:effect "build" ; dev:timeout 240 ; dev:workingDirectory "repository-root" .
 
 <https://github.com/gj3447/CHU/blob/main/philosophy/graph/README.md>
     a dev:Source ; dev:reviewedOn "2026-10-12"^^xsd:date .
