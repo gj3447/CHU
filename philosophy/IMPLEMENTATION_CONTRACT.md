@@ -17,7 +17,7 @@
 물리 backend, 스케줄러, 부팅 방식, ABI는 CHU_OS가 선택한다. 인지의 충분조건·의식·
 우주의 존재론은 OS 테스트의 합격 조건으로 슬쩍 넣지 않는다.
 
-기존 `spec/`, `os/`, `plan/`, 프로토타입은 분리 시점의 구현 자산이다. `canon/`과 `lean/`의
+기존 `spec/`, `os/`, `plan/`, 프로토타입은 분리 시점의 구현 자산이다(2026-11-21부터 `os/`·`plan/`은 CHU_OS에만 있다). `canon/`과 `lean/`의
 정본은 CHU에 남긴다. 새 OS 저장소에 검증을 위한 사본이 필요하면 upstream pin과 byte
 검증으로 관리하며 독립 철학 정본으로 편집하지 않는다. CLI와 역사적 IRI/task ID는 이름을
 바꾸기 위해 재발급하지 않는다. 실제 이관 범위는 [분리 기록](../docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)에 있다.

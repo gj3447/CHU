@@ -454,7 +454,7 @@ dev:kernel-contract a dev:Check ;
 <https://github.com/gj3447/CHU/blob/main/engineering/README.md>
     a dev:Source ; dev:reviewedOn "2026-10-02"^^xsd:date .
 dev:repo-graph a dev:Check ;
-    skos:prefLabel "Validate repository CID inventory, graph profiles, named graph isolation and evidence freshness" ;
+    skos:prefLabel "Validate repository CID inventory, graph profiles, named graph isolation and open gaps" ;
     prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/engineering/README.md> ;
     dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
     dev:argv ( "{python}" "scripts/chu_repo.py" "check" "--out" "{out}" "--json" ) ;

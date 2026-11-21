@@ -5,8 +5,8 @@ v0.1 · 2026-09-30 · `SECONDARY_AI` 구현 명세. [아키텍처](ARCHITECTURE.
 
 `Node = (cid, bytes)`. 파일, 라벨, 작업 요청, 에이전트 설명도 bytes를 가진 노드로
 표현할 수 있다. 운영 주체의 서명이나 권한은 설명 노드만으로 보장되지 않는다.
-참조 모델은 실제 `README.md`, 계획 JSON, Rust core, Python 계획 검사기,
-Lean 재작성 파일을 바이트 그대로 읽는다. 확장자는 경로 뷰의 정보이며 정체성이 아니다.
+참조 모델은 실제 `README.md`, engineering catalog JSON, Rust core, Python 모델 검사기,
+Lean 재작성 파일을 바이트 그대로 읽는다(2026-11-21 이전에는 CHU_OS로 옮긴 계획 JSON과 계획 검사기였다). 확장자는 경로 뷰의 정보이며 정체성이 아니다.
 
 `Hyperedge = (relationType, ordered participants[role, nodeCID])`.
 순서와 역할을 모두 보존한다. 같은 노드가 여러 관계 또는 같은 관계의 다른 위치에

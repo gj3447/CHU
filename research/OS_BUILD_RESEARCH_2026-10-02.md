@@ -1,5 +1,7 @@
 # CHU OS를 실제로 만드는 경로 조사
 
+> **2026-11-21 안내.** `os/`와 `os-design` 검사는 [CHU_OS](https://github.com/gj3447/CHU_OS)로 옮겼다. 본문의 `./chu check --only os-design` 등은 CHU_OS에서 실행한다. 아래 본문은 당시 기록 그대로다.
+
 2026-10-02 · `SECONDARY_AI_RESEARCH` · 1차 출처 검토. 사용자 목표는 VM에서
 부팅하고 HSWM을 실행할 수 있는 CHU OS다. 현재 저장소는 Ubuntu/QEMU substrate와
 guest probe까지만 있으며, **CHU OS나 HSWM 실행은 아직 완료되지 않았다.**

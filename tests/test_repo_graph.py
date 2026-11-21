@@ -115,8 +115,8 @@ def test_inventory_rejects_false_metadata(sources, mutation):
     elif mutation == "missing-gap":
         graph.remove((ENG["gap-legacy-vocabulary"], None, None))
     elif mutation == "removed-class":
-        # Vocabulary withdrawn with the OS plan must not come back unnoticed.
-        graph.add((ENG["gap-research-claims"], ENG.addressesTask, URIRef("https://github.com/gj3447/CHU/plan#T06")))
+        # A class withdrawn with the OS plan must not come back unnoticed; no predicate is involved.
+        graph.add((URIRef("https://github.com/gj3447/CHU/plan#T06"), RDF.type, ENG.PlanTask))
     assert validate_graph(dataset, sources), mutation
 
 

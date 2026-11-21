@@ -1,5 +1,7 @@
 # CHU 영속 재작성 연구 — SQLite 후보와 실패 경계
 
+> **2026-11-21 안내.** 이 실험의 adapter·검사·테스트(`scripts/chu_storage_probe.py`, `check_storage_probe.py`, `tests/test_storage_probe.py`, `storage-probe` 검사)는 [CHU_OS](https://github.com/gj3447/CHU_OS)로 옮겼다. 본문의 재실행 명령은 CHU_OS에서 실행한다. 이 저장소에는 결과·출처 기록만 남긴다. 아래 본문은 당시 기록 그대로다.
+
 2026-10-09 · `SECONDARY_AI` · 기존 T11–T14를 위한 구현 탐색/실험.
 **연구용 Python adapter를 만들고 30개 시나리오를 실행했다. 제품용 Rust 커널 채택이나
 T10–T14 완료 선언은 아니다.** HOH Interface는 기존 사용자 결정대로 유지한다.

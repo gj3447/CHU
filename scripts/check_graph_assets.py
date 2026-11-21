@@ -3,13 +3,13 @@
 import importlib.util
 import json
 from pathlib import Path
-import re
 
 from pyshacl import validate
 from rdflib import Graph
 from rdflib.compare import isomorphic
 
 ROOT = Path(__file__).resolve().parents[1]
+ARCHIVED_PLAN_TASKS = {"T01", "T02", "T03", "T04", "T11", "T12", "T13", "T14", "T15", "T20", "T22", "T33", "T40"}
 
 
 def load(relative):
@@ -41,8 +41,9 @@ def main():
     stored = Graph().parse(ROOT / "research/linux_os/findings.ttl")
     assert isomorphic(stored, findings.build()), "findings source and archived RDF differ"
     assert validate(stored, shacl_graph=Graph().parse(data=findings.SHAPES, format="turtle"))[0]
-    # Decisions keep their plan#T… IRIs; the plan itself and its membership check live in CHU_OS.
-    assert all(re.fullmatch(r"T\d{2}", t) for _, ts in findings.DECISIONS.values() for t in ts)
+    # The plan lives in CHU_OS, whose graph-assets check tests these IDs against it. Here the
+    # archived citation set is pinned exactly, so an edited or invented task ID cannot pass.
+    assert {t for _, ts in findings.DECISIONS.values() for t in ts} == ARCHIVED_PLAN_TASKS
     session = load("journal/2026-09-29/session_graph.py")
     archived = Graph().parse(ROOT / "journal/2026-09-29/session.ttl")
     assert validate(archived, shacl_graph=Graph().parse(data=session.SHAPES, format="turtle"))[0]

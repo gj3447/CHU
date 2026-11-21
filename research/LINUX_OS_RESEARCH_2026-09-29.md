@@ -1,5 +1,7 @@
 # Linux/Ubuntu OS 연구 — 하이퍼그래프 OS로 가는 길
 
+> **2026-11-21 안내.** `plan/`은 [CHU_OS](https://github.com/gj3447/CHU_OS)로 옮겼다. `findings_graph.py`의 단독 실행은 계획 파일을 읽으므로 CHU_OS에서만 동작한다. 이 저장소에서는 `./chu check --only graph-assets`가 저장된 RDF를 대조한다. 아래 본문은 당시 기록 그대로다.
+
 2026-09-29 · 계획 노드 **T09** (완료) · `SECONDARY_AI_RESEARCH` — 사용자 방향(CHU = 하이퍼그래프 OS)에 대한 AI의 조사·실측
 
 **질문:** Linux(Ubuntu/Debian)는 이미 어떤 그래프·하이퍼그래프를 품고 있고, CHU 하이퍼그래프 OS는 그 위에

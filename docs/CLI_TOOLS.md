@@ -9,11 +9,11 @@
 | 도구 / 설치 버전 | CHU에서 쓰는 부분 | 프로젝트 라이선스 출처 |
 |---|---|---|
 | [Oxigraph](https://github.com/oxigraph/oxigraph) 0.5.11 | RDF 저장·SPARQL 질의, RDFLib와 결과 교차검증 | [MIT 또는 Apache-2.0](https://github.com/oxigraph/oxigraph/tree/v0.5.11) |
-| [DuckDB](https://duckdb.org/docs/current/clients/cli/output_formats) 1.5.6 | 계획 그래프 JSON의 SQL 집계, CSV/Parquet 분석 | [MIT](https://github.com/duckdb/duckdb/blob/v1.5.6/LICENSE) |
+| [DuckDB](https://duckdb.org/docs/current/clients/cli/output_formats) 1.5.6 | 카탈로그 JSON의 SQL 집계, CSV/Parquet 분석 | [MIT](https://github.com/duckdb/duckdb/blob/v1.5.6/LICENSE) |
 | [yq](https://github.com/mikefarah/yq) 4.54.1 | CI YAML·툴체인 TOML을 JSON으로 읽고 설정 구조 확인 | [MIT](https://github.com/mikefarah/yq/blob/v4.54.1/LICENSE) |
 | [ast-grep](https://github.com/ast-grep/ast-grep) 0.45.3 | Rust/Python 문법 구조 검색, 수정 대상의 JSON 위치 정보 | [MIT](https://github.com/ast-grep/ast-grep/blob/0.45.3/LICENSE) |
 | [hyperfine](https://github.com/sharkdp/hyperfine) 1.20.0 | CHU 명령의 워밍업·반복 측정·JSON 시간 기록 | [MIT 또는 Apache-2.0](https://github.com/sharkdp/hyperfine/tree/v1.20.0) |
-| [jq](https://jqlang.org/manual/) 1.8.2 | agent JSON 결과 필터·실패 판정, 계획 그래프 노드 선택 | [MIT 본체 및 포함 코드별 고지](https://github.com/jqlang/jq/blob/jq-1.8.2/COPYING) |
+| [jq](https://jqlang.org/manual/) 1.8.2 | agent JSON 결과 필터·실패 판정, 카탈로그 항목 선택 | [MIT 본체 및 포함 코드별 고지](https://github.com/jqlang/jq/blob/jq-1.8.2/COPYING) |
 
 jq는 시스템에도 있었지만 재현 가능한 프로젝트 버전을 별도로 고정했다.
 ast-grep는 시스템의 다른 명령인 `sg`와 충돌하지 않도록 `ast-grep` 이름으로만 설치한다.

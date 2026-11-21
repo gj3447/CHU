@@ -44,9 +44,9 @@ builds and behavior. Neither implies a running CHU OS or shared KG write access.
 ./chu checks --json                 # check IDs, argv, prerequisites, effects, timeouts
 ./chu check --json                  # all registered checks; stderr progress, JSON stdout
 ./chu check --only core-test --only truncation --json
-./chu repo status --json            # complete file inventory, profiles and evidence freshness
+./chu repo status --json            # complete file inventory, profiles and open gaps
 ./chu repo query profiles --json    # each profile's checks and exact proof boundary
-./chu repo query evidence --json    # historical input digests vs current tracked bytes
+./chu repo query gaps --json        # open gaps kept here; OS plan/evidence views are in CHU_OS
 ./chu check --only repo-graph --json # SHACL, inventory, selected syntax/local links, isolated RDF queries
 ./chu graph-check --json            # SHACL, ontology predicates, lists, version drift
 ./chu query tools --json            # named local SPARQL competency query
@@ -117,8 +117,8 @@ MCP being available.
 ## Graph contract and standards
 
 The repository-wide [engineering map](../engineering/README.md) connects file
-byte CIDs, source representations, explicit collections, validation profiles,
-plan AND gates and evidence freshness. Its `repo` commands are read-only views;
+byte CIDs, source representations, explicit collections, validation profiles
+and open gaps. Its `repo` commands are read-only views;
 the `repo-graph` check retains an ignored TriG dataset and query answers.
 Every existing RDF source is a separate named graph. The inventory's SHACL is
 applied only to its own metadata, leaving each domain profile's existing
@@ -161,8 +161,8 @@ Tool/check specification IRIs identify engineering concepts, not CHU stored
 content. Source artifacts in run evidence use `urn:sha256:<actual-byte-digest>`;
 `dev:pathView` records one or more checkout paths. The catalog is attributed
 `SECONDARY_AI`; there are no synthesized user quotations. Results are separate
-observations, never overwritten onto desired-version specifications. Only the
-plan dependency relation must be acyclic; the whole RDF graph need not be a DAG.
+observations, never overwritten onto desired-version specifications. The RDF
+graph need not be a DAG; the acyclic plan dependency relation is checked in CHU_OS.
 
 Shared KG lookup found `sym:Concept:computable_hyper_universe_(chu)` with
 `authority_class=UNSPECIFIED`, `record_lifecycle=UNKNOWN`, no source references,

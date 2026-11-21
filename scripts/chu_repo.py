@@ -248,6 +248,9 @@ def validate_graph(dataset, files=None):
                 errors.append(f"Wrong predicate datatype: {pred}")
         elif (obj, RDF.type, range_) not in graph:
             errors.append(f"Wrong predicate range: {pred}")
+    for subject, kind in graph.subject_objects(RDF.type):
+        if str(kind).startswith(str(ENG)) and (kind, RDF.type, None) not in ontology:
+            errors.append(f"Unregistered class: {kind}")
     files = source_files() if files is None else files
     config = read_catalog(files)
     rows = query(dataset, "files")

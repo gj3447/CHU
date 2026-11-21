@@ -118,8 +118,10 @@ HOH와 OMC의 CHU 구현 참조는 모두 과거 commit(`e53500c`, `236d539`)에
 
 ## 2026-11-21 OS 전용 경로 정리
 
-SECONDARY_AI. 기준은 정리 직전 CHU commit `63655379de0d8e785eb9b83ab4eeb4374e409a54`다. 그 판본까지의 모든 파일과 이력은 CHU_OS 이력의 선조에 들어 있어 삭제로 사라지는 내용은 없다
-(삭제 전 24개 파일의 blob이 CHU_OS 객체 저장소에 있는지 파일별로 확인했다).
+SECONDARY_AI. 기준은 정리 직전 CHU commit `63655379de0d8e785eb9b83ab4eeb4374e409a54`다. 삭제한 26개 파일(아래 24개와 질의 2개)의 blob은 모두 CHU_OS `origin/main`의 이력에서 도달할 수 있어 삭제로
+사라지는 내용은 없다(파일별로 확인했고 독립 검토에서 다시 확인했다). commit 단위로는 CHU `847525c`까지가
+CHU_OS `feat/systemd-job-executor`의 선조이고 CHU_OS `main`의 마지막 CHU 선조는 `371ff76`이다. 그 뒤의 CHU
+commit은 CHU_OS가 pin을 갱신하는 병합에서 선조가 된다.
 
 | 구분 | 내용 |
 |---|---|

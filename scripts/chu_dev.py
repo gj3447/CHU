@@ -254,7 +254,7 @@ def main():
     p = sub.add_parser("model", help="CHU executable specification: demo/export/check")
     p.add_argument("argv", nargs=argparse.REMAINDER)
     p = sub.add_parser("repo", add_help=False,
-                       help="Discover repository artifacts, graph profiles, plan and evidence boundaries")
+                       help="Discover repository artifacts, graph profiles and open gaps")
     p.add_argument("-h", "--help", dest="repo_help", action="store_true")
     p.add_argument("argv", nargs=argparse.REMAINDER)
     p = sub.add_parser("concept", add_help=False, help="Query/export CHU concept claims and provenance")
