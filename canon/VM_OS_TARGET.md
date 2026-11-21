@@ -14,4 +14,4 @@
 - 자체 커널 구현 여부는 미확정이다. 현재 실험의 Linux 재사용을 최종 커널 결정으로 취급하지 않는다.
 - 표준 RDF/SHACL/PROV 도구는 데이터 교환·검증·근거 역할이다. OS 기능을 대신하지 않는다.
 
-실행 계약과 남은 검증: [VM OS 설계](../os/README.md), [정본 작업 그래프](../plan/chu_os_plan.graph.json).
+실행 계약과 남은 검증: [VM OS 설계](https://github.com/gj3447/CHU_OS/blob/main/os/README.md), [정본 작업 그래프](https://github.com/gj3447/CHU_OS/blob/main/plan/chu_os_plan.graph.json).

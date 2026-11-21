@@ -7,7 +7,7 @@ from rdflib import RDF, Literal, URIRef
 from rdflib.namespace import PROV
 
 from chu_model import (CHU, ROOT, Change, Edge, Incidence, Model, State, cid, demo,
-                       group, members, roadmap, to_rdf, validate_rdf)
+                       group, members, to_rdf, validate_rdf)
 
 # pySHACL's SPARQL implementation currently triggers these RDFLib deprecations
 # once per graph access. Retain the notices without tens of thousands of copies.
@@ -90,7 +90,7 @@ def test_competency_answers_are_subjects_and_grouped_alternatives():
     rows = [row for row in rows if str(row.state) == info["linked"]]
     assert len({row.clause for row in rows}) == 1
     assert {str(row.candidate) for row in rows} == set(info["groups"])
-    assert {str(row.subject) for row in rows} == {info["sources"]["plan/chu_os_plan.graph.json"]}
+    assert {str(row.subject) for row in rows} == {info["sources"]["engineering/catalog.json"]}
     branches = list(g.query((ROOT / "spec/queries/branches.rq").read_text()))
     assert {str(row.result) for row in branches if str(row.base) == info["linked"]} == set(info["branches"])
 
@@ -132,12 +132,13 @@ def test_shacl_and_schema_reject_malformed_exports(mutation):
     assert not validate_rdf(g)["ok"]
 
 
-def test_agent_model_interface_and_ready_tasks(tmp_path):
+def test_agent_model_interface_without_the_os_roadmap(tmp_path):
     result = subprocess.run([str(ROOT / "chu"), "model", "demo", "--json"], cwd=tmp_path,
                             capture_output=True, text=True, timeout=60)
     assert result.returncode == 0, result.stderr
     info = json.loads(result.stdout)
     assert len(info["branches"]) == 2 and len(info["events"]) == 4
-    rows = roadmap()["tasks"]
-    assert all(row["status"] != "ready" or not row["blocked_by"] for row in rows)
-    assert next(row for row in rows if row["id"] == "T12")["blocked_by"] == ["T11"]
+    # The plan-derived roadmap moved to CHU_OS with the plan; it must fail loudly here, not return [].
+    moved = subprocess.run([str(ROOT / "chu"), "model", "roadmap", "--json"], cwd=tmp_path,
+                           capture_output=True, text=True, timeout=60)
+    assert moved.returncode == 2 and "invalid choice" in moved.stderr

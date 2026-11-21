@@ -34,7 +34,7 @@ def test_catalog_and_competency_answers():
 def test_graph_rejects_invalid_controls(mutation):
     g = dev.catalog()
     if mutation == "dangling-tool":
-        g.add((dev.DEV.plan, dev.DEV.requires, dev.DEV.missing))
+        g.add((dev.DEV["finite-panel"], dev.DEV.requires, dev.DEV.missing))
     elif mutation == "no-source":
         g.remove((dev.DEV.pyshacl, PROV.wasDerivedFrom, None))
     elif mutation == "two-versions":
@@ -44,9 +44,9 @@ def test_graph_rejects_invalid_controls(mutation):
     elif mutation == "predicate":
         g.add((dev.DEV.python, dev.DEV.unknownPredicate, Literal("x")))
     elif mutation == "domain":
-        g.add((dev.DEV.plan, dev.DEV.version, Literal("1")))
+        g.add((dev.DEV["finite-panel"], dev.DEV.version, Literal("1")))
     elif mutation == "cycle":
-        head = g.value(dev.DEV.plan, dev.DEV.argv)
+        head = g.value(dev.DEV["finite-panel"], dev.DEV.argv)
         g.set((head, RDF.rest, head))
     elif mutation == "pin-drift":
         g.set((dev.DEV.lean, dev.DEV.version, Literal("0.0")))
@@ -93,12 +93,12 @@ def test_evidence_roundtrip_and_failed_observation_query(tmp_path):
     report = {"run_id": "00000000-0000-4000-8000-000000000001",
               "started_at": "2026-09-30T00:00:00+00:00", "ended_at": "2026-09-30T00:00:01+00:00",
               "source_sha256": {"one.txt": "a" * 64, "alias.txt": "a" * 64},
-              "checks": [{"id": "plan", "uri": str(dev.DEV.plan), "status": "FAIL"}]}
+              "checks": [{"id": "finite-panel", "uri": str(dev.DEV["finite-panel"]), "status": "FAIL"}]}
     dev.write_evidence(report, tmp_path)
     g = dev.catalog() + Graph().parse(tmp_path / "evidence.ttl")
     assert dev.graph_validate(g)["ok"]
     result = list(g.query((dev.ROOT / "dev/queries/failures.rq").read_text()))
-    assert len(result) == 1 and str(result[0].check) == str(dev.DEV.plan)
+    assert len(result) == 1 and str(result[0].check) == str(dev.DEV["finite-panel"])
     assert str(result[0].status) == "FAIL"
     entities = set(g.subjects(dev.DEV.pathView, None))
     assert len(entities) == 1  # two path projections, one content identity

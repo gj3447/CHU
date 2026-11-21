@@ -1,6 +1,7 @@
 # CHU Status
 
-> Current repository state: `./chu repo status --json`; profile and evidence views: `./chu repo query profiles --json`, `./chu repo query evidence --json`.
+> Current repository state: `./chu repo status --json`; profile view: `./chu repo query profiles --json`.
+> OS plan, VM harness and evidence views moved to [CHU_OS](https://github.com/gj3447/CHU_OS) on 2026-11-21; OS-related links below are permalinks to the last CHU revision that contained those files.
 >
 > The remainder contains dated Lean, research, and environment observations. It is not a live pass dashboard.
 > Quick overview: [`../README.md`](../README.md). User guide: [`USERGUIDE.md`](USERGUIDE.md).
@@ -13,7 +14,7 @@
 mkosi, Buildroot, Yocto, LFS and kernel-development alternatives. A Linux/mkosi
 image experiment is proposed, not installed or adopted. CHU OS acceptance remains incomplete: the current records cover design and a bounded substrate observation, not HSWM execution, release/update, or recovery acceptance.
 
-- [OS design graph](../os/design.ttl) connects seven requirements to sources and
+- [OS design graph](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/design.ttl) connects seven requirements to sources and
   plan tasks, distinguishes AI proposals from primary user bytes, and limits the
   archived two-boot observation to clean-boot substrate scope.
 - `os-design` adds SHACL, byte-CID and domain/range checks plus three queries
@@ -31,14 +32,14 @@ image experiment is proposed, not installed or adopted. CHU OS acceptance remain
 The [user target](../canon/VM_OS_TARGET.md) is a VM-bootable CHU OS capable of
 running HSWM. The former user-space overlay assumption has been superseded. This
 section records the old harness observation only; it is not a current VM verdict.
-[VM commands and source trace](../os/README.md) define its bounded scope:
+[VM commands and source trace](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/README.md) define its bounded scope:
 
 - QEMU 10.0.13 TCG boots the checksum-pinned Ubuntu 24.04 image twice with no
   guest network, KVM, root privileges or host filesystem sharing.
 - Both clean shutdowns pass; guest Linux 6.8.0-139, systemd PID 1, Node 24.13.0
   and cgroup v2 are verified. The second boot reads the exact previous state
-  digest. [JSON evidence](../os/boot-verification.json) and
-  [PROV-O evidence](../os/boot-evidence.ttl) bind the inputs and serial log digests.
+  digest. [JSON evidence](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/boot-verification.json) and
+  [PROV-O evidence](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/boot-evidence.ttl) bind the inputs and serial log digests.
 - Ubuntu GA kernel sources were downloaded and the init/initramfs/root-mount
   paths traced. Reviewed source versions differ from guest patch versions;
   this is not a complete Ubuntu audit, a kernel rebuild, or crash-recovery proof.
@@ -110,7 +111,7 @@ absent. Shared KG reads resolved an existing CHU UID; shared KG publication was
 not performed. Upstream RDFLib JSON-LD/Dataset deprecation warnings and the expected
 unused-native-main warning in a WASM cdylib remain non-fatal. Repeated Dataset
 warnings are displayed once per test instead of once per graph access. The CHU OS kernel
-itself remains at the milestones described in [`../plan/CHU_OS_PLAN.md`](../plan/CHU_OS_PLAN.md).
+itself remains at the milestones described in [`../plan/CHU_OS_PLAN.md`](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/plan/CHU_OS_PLAN.md).
 
 ---
 

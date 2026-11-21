@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 eng: a owl:Ontology ;
-    owl:versionInfo "0.1.0" ;
+    owl:versionInfo "0.2.0" ;
     rdfs:comment "CHU-owned engineering-map vocabulary. The inventory links profile representations without importing or merging their source graphs." .
 
 eng:Artifact a owl:Class ; rdfs:subClassOf prov:Entity .
@@ -14,9 +14,6 @@ eng:Representation a owl:Class ; rdfs:subClassOf prov:Entity .
 eng:Collection a owl:Class ; rdfs:subClassOf prov:Entity .
 eng:Profile a owl:Class ; rdfs:subClassOf prov:Entity .
 eng:AssetBinding a owl:Class ; rdfs:subClassOf prov:Entity .
-eng:PlanTask a owl:Class ; rdfs:subClassOf prov:Entity .
-eng:Gate a owl:Class ; rdfs:subClassOf prov:Entity .
-eng:EvidenceBinding a owl:Class ; rdfs:subClassOf prov:Entity .
 eng:Gap a owl:Class ; rdfs:subClassOf prov:Entity .
 
 eng:content a owl:ObjectProperty ; rdfs:domain eng:Representation ; rdfs:range eng:Artifact ;
@@ -37,23 +34,5 @@ eng:validatedBy a owl:ObjectProperty ; rdfs:domain eng:Profile ; rdfs:range dev:
     rdfs:comment "Profile -> local executable validation check, one or more." .
 eng:scope a owl:DatatypeProperty ; rdfs:domain prov:Entity ; rdfs:range xsd:string ;
     rdfs:comment "Bounded scope statement for profiles and open gaps." .
-eng:taskStatus a owl:DatatypeProperty ; rdfs:domain eng:PlanTask ; rdfs:range xsd:string ;
-    rdfs:comment "Plan-task status projected from the canonical plan: pending or done." .
-eng:tailTask a owl:ObjectProperty ; rdfs:domain eng:Gate ; rdfs:range eng:PlanTask ;
-    rdfs:comment "Gate prerequisite task. All tail tasks are required." .
-eng:headTask a owl:ObjectProperty ; rdfs:domain eng:Gate ; rdfs:range eng:PlanTask ;
-    rdfs:comment "Gate successor task. All tail tasks enable each head task." .
-eng:gateSemantics a owl:DatatypeProperty ; rdfs:domain eng:Gate ; rdfs:range xsd:string ;
-    rdfs:comment "Gate semantics fixed to ALL_TAILS; do not flatten the gate into independent binary dependencies." .
-eng:sourceReport a owl:ObjectProperty ; rdfs:domain eng:EvidenceBinding ; rdfs:range eng:Artifact ;
-    rdfs:comment "Evidence binding -> report artifact that recorded the evidence." .
-eng:recordedContent a owl:ObjectProperty ; rdfs:domain eng:EvidenceBinding ; rdfs:range eng:Artifact ;
-    rdfs:comment "Evidence binding -> historical recorded content artifact." .
-eng:currentContent a owl:ObjectProperty ; rdfs:domain eng:EvidenceBinding ; rdfs:range eng:Artifact ;
-    rdfs:comment "Evidence binding -> currently observed content artifact when available." .
-eng:freshness a owl:DatatypeProperty ; rdfs:domain eng:EvidenceBinding ; rdfs:range xsd:string ;
-    rdfs:comment "Comparison result: MATCH, CHANGED, or UNAVAILABLE." .
-eng:addressesTask a owl:ObjectProperty ; rdfs:domain eng:Gap ; rdfs:range eng:PlanTask ;
-    rdfs:comment "Open engineering gap -> affected plan task, zero or more." .
 eng:gapState a owl:DatatypeProperty ; rdfs:domain eng:Gap ; rdfs:range xsd:string ;
     rdfs:comment "Open-gap lifecycle fixed to OPEN." .

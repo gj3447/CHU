@@ -10,12 +10,12 @@
 CHU의 현재 USER_PRIMARY 목표는 VM에서 부팅하고 HSWM을 실행할 수 있는 하이퍼그래프 OS다. Lean·PROM 자료는 이 목표의 이론/연구 층이며 완료된 OS의 증거가 아니다.
 
 - [`engineering/README.md`](engineering/README.md) — 현재 그래프 프로필, CID 인벤토리와 증거 질의 진입점
-- [`os/README.md`](os/README.md) — 제한된 VM substrate 관찰과 미완료 경계
+- [`os/README.md`](https://github.com/gj3447/CHU_OS/blob/main/os/README.md) — 제한된 VM substrate 관찰과 미완료 경계
 - [`spec/ARCHITECTURE.md`](spec/ARCHITECTURE.md) — 구현 계층과 종료 조건
-- 현재 상태는 `./chu repo status --json`, 프로필은 `./chu repo query profiles --json`, 증거는 `./chu repo query evidence --json`으로 확인
+- 현재 상태는 `./chu repo status --json`, 프로필은 `./chu repo query profiles --json`으로 확인. OS 계획·VM 증거 질의는 [CHU_OS](https://github.com/gj3447/CHU_OS)에서 실행 (2026-11-21 이관)
 - [`canon/AI_NATIVE_THREE_PRINCIPLES.md`](canon/AI_NATIVE_THREE_PRINCIPLES.md) — AI native 3대원칙 (원문 + 증명 상태)
 - [`WHY_HYPERGRAPH.md`](WHY_HYPERGRAPH.md) — Wolfram · ZFC · Transformer · HSWM → 왜 하이퍼그래프인가
-- [`plan/CHU_OS_PLAN.md`](plan/CHU_OS_PLAN.md) — 작업계획 (정본 [`plan/chu_os_plan.graph.json`](plan/chu_os_plan.graph.json))
+- [`plan/CHU_OS_PLAN.md`](https://github.com/gj3447/CHU_OS/blob/main/plan/CHU_OS_PLAN.md) — 작업계획 (정본 [`plan/chu_os_plan.graph.json`](https://github.com/gj3447/CHU_OS/blob/main/plan/chu_os_plan.graph.json))
 - [`lean/`](lean/) — CHU Lean 11개 정본 사본 (4.34.1, 11/11 통과)
 - [`canon/sources/`](canon/sources/) — 사용자 원문
 - [`ECOSYSTEM.md`](ECOSYSTEM.md) — CHU · HSWM · USL 관계와 연결 지점

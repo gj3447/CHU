@@ -47,10 +47,11 @@ HOH Interface는 CHU_OS의 사람 인터페이스라는 기존 결정을 유지�
 [engineering](engineering/README.md)을 따른다. 철학 검사 PASS는 원문 hash와 네 Lean 예제의
 검사 결과이며 철학적 주장의 보편적 참 판정이 아니다.
 
-CHU_OS 초기 이관 후에도 기존 `spec/`, `os/`, `plan/`, 프로토타입과 `./chu`는 소비자 호환과
-과거 관측 재현을 위해 당분간 남긴다. 새 OS 개발의 정본 위치와 상세 전환 상태는
-[분리 기록](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)에 명시한다. 부팅·HSWM 실행·전원 장애 복구의
-미완료 상태를 저장소 생성만으로 완료 처리하지 않는다.
+2026-11-21에 OS 전용 경로(`os/`, `plan/`, VM 도구, 저장 실험 코드와 그 검사)를 이 저장소에서
+제거했다. 그 정본과 이후 개발은 [CHU_OS](https://github.com/gj3447/CHU_OS)에 있다. 이 저장소에는 이론 검사가 쓰는 Rust
+프로토타입과, 분리 시점 기준의 참조용 `spec/`·실행 명세만 남긴다. 상세는
+[분리 기록](docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)에 있다. 부팅·HSWM 실행·전원 장애 복구의
+미완료 상태를 저장소 분리만으로 완료 처리하지 않는다.
 
 ## License
 

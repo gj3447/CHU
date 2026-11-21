@@ -209,15 +209,6 @@ dev:lean-JaebaeManInf a dev:Check ;
     dev:timeout 120 ;
     dev:workingDirectory "repository-root" .
 
-dev:plan a dev:Check ;
-    skos:prefLabel "Check plan referential integrity and DAG" ;
-    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
-    dev:argv ( "{python}" "plan/check_plan.py" ) ;
-    dev:effect "read" ;
-    dev:requires dev:python ;
-    dev:timeout 30 ;
-    dev:workingDirectory "repository-root" .
-
 dev:python-lint a dev:Check ;
     skos:prefLabel "Lint Python sources" ;
     prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/docs/DEVELOPMENT.md> ;
@@ -460,15 +451,6 @@ dev:kernel-contract a dev:Check ;
     dev:argv ( "{python}" "scripts/check_model.py" "--out" "{out}" ) ;
     dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
 
-<https://github.com/gj3447/CHU/blob/main/research/OS_BUILD_RESEARCH_2026-10-02.md>
-    a dev:Source ; dev:reviewedOn "2026-10-02"^^xsd:date .
-dev:os-design a dev:Check ;
-    skos:prefLabel "Validate OS requirements, proposal provenance and bounded archived evidence" ;
-    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/OS_BUILD_RESEARCH_2026-10-02.md> ;
-    dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
-    dev:argv ( "{python}" "scripts/check_os_design.py" "--out" "{out}" ) ;
-    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
-
 <https://github.com/gj3447/CHU/blob/main/engineering/README.md>
     a dev:Source ; dev:reviewedOn "2026-10-02"^^xsd:date .
 dev:repo-graph a dev:Check ;
@@ -476,15 +458,6 @@ dev:repo-graph a dev:Check ;
     prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/engineering/README.md> ;
     dev:requires dev:python, dev:rdflib, dev:pyshacl, dev:oxigraph ;
     dev:argv ( "{python}" "scripts/chu_repo.py" "check" "--out" "{out}" "--json" ) ;
-    dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
-
-<https://github.com/gj3447/CHU/blob/main/research/storage_atomicity_20261009/README.md>
-    a dev:Source ; dev:reviewedOn "2026-10-09"^^xsd:date .
-dev:storage-probe a dev:Check ;
-    skos:prefLabel "Research SQLite atomic rewrite, SIGKILL, retry, branch CAS and ABA boundaries" ;
-    prov:wasDerivedFrom <https://github.com/gj3447/CHU/blob/main/research/storage_atomicity_20261009/README.md> ;
-    dev:requires dev:python, dev:rdflib, dev:pyshacl ;
-    dev:argv ( "{python}" "scripts/check_storage_probe.py" "--out" "{out}" ) ;
     dev:effect "build" ; dev:timeout 120 ; dev:workingDirectory "repository-root" .
 
 <https://github.com/gj3447/CHU/blob/main/philosophy/FORMAL_BOUNDARY.md>

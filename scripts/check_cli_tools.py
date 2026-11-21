@@ -16,7 +16,7 @@ from rdflib.namespace import PROV
 
 from chu_dev import DEV, QUERIES, ROOT, catalog
 
-PLAN = "plan/chu_os_plan.graph.json"
+CATALOG = "engineering/catalog.json"
 
 
 def run(tool, *args, check=True, input=None):
@@ -44,7 +44,7 @@ def oxigraph(out):
     # Explicit local negative observation makes the failure CQ non-vacuous.
     observation, activity = URIRef("urn:chu:test:failure"), URIRef("urn:chu:test:run")
     for triple in [(observation, RDF.type, DEV.Observation),
-                   (observation, DEV.check, DEV.plan), (observation, DEV.status, Literal("FAIL")),
+                   (observation, DEV.check, DEV["finite-panel"]), (observation, DEV.status, Literal("FAIL")),
                    (observation, PROV.wasGeneratedBy, activity), (activity, RDF.type, PROV.Activity),
                    (activity, PROV.endedAtTime, Literal("2026-09-30T00:00:00Z", datatype=XSD.dateTime))]:
         g.add(triple)
@@ -74,15 +74,15 @@ def oxigraph(out):
 
 
 def duckdb(out):
-    expected = Counter(node["milestone"] for node in json.loads((ROOT / PLAN).read_text())["nodes"])
+    expected = Counter(row["lifecycle"] for row in json.loads((ROOT / CATALOG).read_text())["collections"])
     sql = ("SET autoinstall_known_extensions=false; SET autoload_known_extensions=false; "
-           "SELECT node.milestone AS milestone, count(*) AS nodes "
-           f"FROM (SELECT unnest(nodes) AS node FROM read_json_auto('{PLAN}')) "
-           "GROUP BY milestone ORDER BY milestone;")
+           "SELECT item.lifecycle AS lifecycle, count(*) AS collections "
+           f"FROM (SELECT unnest(collections) AS item FROM read_json_auto('{CATALOG}')) "
+           "GROUP BY lifecycle ORDER BY lifecycle;")
     actual = json.loads(run("duckdb", "-no-init", "-batch", "-bail", "-json", ":memory:", sql).stdout)
-    assert {row["milestone"]: row["nodes"] for row in actual} == dict(expected)
-    (out / "duckdb-milestones.json").write_text(json.dumps(actual, indent=2) + "\n")
-    return {"milestones": actual, "matches_python": True}
+    assert {row["lifecycle"]: row["collections"] for row in actual} == dict(expected)
+    (out / "duckdb-lifecycles.json").write_text(json.dumps(actual, indent=2) + "\n")
+    return {"lifecycles": actual, "matches_python": True}
 
 
 def yq(out):
@@ -111,23 +111,25 @@ def ast_grep(out):
 
 
 def hyperfine(out):
-    artifact = out / "hyperfine-plan.json"
-    command = shlex.join([sys.executable, "plan/check_plan.py"])
+    artifact = out / "hyperfine-catalog.json"
+    command = shlex.join([sys.executable, "-m", "json.tool", CATALOG])
     run("hyperfine", "--shell=none", "--warmup", "1", "--runs", "3", "--style", "none",
         "--export-json", artifact, command)
     result = json.loads(artifact.read_text())["results"][0]
     assert len(result["times"]) == 3 and result["exit_codes"] == [0, 0, 0]
     return {"runs": 3, "warmup": 1, "mean_seconds": result["mean"],
-            "scope": "local plan-validator baseline, not a speedup comparison"}
+            "scope": "local catalog-parse baseline, not a speedup comparison"}
 
 
 def jq(out):
-    plan = json.loads((ROOT / PLAN).read_text())
-    actual = json.loads(run("jq", "-e", '[.nodes[] | select(.status == "done") | .id] | sort', PLAN).stdout)
-    assert actual == sorted(node["id"] for node in plan["nodes"] if node.get("status") == "done")
+    config = json.loads((ROOT / CATALOG).read_text())
+    actual = json.loads(run("jq", "-e", '[.collections[] | select(.lifecycle == "CURRENT") | .id] | sort',
+                            CATALOG).stdout)
+    assert actual == sorted(row["id"] for row in config["collections"] if row["lifecycle"] == "CURRENT")
+    assert actual, "Vacuous jq selection"
     bad = run("jq", "-e", ".ok", input='{"ok":false}', check=False)
     assert bad.returncode == 1, "False agent outcome must retain a failing exit code"
-    return {"done_nodes": actual, "false_is_failure": True}
+    return {"current_collections": actual, "false_is_failure": True}
 
 
 CHECKS = {"oxigraph": oxigraph, "duckdb": duckdb, "yq": yq,

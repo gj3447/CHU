@@ -92,8 +92,8 @@ activity, boot observation, update candidate, rollback result, HSWM workload를 
 무엇인가?”, “어느 HSWM workload/provider capability가 실행됐는가?”, “graph state를 보존한
 rollback이 가능한가?”
 
-이번 반영은 [`os/design.ttl`](../os/design.ttl)의 요구사항·제안·보관 관찰 연결과
-T66–T69 계획 보완이다. [`coverage.rq`](../os/queries/coverage.rq)는 출처→요구사항→작업→상태를
+이번 반영은 [`os/design.ttl`](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/design.ttl)의 요구사항·제안·보관 관찰 연결과
+T66–T69 계획 보완이다. [`coverage.rq`](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/queries/coverage.rq)는 출처→요구사항→작업→상태를
 조회한다. `./chu check --only os-design --json`이 실제 RDF에 SHACL 검증을 적용하고
 출처 파일 CID, ontology domain/range, RDFLib/Oxigraph의 질의 답을 대조한다.
 사용자 원문과 AI 요구사항 해석은 분리하며, AI 제안은 `PROPOSED`로 유지한다.
@@ -102,4 +102,4 @@ T66–T69 계획 보완이다. [`coverage.rq`](../os/queries/coverage.rq)는 출
 현재 조회로 네 질문의 완전한 답이 생긴 것은 아니다. 자체 image build, HSWM workload,
 rollback 결과는 아직 없다. 기존 boot evidence의 개별 Boot/input-role 노드화와 오래된 계획
 완료 기록의 digest 증거도 남아 있다. 이번 변경은 OS 설계 추적을 보완하며 OS 구현 완료를
-표시하지 않는다. [검증 범위와 남은 간극](../os/README.md#research-and-requirements-trace).
+표시하지 않는다. [검증 범위와 남은 간극](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/os/README.md#research-and-requirements-trace).

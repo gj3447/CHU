@@ -3,7 +3,6 @@
 import argparse
 import hashlib
 import json
-import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -17,8 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CHU = Namespace("https://github.com/gj3447/CHU/vocab#")
 ROLES = {"group": ("group", "member"), "requires-any": ("subject", "candidate")}
 OPERATIONS = {"create", "link", "unlink", "retag", "delete"}
-EXAMPLES = ("README.md", "plan/chu_os_plan.graph.json", "chu_core_prototype/chu_core.rs",
-            "plan/check_plan.py", "lean/CHU_WolframRewrite.lean")
+EXAMPLES = ("README.md", "engineering/catalog.json", "chu_core_prototype/chu_core.rs",
+            "scripts/check_model.py", "lean/CHU_WolframRewrite.lean")
 
 
 def encoded(value):
@@ -162,7 +161,7 @@ def demo():
     common = sources["README.md"]
     edges = (group(groups[0], common, sources["chu_core_prototype/chu_core.rs"]),
              group(groups[1], common, sources["lean/CHU_WolframRewrite.lean"]),
-             Edge("requires-any", (Incidence("subject", sources["plan/chu_os_plan.graph.json"]),
+             Edge("requires-any", (Incidence("subject", sources["engineering/catalog.json"]),
                                    Incidence("candidate", groups[0]), Incidence("candidate", groups[1]))))
     linked = model.apply(base, Change("link", add_edges=edges), "link-two-views")
     left = model.apply(linked, Change("unlink", remove_edges=(edges[0].cid,)), "branch-left")
@@ -237,38 +236,18 @@ def validate_rdf(g):
     return {"ok": not errors, "triples": len(g), "errors": errors}
 
 
-def roadmap():
-    checked = subprocess.run([sys.executable, str(ROOT / "plan/check_plan.py")], cwd=ROOT,
-                             capture_output=True, text=True, timeout=30)
-    if checked.returncode:
-        raise ValueError("Invalid plan: " + checked.stdout.strip())
-    plan = json.loads((ROOT / "plan/chu_os_plan.graph.json").read_text())
-    nodes = {node["id"]: node for node in plan["nodes"]}
-    done = {name for name, node in nodes.items() if node.get("status") == "done"}
-    rows = []
-    for name, node in nodes.items():
-        prerequisites = {p for e in plan["hyperedges"] if name in e["head"] for p in e["tail"]}
-        rows.append({**node, "status": "done" if name in done else "blocked" if prerequisites - done else "ready",
-                     "requires": sorted(prerequisites), "blocked_by": sorted(prerequisites - done)})
-    return {"schema": "chu-roadmap/v1", "source": "plan/chu_os_plan.graph.json", "tasks": rows,
-            "ready": [row["id"] for row in rows if row["status"] == "ready"]}
-
-
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["demo", "export", "check", "roadmap"])
+    parser.add_argument("action", choices=["demo", "export", "check"])
     parser.add_argument("--json", action="store_true", help="JSON is the default except RDF export")
     parser.add_argument("--format", choices=["turtle", "json-ld", "nt"], default="turtle")
     args = parser.parse_args(argv)
-    if args.action == "roadmap":
-        result = roadmap()
-    else:
-        model, info = demo()
-        g = to_rdf(model, info)
-        if args.action == "export":
-            print(g.serialize(format=args.format))
-            return 0
-        result = info if args.action == "demo" else validate_rdf(g)
+    model, info = demo()
+    g = to_rdf(model, info)
+    if args.action == "export":
+        print(g.serialize(format=args.format))
+        return 0
+    result = info if args.action == "demo" else validate_rdf(g)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if result.get("ok", True) else 1
 

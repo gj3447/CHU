@@ -33,7 +33,7 @@ CHU의 raw-byte CID와 역할·순서가 있는 n항 관계를 유지하면서,
 
 ## 실험 구현
 
-[chu_storage_probe.py](../../scripts/chu_storage_probe.py)는 연구 전용 adapter다.
+[chu_storage_probe.py](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/scripts/chu_storage_probe.py)는 연구 전용 adapter다.
 `objects`에는 실제 콘텐츠·관계·상태 인코딩 bytes를 SHA-256으로 저장하고,
 `states`는 snapshot 목록, `events`는 별도 실행 사건, `branches`는 조회 가능한 head를
 기록한다. SQL 테이블과 branch 표시 이름은 물리 저장/제어 메타데이터이며 콘텐츠 CID를
@@ -80,7 +80,7 @@ principal별 idempotency 범위는 아직 결정하지 않았다. actor URN은 �
 새 연결에서 SQLite integrity/FK, 콘텐츠 CID, snapshot endpoint, 사건/branch 일관성을
 검사했다. DB는 모두 synthetic disposable 데이터이며 종료 후 제거했다.
 
-[회귀 테스트](../../tests/test_storage_probe.py)는 추가로 binary bytes, Unicode의 서로 다른
+[회귀 테스트](https://github.com/gj3447/CHU/blob/63655379de0d8e785eb9b83ab4eeb4374e409a54/tests/test_storage_probe.py)는 추가로 binary bytes, Unicode의 서로 다른
 인코딩, 순서가 다른 n항 관계, actor/branch/revision/base가 다른 request ID 재사용,
 예외 rollback, 역사적 객체 보존, NFS 거부를 검사한다.
 

@@ -6,7 +6,7 @@ import pytest
 from rdflib import Literal, RDF, URIRef
 
 from chu_dev import DEV, ROOT
-from chu_repo import ENG, PLAN, build, local_jsonld_contexts, query, scan_syntax_and_links, source_files, validate_graph
+from chu_repo import ENG, build, local_jsonld_contexts, query, scan_syntax_and_links, source_files, validate_graph
 
 
 @pytest.fixture(scope="module")
@@ -26,7 +26,7 @@ def test_inventory_answers_cover_sources_and_preserve_profile_boundaries(sources
     assert len(primary) == 14
     assert rows["canon/VM_OS_TARGET.md"]["authority"] == "SECONDARY_AI"
     assert rows["journal/2026-09-29/session.ttl"]["lifecycle"] == "HISTORICAL"
-    assert summary["profiles"] == 15
+    assert summary["profiles"] == 11
     assets = query(dataset, "assets")
     assert any(r["profile"] == str(ENG["profile-concept-claims"])
                and r["path"] == "philosophy/graph/claims.ttl" and r["role"] == "data"
@@ -34,7 +34,7 @@ def test_inventory_answers_cover_sources_and_preserve_profile_boundaries(sources
     assert any(r["profile"] == str(ENG["profile-model"]) and r["path"] == "spec/shapes.ttl"
                and r["role"] == "shapes" for r in assets)
     assert any(r["profile"] == str(ENG["profile-storage-research"])
-               and r["path"] == "scripts/chu_storage_probe.py" for r in assets)
+               and r["path"] == "research/storage_atomicity_20261009/results.json" for r in assets)
     assert len(dataset.default_graph) == 0
     for path in ("spec/ontology.ttl", "research/linux_os/shapes.ttl", "journal/2026-09-29/session.ttl"):
         assert len(dataset.graph(URIRef(rows[path]["representation"]))) > 0
@@ -43,7 +43,7 @@ def test_inventory_answers_cover_sources_and_preserve_profile_boundaries(sources
         (URIRef(rows["README.md"]["representation"]), ENG.authority, Literal("USER_PRIMARY")))
     assert {r["path"] for r in query(dataset, "files") if r["authority"] == "USER_PRIMARY"} == primary
     assert {r["path"] for r in query(dataset, "source-graphs")} == {
-        "dev/catalog.ttl", "os/design.ttl", "research/linux_os/findings.ttl"}
+        "dev/catalog.ttl", "philosophy/graph/claims.ttl", "research/linux_os/findings.ttl"}
 
 
 def test_alias_paths_share_content_but_keep_source_authority_context(sources):
@@ -76,21 +76,23 @@ def test_identical_rdf_bytes_keep_separate_source_contexts_without_blank_node_du
     assert not list(second.triples((None, ENG.testMarker, None)))
 
 
-def test_final_and_gate_and_historical_freshness_are_queryable(sources):
-    dataset, _ = build(sources)
-    rows = [r for r in query(dataset, "plan") if r["gate"] == str(PLAN.E37)]
-    assert {r["tail"] for r in rows} == {str(PLAN[f"T{x}"]) for x in range(63, 69)}
-    assert {r["head"] for r in rows} == {str(PLAN.T69)}
-    evidence = {r["path"]: r for r in query(dataset, "evidence")}
-    assert evidence["scripts/chu_vm.py"]["freshness"] == "CHANGED"
-    assert evidence["os/guest-probe.mjs"]["freshness"] == "MATCH"
-    assert all(row["freshness"] == "UNAVAILABLE" for p, row in evidence.items() if p.startswith(".chu/"))
-    assert {r["gap"] for r in query(dataset, "gaps")} >= {
-        str(ENG["gap-hswm"]), str(ENG["gap-legacy-vocabulary"])}
+def test_open_gaps_are_queryable_and_os_owned_views_are_not_projected(sources):
+    dataset, summary = build(sources)
+    assert {r["gap"] for r in query(dataset, "gaps")} == {
+        str(ENG["gap-legacy-vocabulary"]), str(ENG["gap-research-claims"])}
+    # The OS plan, VM evidence and their implementation live in CHU_OS, not in this inventory.
+    assert not [p for p in sources if p.startswith(("os/", "plan/"))]
+    assert "plan" not in summary and "evidence_freshness" not in summary
+    for name in ("plan", "evidence"):
+        with pytest.raises(ValueError, match="Unknown repository query"):
+            query(dataset, name)
+    graph = dataset.graph(ENG.inventory)
+    for kind in ("PlanTask", "Gate", "EvidenceBinding"):
+        assert not list(graph.subjects(RDF.type, ENG[kind]))
 
 
-@pytest.mark.parametrize("mutation", ["authority", "missing-file", "fake-cid", "gate", "freshness", "predicate", "check",
-                                     "recorded-evidence", "missing-evidence", "missing-asset", "false-done"])
+@pytest.mark.parametrize("mutation", ["authority", "missing-file", "fake-cid", "predicate", "check",
+                                     "missing-asset", "gap-scope", "missing-gap", "removed-class"])
 def test_inventory_rejects_false_metadata(sources, mutation):
     dataset, _ = build(sources)
     graph = dataset.graph(ENG.inventory)
@@ -101,30 +103,20 @@ def test_inventory_rejects_false_metadata(sources, mutation):
         graph.remove((representation, ENG.content, None))
     elif mutation == "fake-cid":
         graph.set((representation, ENG.content, URIRef("urn:sha256:" + "0" * 64)))
-    elif mutation == "gate":
-        graph.remove((PLAN.E37, ENG.tailTask, PLAN.T68))
-    elif mutation == "freshness":
-        binding = next(graph.subjects(RDF.type, ENG.EvidenceBinding))
-        graph.set((binding, ENG.freshness, Literal("MATCH")))
-        graph.remove((binding, ENG.currentContent, None))
     elif mutation == "predicate":
         graph.add((representation, ENG.pretend, Literal(True)))
     elif mutation == "check":
         graph.set((ENG["profile-model"], ENG.validatedBy, DEV.unknown))
-    elif mutation == "recorded-evidence":
-        # There is both a representation and an evidence binding for a current source path.
-        binding = next(n for n in graph.subjects(RDF.type, ENG.EvidenceBinding)
-                       if graph.value(n, DEV.pathView) == Literal("scripts/chu_vm.py"))
-        graph.set((binding, ENG.recordedContent, graph.value(binding, ENG.currentContent)))
-        graph.set((binding, ENG.freshness, Literal("MATCH")))
-    elif mutation == "missing-evidence":
-        binding = next(graph.subjects(RDF.type, ENG.EvidenceBinding))
-        graph.remove((binding, None, None))
     elif mutation == "missing-asset":
         binding = next(graph.subjects(RDF.type, ENG.AssetBinding))
         graph.remove((binding, None, None))
-    elif mutation == "false-done":
-        graph.set((PLAN.T69, ENG.taskStatus, Literal("done")))
+    elif mutation == "gap-scope":
+        graph.set((ENG["gap-research-claims"], ENG.scope, Literal("everything was verified")))
+    elif mutation == "missing-gap":
+        graph.remove((ENG["gap-legacy-vocabulary"], None, None))
+    elif mutation == "removed-class":
+        # Vocabulary withdrawn with the OS plan must not come back unnoticed.
+        graph.add((ENG["gap-research-claims"], ENG.addressesTask, URIRef("https://github.com/gj3447/CHU/plan#T06")))
     assert validate_graph(dataset, sources), mutation
 
 
@@ -135,7 +127,7 @@ def test_catalog_rejects_silent_omissions(sources, mutation):
     if mutation == "unclassified":
         files["unclassified.txt"] = b"new"
     elif mutation == "unprofiled-rdf":
-        files["os/unprofiled.ttl"] = b"<urn:a> <urn:b> <urn:c> ."
+        files["dev/unprofiled.ttl"] = b"<urn:a> <urn:b> <urn:c> ."
     elif mutation == "missing-asset":
         config["profiles"][0]["assets"]["data"].append("dev/missing.ttl")
     elif mutation == "unknown-check":

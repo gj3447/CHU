@@ -25,8 +25,7 @@ from check_cli_tools import bindings, run
 from chu_dev import DEV, ROOT, catalog
 
 ENG = Namespace("https://github.com/gj3447/CHU/engineering#")
-PLAN = Namespace("https://github.com/gj3447/CHU/plan#")
-QUERIES = {"files", "profiles", "assets", "plan", "evidence", "gaps", "source-graphs"}
+QUERIES = {"files", "profiles", "assets", "gaps", "source-graphs"}
 AUTHORITIES = {"USER_PRIMARY", "SECONDARY_AI", "OWNER_INSTRUCTION", "UNSPECIFIED"}
 LIFECYCLES = {"CURRENT", "HISTORICAL", "REFERENCE", "PRESERVED"}
 ROLES = {"data", "ontology", "shapes", "queries", "source"}
@@ -149,7 +148,7 @@ def build(files=None):
     config = read_catalog(files)
     dataset = Dataset()
     graph = dataset.graph(ENG.inventory)
-    for prefix, ns in (("eng", ENG), ("dev", DEV), ("prov", PROV), ("plan", PLAN)):
+    for prefix, ns in (("eng", ENG), ("dev", DEV), ("prov", PROV)):
         dataset.bind(prefix, ns)
 
     def entity(node, kind):
@@ -209,42 +208,11 @@ def build(files=None):
     if rdf_paths - asset_paths:
         raise ValueError(f"RDF assets lack a validation profile: {sorted(rdf_paths - asset_paths)}")
 
-    plan = json.loads(files["plan/chu_os_plan.graph.json"])
-    for row in plan["nodes"]:
-        node = entity(PLAN[row["id"]], ENG.PlanTask)
-        add(node, SKOS.prefLabel, Literal(row["title"]))
-        add(node, ENG.taskStatus, Literal(row.get("status", "pending")))
-    for row in plan["hyperedges"]:
-        gate = entity(PLAN[row["id"]], ENG.Gate)
-        add(gate, ENG.gateSemantics, Literal("ALL_TAILS"))
-        for field, pred in (("tail", ENG.tailTask), ("head", ENG.headTask)):
-            for task in row[field]:
-                add(gate, pred, PLAN[task])
-
-    archived = json.loads(files["os/boot-verification.json"])
-    report = cid(files["os/boot-verification.json"])
-    freshness = Counter()
-    for path, digest in archived["source_sha256"].items():
-        binding = entity(record_id("evidence", str(report), path, digest), ENG.EvidenceBinding)
-        add(binding, DEV.pathView, Literal(path))
-        add(binding, ENG.sourceReport, report)
-        recorded = entity(URIRef("urn:sha256:" + digest), ENG.Artifact)
-        add(binding, ENG.recordedContent, recorded)
-        state = "UNAVAILABLE"
-        if path in files:
-            current = cid(files[path])
-            add(binding, ENG.currentContent, current)
-            state = "MATCH" if current == recorded else "CHANGED"
-        add(binding, ENG.freshness, Literal(state))
-        freshness[state] += 1
-
     for row in config.get("gaps", []):
         gap = entity(ENG["gap-" + row["id"]], ENG.Gap)
         add(gap, SKOS.prefLabel, Literal(row["label"]))
         add(gap, ENG.scope, Literal(row["scope"]))
         add(gap, ENG.gapState, Literal("OPEN"))
-        for task in row.get("tasks", []):
-            add(gap, ENG.addressesTask, PLAN[task])
     snapshot = cid(json.dumps({p: sha(data) for p, data in sorted(files.items())}, separators=(",", ":")).encode())
     entity(snapshot, PROV.Collection)
     add(snapshot, PROV.wasAttributedTo, ENG.indexer)
@@ -255,9 +223,7 @@ def build(files=None):
                "byte_artifacts": len({cid(data) for data in files.values()}), "snapshot": str(snapshot),
                "collections": dict(sorted(membership.items())), "profiles": len(config["profiles"]),
                "registered_checks": len(set(catalog().subjects(RDF.type, DEV.Check))),
-               "plan": {"tasks": len(plan["nodes"]), "gates": len(plan["hyperedges"]),
-                        "declared_done": sum(n.get("status") == "done" for n in plan["nodes"])},
-               "source_graphs": len(rdf_paths), "evidence_freshness": dict(freshness),
+               "source_graphs": len(rdf_paths), "gaps": len(config.get("gaps", [])),
                "scope": config["scope"], "review": "full structural inventory; semantic reviews are bounded by engineering/README.md"}
     return dataset, summary
 
@@ -308,26 +274,9 @@ def validate_graph(dataset, files=None):
                        for path in files if matches(path, patterns)}
     if {(r["profile"], r["role"], r["path"]) for r in query(dataset, "assets")} != expected_assets:
         errors.append("Profile asset-role answers differ from catalog")
-    plan = json.loads(files["plan/chu_os_plan.graph.json"])
-    expected_statuses = {PLAN[n["id"]]: n.get("status", "pending") for n in plan["nodes"]}
-    if {n: str(graph.value(n, ENG.taskStatus)) for n in graph.subjects(RDF.type, ENG.PlanTask)} != expected_statuses:
-        errors.append("Projected task statuses differ from canonical plan")
-    expected_gates = {(str(PLAN[e["id"]]), str(PLAN[t]), str(PLAN[h]))
-                      for e in plan["hyperedges"] for t in e["tail"] for h in e["head"]}
-    if {(r["gate"], r["tail"], r["head"]) for r in query(dataset, "plan")} != expected_gates:
-        errors.append("Dependency gate answers lost or added an AND endpoint")
-    archived = json.loads(files["os/boot-verification.json"])
-    evidence = query(dataset, "evidence")
-    if len(evidence) != len(archived["source_sha256"]) or {r["path"] for r in evidence} != set(archived["source_sha256"]):
-        errors.append("Evidence bindings omit or duplicate archived inputs")
-    for row in evidence:
-        expected_digest = archived["source_sha256"].get(row["path"])
-        if row["recorded"] != "urn:sha256:" + str(expected_digest) or row["report"] != str(cid(files["os/boot-verification.json"])):
-            errors.append(f"Recorded evidence differs from archive: {row['path']}")
-        current = str(cid(files[row["path"]])) if row["path"] in files else None
-        state = "UNAVAILABLE" if current is None else "MATCH" if current == row["recorded"] else "CHANGED"
-        if row["freshness"] != state or row.get("current") != current:
-            errors.append(f"Evidence freshness answer is false: {row['path']}")
+    expected_gaps = {(str(ENG["gap-" + g["id"]]), g["label"], g["scope"]) for g in config.get("gaps", [])}
+    if {(r["gap"], r["label"], r["scope"]) for r in query(dataset, "gaps")} != expected_gaps:
+        errors.append("Open-gap answers differ from catalog")
     return errors
 
 
@@ -339,8 +288,6 @@ def query(dataset, name):
 
 
 def check(out):
-    subprocess.run([sys.executable, str(ROOT / "plan/check_plan.py")], cwd=ROOT,
-                   check=True, capture_output=True, timeout=30)
     files = source_files()
     dataset, summary = build(files)
     errors = validate_graph(dataset, files)
@@ -380,7 +327,7 @@ def main(argv=None):
         p.add_argument("--json", action="store_true", help="Machine-readable output (default except export)")
         if command == "query":
             p.add_argument("name", choices=sorted(QUERIES))
-            p.add_argument("--path", help="Optional file path glob for files/assets/evidence rows")
+            p.add_argument("--path", help="Optional file path glob for files/assets rows")
         if command == "export":
             p.add_argument("--format", choices=["trig", "nquads"], default="trig")
         if command == "check":
@@ -397,8 +344,8 @@ def main(argv=None):
             if args.command == "query":
                 result = query(dataset, args.name)
                 if args.path:
-                    if args.name not in {"files", "assets", "evidence"}:
-                        raise ValueError("--path applies only to files/assets/evidence")
+                    if args.name not in {"files", "assets"}:
+                        raise ValueError("--path applies only to files/assets")
                     result = [row for row in result if fnmatch.fnmatchcase(row.get("path", ""), args.path)]
             else:
                 result = {**summary, "observed_at": datetime.now(timezone.utc).isoformat(),

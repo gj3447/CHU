@@ -2,8 +2,9 @@
 
 The supported development baseline is Linux x86_64, Python 3.13.5, Rust 1.97.1,
 Lean 4.34.1 and uv 0.12.3. Version files and `uv.lock` are executable requirements.
-This prepares the existing Rust prototype, Lean proofs and graph engineering tools;
-the OS kernel milestones in `plan/` remain separate implementation work.
+This prepares the Rust prototype used by the theory checks, Lean proofs and graph
+engineering tools. OS implementation, its plan, VM harness and storage experiments
+are owned by [CHU_OS](https://github.com/gj3447/CHU_OS) and were removed from this checkout on 2026-11-21.
 
 ## Start and reproduce
 
@@ -43,7 +44,6 @@ builds and behavior. Neither implies a running CHU OS or shared KG write access.
 ./chu checks --json                 # check IDs, argv, prerequisites, effects, timeouts
 ./chu check --json                  # all registered checks; stderr progress, JSON stdout
 ./chu check --only core-test --only truncation --json
-./chu check --only os-design --json  # OS requirements/proposals/evidence; no VM boot
 ./chu repo status --json            # complete file inventory, profiles and evidence freshness
 ./chu repo query profiles --json    # each profile's checks and exact proof boundary
 ./chu repo query evidence --json    # historical input digests vs current tracked bytes
@@ -75,18 +75,17 @@ also create compiler/test caches and artifacts. Every `check` run writes local
 evidence to a new `.chu/runs/<uuid>/` and atomically updates `.chu/latest`.
 The operational default is **discover → diagnose → select/run → inspect evidence**.
 
-For CHU kernel development, load [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md)
-and its five contracts. `./chu model roadmap --json` derives ready/blocked tasks
-from the existing plan hypergraph. `./chu model demo --json` runs an in-memory
+Kernel development happens in [CHU_OS](https://github.com/gj3447/CHU_OS). The split-time reference specification
+stays here: [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md) and its five contracts.
+`./chu model roadmap` moved with the plan. `./chu model demo --json` runs an in-memory
 reference scenario; `./chu model check --json` validates its RDF projection;
 `./chu check --only kernel-contract --json` cross-checks three model queries with
 Oxigraph and retains outputs. This is executable specification, not a persistent
 OS kernel or permission to execute agent requests on the host.
 
-The VM substrate experiment is separate from the normal check suite. Its inputs,
-boot contract, evidence location, and HSWM boundary are in
-[`../os/README.md`](../os/README.md). It starts QEMU with TCG and no guest network;
-the current probe verifies guest substrate only and reports HSWM as `NOT_READY`.
+The VM substrate experiment (`./chu vm`, `os/`) is no longer part of this checkout.
+Run it from [CHU_OS](https://github.com/gj3447/CHU_OS); its inputs, boot contract and HSWM boundary are in
+[its `os/README.md`](https://github.com/gj3447/CHU_OS/blob/main/os/README.md).
 
 ## Selected tools and exact use
 

@@ -1,6 +1,6 @@
 # CHU / CHU_OS 저장소 분리 기록
 
-2026-10-12 · SECONDARY_AI · 상태(2026-11-21): **초기 이관 완료; CHU_OS pin 갱신과 USL 소비자 전환 완료, CHU의 기존 OS 경로 정리는 미수행**. 최신 내용은 [맨 아래 후속 기록](#2026-11-21-후속-기록)에 있다.
+2026-10-12 · SECONDARY_AI · 상태(2026-11-21): **초기 이관, CHU_OS pin 갱신, USL 소비자 전환, CHU의 OS 전용 경로 정리 완료**. 최신 내용은 [맨 아래 후속 기록](#2026-11-21-후속-기록)에 있다.
 [현재 용어](../canon/CHU_AND_CHU_OS.md)와 [사용자 원문](../canon/sources/USER_PRIMARY_CHU_CHU_OS_2026-10-12.txt)이 근거다.
 후속 [사용자 지시](../canon/sources/USER_PRIMARY_CHU_PHILOSOPHY_FIRST_2026-10-12.txt)에 따라
 철학을 먼저 정리하고 별도 CHU_OS 저장소를 만든다. [철학 v1](../philosophy/README.md)과
@@ -107,7 +107,7 @@ SECONDARY_AI. 위 2026-10-12 표의 “아직 수행하지 않음” 항목 이�
 | USL 소비자 전환 | 완료(로컬 커밋, 미push) | USL `40ab9c2`. `chu:os-plan`·`chu:kernel-prototype`가 CHU_OS로 결속되고 `example:chu`가 11/11 일치 |
 | HOH·OMC 소비자 참조 | 변경하지 않음 | 아래 설명 |
 | HSWM 소비자 참조 | 변경 불필요 | README가 가리키는 `ECOSYSTEM.md`·3대원칙은 CHU 소유 문서다 |
-| CHU의 기존 OS 경로 정리 | 미수행 | 사용자 결정이 필요하다. Rust 프로토타입은 이론 검사(`truncation`·`witness`·`finite-panel`)의 입력이고, `philosophy/sources.json`과 이론 문서가 `spec/`·`plan/` 경로를 참조해 어디까지 남길지가 소유 범위 결정이다 |
+| CHU의 기존 OS 경로 정리 | 완료 | [아래 정리 기록](#2026-11-21-os-전용-경로-정리). AI가 제시한 권장안(OS 전용만 제거, Rust 프로토타입과 `spec/`은 유지)에 대해 사용자가 2026-11-21 대화에서 “다음 작업 진행해줘”라고 답했고, 이를 권장안 승인으로 읽고 진행했다(이 독해는 AI의 해석이며 대화는 `canon/sources/`에 수록하지 않았다) |
 
 HOH와 OMC의 CHU 구현 참조는 모두 과거 commit(`e53500c`, `236d539`)에 고정돼 있고 CHU `HEAD`의 경로를
 읽지 않는다. 두 commit은 CHU_OS 이력의 선조이므로 CHU_OS 원격에서도 해석된다. HOH 검사가 고정한
@@ -115,3 +115,30 @@ HOH와 OMC의 CHU 구현 참조는 모두 과거 commit(`e53500c`, `236d539`)에
 같다(이번에 `git show`로 대조). 따라서 CHU의 OS 경로를 정리해도 이 고정 참조는 깨지지 않는다.
 두 저장소는 HOH–OMC 세션 경계 규칙과 진행 중인 미커밋 변경이 있어 CHU 세션에서 수정하지 않았다.
 새 관측을 CHU_OS 판본으로 남길지는 각 소유자의 후속 작업이다. HOH의 실제 검증 실행은 이번에 하지 않았다.
+
+## 2026-11-21 OS 전용 경로 정리
+
+SECONDARY_AI. 기준은 정리 직전 CHU commit `63655379de0d8e785eb9b83ab4eeb4374e409a54`다. 그 판본까지의 모든 파일과 이력은 CHU_OS 이력의 선조에 들어 있어 삭제로 사라지는 내용은 없다
+(삭제 전 24개 파일의 blob이 CHU_OS 객체 저장소에 있는지 파일별로 확인했다).
+
+| 구분 | 내용 |
+|---|---|
+| CHU에서 제거 (24개) | `os/` 13개, `plan/` 3개, `scripts/chu_vm.py`·`check_os_design.py`·`chu_storage_probe.py`·`check_storage_probe.py`, `tests/test_vm.py`·`test_os_design.py`·`test_plan_contract.py`·`test_storage_probe.py`. 그 밖에 투영을 없애며 `engineering/queries/plan.rq`·`evidence.rq` 2개도 삭제 |
+| 함께 제거한 검사·명령 | `plan`·`os-design`·`storage-probe` 검사, `./chu vm`, `./chu model roadmap`, `./chu repo query plan`·`evidence`와 그 어휘(`PlanTask`·`Gate`·`EvidenceBinding`) |
+| CHU에 남긴 것 | Rust 프로토타입(이론 검사 `truncation`·`witness`·`finite-panel`의 입력), 분리 시점 기준 참조용 `spec/`과 실행 명세(`kernel-contract`), 보관 연구 자료(`research/`, 저장 실험의 결과·출처 기록 포함) |
+| 열린 항목 이관 | 영속 커널·OS 수명주기·HSWM·보관 증거의 네 gap은 CHU_OS 목록 소관. CHU에는 과거 어휘·연구 검증 두 gap만 남는다 |
+
+링크는 두 방식으로 고쳤다. 현재 안내 문서는 CHU_OS `main`의 해당 파일을 가리킨다. 날짜가 있는 관측·연구
+문서(`docs/STATUS.md`, `research/`)는 그 문서가 실제로 가리키던 바이트인 CHU `63655379de0d8e785eb9b83ab4eeb4374e409a54`의 permalink를 가리킨다.
+보관된 Linux 연구 결정의 `plan#T…` IRI는 재발급하지 않았고, 그 작업 ID가 계획에 실제로 있는지의 검사는
+계획을 가진 CHU_OS가 한다. `research/linux_os/findings_graph.py`를 단독 실행하는 경로는 계획 파일이 없어 이
+저장소에서는 동작하지 않는다(보관 생성기이며 일상 검사는 `graph-assets`가 저장된 RDF와 대조한다).
+
+정리 뒤 이 저장소의 로컬 검사는 등록 검사 **34개 전부 PASS**, Python 테스트 **111개 PASS**, 추적 파일 **272개**다.
+정리 전 기준선은 검사 37개 PASS·테스트 184개였다. 줄어든 수는 제거한 검사 3개, OS 전용 테스트, 계획·증거 투영의 음성 대조군이다.
+원격 CI 결과는 별도이며 이 기록의 근거가 아니다.
+
+남은 경계. `spec/`과 실행 명세는 CHU_OS에도 있고 그쪽이 계속 바뀐다. 이 저장소 사본은 분리 시점 기준의
+참조본으로 표시했으며(`engineering/catalog.json`의 `REFERENCE`), 계획 파일 의존을 끊기 위해 `scripts/chu_model.py`의
+예제 입력 두 개와 `roadmap`만 고쳤다. 참조본까지 CHU_OS로 넘길지는 후속 결정이다. HOH·OMC의 과거 commit 고정
+참조는 이번 삭제의 영향을 받지 않는다.

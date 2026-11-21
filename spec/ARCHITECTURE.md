@@ -1,5 +1,9 @@
 # CHU 구현 순서와 실행 계약
 
+> **참조본 (2026-11-21).** 이 `spec/`은 저장소 분리 시점 기준의 참조 사본이다. 현행 명세·계획·영속 커널 개발의
+> 정본은 [CHU_OS](https://github.com/gj3447/CHU_OS)다. 여기의 `./chu model`은 `demo`·`check`·`export`만 제공하며, `roadmap`과
+> `storage-probe`·VM 명령은 CHU_OS에서 실행한다.
+
 2026-09-30 · `SECONDARY_AI` · CHU 소유의 v0.1 실행 명세.
 사용자 정체성은 [OWNER](../docs/agent-rules/OWNER.md)가 우선한다.
 사용자는 2026-09-30에 **VM에서 직접 부팅하고 HSWM을 실행할 수 있는 CHU OS**를
@@ -31,7 +35,7 @@ flowchart LR
 `scripts/chu_model.py`는 외부 파일을 수정하거나 에이전트 작업을 실행하지 않는
 메모리 모델로 핵심 데이터 계약을 검증한다. Rust 그래프 커널 계획은 유지하지만, 그것은
 Linux 커널 자체와 다른 계층이다. 현재 VM substrate는 systemd·Node·cgroup v2·지속 상태만
-검사하며 HSWM을 실행하지 않는다. 부팅 입력·증거·한계는 [`os/README.md`](../os/README.md)에 있다.
+검사하며 HSWM을 실행하지 않는다. 부팅 입력·증거·한계는 [`os/README.md`](https://github.com/gj3447/CHU_OS/blob/main/os/README.md)에 있다.
 
 ## 계층별 결정과 가져온 도구
 
@@ -93,7 +97,7 @@ T41의 수용 조건은 같은 작업을 CLI와 GUI에서 수행했을 때 같�
 `SECONDARY_AI` 평가. 사용자 결정은 HOH 화면의 고정과 백엔드 구현 우선이며,
 아래 세부 순서·계약·수용 시나리오는 그에 대한 엔지니어링 제안이다.
 검토 기준은 CHU `8e3626303527cc26ebd548a18f147252c5f14440`의 명세, 계획과
-Python/Rust 코어다. 기존 [VM 관측](../os/README.md)은 과거 부팅 토대의 증거이며,
+Python/Rust 코어다. 기존 [VM 관측](https://github.com/gj3447/CHU_OS/blob/main/os/README.md)은 과거 부팅 토대의 증거이며,
 이번 평가는 새 VM 실행이나 HSWM 실행 검증을 포함하지 않는다.
 
 현재 [Python 모델](../scripts/chu_model.py)의 `Model.states/events`는 메모리 사전이고
@@ -137,14 +141,13 @@ GC, 작업 취소·재시도, 알림 재접속, 백업 복원에는 아직 독�
 base CID만으로 오래된 쓰기를 구분할 수 없어 별도 branch revision을 함께 검사했다.
 이는 T12/T13/T14의 설계 근거이며 Rust 커널, 전원 장애 회복, 권한 집행의 완료가 아니다.
 호스트 SQLite의 WAL-reset 수정 반영은 미확인이므로 제품 backend 채택도 보류한다.
-재실행: `./chu check --only storage-probe --json`.
+재실행은 CHU_OS에서: `./chu check --only storage-probe --json`.
 
 ```bash
 ./chu model demo --json
 ./chu model check --json
 ./chu model export --format turtle > .chu/model.ttl
 ./chu check --only kernel-contract --json
-./chu model roadmap --json
 ```
 
 데모는 이 저장소의 실제 `.md/.json/.rs/.py/.lean` 5개 파일을 읽고 바이트 CID로
@@ -171,8 +174,8 @@ Python 테스트와 `kernel-contract`가 함께 검증한다.
 
 ## 다음 구현 순서와 종료 조건
 
-정본 작업 ID와 의존성은 [계획 JSON](../plan/chu_os_plan.graph.json)에 유지한다.
-`roadmap`은 각 n항 선행조건의 **모든 tail**이 완료됐는지 계산해 ready/blocked를 출력한다.
+정본 작업 ID와 의존성은 [계획 JSON](https://github.com/gj3447/CHU_OS/blob/main/plan/chu_os_plan.graph.json)에 유지한다.
+CHU_OS의 `roadmap`은 각 n항 선행조건의 **모든 tail**이 완료됐는지 계산해 ready/blocked를 출력한다.
 
 1. **T10 → T11:** 기존 Rust core를 라이브러리로 분리하고 기존 assert를 유지한다.
    blob put/get·동일 바이트 dedup·다른 프로세스에서 CID 재현을 참조 모델과 비교한다.

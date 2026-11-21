@@ -80,17 +80,17 @@ CHU_QUERY_DIR=$(mktemp -d .chu/query-XXXXXX)
 이 store는 질의 실험용 로컬 projection이다. CHU 커널의 저장 정체성이나 공유 KG를
 대체하지 않는다. HTTP 서버는 시작하지 않으며 pySHACL이 그래프 제약 검사를 담당한다.
 
-### 계획 그래프 SQL 집계
+### 카탈로그 JSON SQL 집계
 
 ```bash
 ./chu tool duckdb -- -no-init -batch -bail -json :memory: \
-  "SELECT node.milestone AS milestone, count(*) AS nodes
-   FROM (SELECT unnest(nodes) AS node FROM read_json_auto('plan/chu_os_plan.graph.json'))
-   GROUP BY milestone ORDER BY milestone"
+  "SELECT item.lifecycle AS lifecycle, count(*) AS collections
+   FROM (SELECT unnest(collections) AS item FROM read_json_auto('engineering/catalog.json'))
+   GROUP BY lifecycle ORDER BY lifecycle"
 ```
 
 `cli-duckdb` 검사는 같은 집계를 Python 결과와 비교하며 extension 자동 설치·로드를
-끄고 실행한다. SQL 집계는 기존 그래프의 분석 뷰다.
+끄고 실행한다. SQL 집계는 기존 목록의 분석 뷰다. (2026-11-21 이전에는 CHU_OS로 옮긴 계획 그래프를 입력으로 썼다.)
 
 ### YAML·TOML·agent JSON
 
@@ -127,7 +127,7 @@ CHU_QUERY_DIR=$(mktemp -d .chu/query-XXXXXX)
 
 ```bash
 ./chu tool hyperfine -- --shell=none --warmup 2 --runs 20 \
-  --export-json .chu/plan-benchmark.json '.venv/bin/python plan/check_plan.py'
+  --export-json .chu/catalog-benchmark.json '.venv/bin/python -m json.tool engineering/catalog.json'
 ```
 
 `cli-hyperfine`는 워밍업 1회·측정 3회로 명령 성공과 JSON 결과를 확인한다.
@@ -149,6 +149,7 @@ SHACL은 출처·날짜·근거·작성자·authority와 연결 대상 타입을
 
 CLI 도입 시 기존 검사 25개에 CLI 동작 검사 6개를 더했다. 이후 CHU 실행 명세의
 `kernel-contract`, OS 조사·요구사항 추적의 `os-design`, 전체 저장소의 `repo-graph`가 추가되었다.
+2026-11-21에 `plan`·`os-design`·`storage-probe` 검사는 해당 파일과 함께 CHU_OS로 옮겼다.
 현재 등록 목록은 `./chu checks --json`에서 조회한다. 명세와 구현 순서는
 [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md)에서 확인한다.
 현재 구현은 RDF/SHACL/SPARQL/PROV-O에 기반한 개발 워크플로다.

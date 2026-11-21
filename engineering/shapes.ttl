@@ -29,24 +29,7 @@ eng:AssetBindingShape a sh:NodeShape ; sh:targetClass eng:AssetBinding ; sh:node
     sh:property [ sh:path eng:representation ; sh:class eng:Representation ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path eng:assetRole ; sh:in ( "data" "ontology" "shapes" "queries" "source" ) ; sh:minCount 1 ; sh:maxCount 1 ] .
 
-eng:PlanTaskShape a sh:NodeShape ; sh:targetClass eng:PlanTask ; sh:nodeKind sh:IRI ;
-    sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path eng:taskStatus ; sh:in ( "pending" "done" ) ; sh:minCount 1 ; sh:maxCount 1 ] .
-
-eng:GateShape a sh:NodeShape ; sh:targetClass eng:Gate ; sh:nodeKind sh:IRI ;
-    sh:property [ sh:path eng:tailTask ; sh:class eng:PlanTask ; sh:minCount 1 ] ;
-    sh:property [ sh:path eng:headTask ; sh:class eng:PlanTask ; sh:minCount 1 ] ;
-    sh:property [ sh:path eng:gateSemantics ; sh:hasValue "ALL_TAILS" ; sh:minCount 1 ; sh:maxCount 1 ] .
-
-eng:EvidenceBindingShape a sh:NodeShape ; sh:targetClass eng:EvidenceBinding ; sh:nodeKind sh:IRI ;
-    sh:property [ sh:path dev:pathView ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path eng:sourceReport ; sh:class eng:Artifact ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path eng:recordedContent ; sh:class eng:Artifact ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path eng:currentContent ; sh:class eng:Artifact ; sh:maxCount 1 ] ;
-    sh:property [ sh:path eng:freshness ; sh:in ( "MATCH" "CHANGED" "UNAVAILABLE" ) ; sh:minCount 1 ; sh:maxCount 1 ] .
-
 eng:GapShape a sh:NodeShape ; sh:targetClass eng:Gap ; sh:nodeKind sh:IRI ;
     sh:property [ sh:path skos:prefLabel ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path eng:scope ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path eng:addressesTask ; sh:class eng:PlanTask ] ;
     sh:property [ sh:path eng:gapState ; sh:hasValue "OPEN" ; sh:minCount 1 ; sh:maxCount 1 ] .

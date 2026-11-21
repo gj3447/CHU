@@ -12,11 +12,11 @@ description: CHU hypergraph OS navigation with Lean/type-theory historical layer
 | Doc / command | Read or run this when |
 |---|---|
 | [`../engineering/README.md`](../engineering/README.md) | Current graph profiles, CID inventory and evidence navigation |
-| [`../os/README.md`](../os/README.md) | VM substrate scope and limits |
+| [`../os/README.md`](https://github.com/gj3447/CHU_OS/blob/main/os/README.md) | VM substrate scope and limits |
 | [`../spec/ARCHITECTURE.md`](../spec/ARCHITECTURE.md) | Implementation layers and acceptance gates |
 | `./chu repo status --json` | You need current status, not a dated prose observation |
 | `./chu repo query profiles --json` | You need profile/source-of-truth boundaries |
-| `./chu repo query evidence --json` | You need evidence and its scope |
+| [CHU_OS](https://github.com/gj3447/CHU_OS) `./chu repo query evidence --json` | You need OS plan or VM evidence; those views moved with `os/` and `plan/` on 2026-11-21 |
 
 ## Quick Links
 

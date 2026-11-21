@@ -2,10 +2,11 @@
 
 2026-10-02 · `SECONDARY_AI` 정리. 범위는 **이 CHU Git 저장소의 추적 파일과 ignore되지 않은
 새 파일 전체**다. `.chu`, `.venv`, 빌드 캐시, 형제 저장소, 공유 KG는 수집하지 않는다.
-현재 명명은 [CHU / CHU_OS 구분](../canon/CHU_AND_CHU_OS.md)을 따른다. 두 저장소의 실제 분리는 아직 수행하지 않았다.
+현재 명명은 [CHU / CHU_OS 구분](../canon/CHU_AND_CHU_OS.md)을 따른다. 2026-11-21에 OS 전용 경로를 [CHU_OS](https://github.com/gj3447/CHU_OS)로 넘기고
+이 저장소에서 제거했다. 계획 작업·AND 게이트와 VM 증거 현재성 뷰는 그쪽 그래프에만 있다 ([분리 기록](../docs/CHU_CHU_OS_REPOSITORY_SPLIT.md)).
 사용자 정전은 [원문](../canon/sources/)에 있고, CHU_OS의 구현 목표는
 [VM에서 부팅하며 HSWM을 실행하는 하이퍼그래프 OS](../canon/VM_OS_TARGET.md)다.
-아직 구현된 것은 실행 명세·프로토타입·개발 도구와 과거 Ubuntu 부팅 실험까지다.
+이 저장소에 남은 구현 자산은 분리 시점 기준 실행 명세와 이론 검사용 프로토타입, 개발 도구다.
 
 ## 에이전트가 찾는 순서
 
@@ -15,12 +16,9 @@
 ./chu repo query profiles --json
 ./chu repo query assets --path 'spec/*' --json
 ./chu repo query source-graphs --json
-./chu repo query plan --json
-./chu repo query evidence --json
 ./chu repo query gaps --json
 ./chu repo export --format trig
 ./chu check --only repo-graph --json
-./chu model roadmap --json
 ```
 
 `status`는 목록 조회이며 PASS 증거가 아니다. `check`가 RDF/SHACL, 파일 구문, 내부 링크와
@@ -36,10 +34,8 @@
 ```mermaid
 flowchart LR
   U[사용자 원문] --> R[요구사항·AI 해석]
-  R --> T[계획 작업·AND 의존 게이트]
-  T --> P[명세·구현·실험]
+  R --> P[철학·형식 이론·참조 명세]
   P --> V[검증 프로필·검사 명령]
-  V --> E[관측·입력 CID·현재성]
   B[파일 바이트 CID] --> F[경로·분류를 가진 표현 기록]
   F --> P
 ```
@@ -51,12 +47,11 @@ flowchart LR
   출처 권위·현재/역사 구분은 이 표현 기록에 붙여, 동일 바이트의 다른 출처 문맥을 섞지 않는다.
 - **원문과 해석**: 원문 경로를 명시적으로 등록한다. 새 해석이나 비슷한 파일 이름만으로
   `USER_PRIMARY`를 얻지 못한다. 자료 전체의 분류는 AI가 작성한 탐색 메타데이터다.
-- **프로필**: 개발 도구, 실행 모델, OS 설계, 연구 fixture, 과거 결정, journal, 계획, VM,
-  보관 VM 관찰, Rust, Lean, 전체 목록, 영속 저장 연구와 철학 경계의 14개 검증 범위를 각각 유지한다.
-- **계획**: 기존 `plan#T…`/`plan#E…` ID를 재사용한다. gate에는 모든 tail과 head를 보존한다.
-  질의의 행은 뷰이며 `ALL_TAILS`가 AND 의미를 명시한다. `done`은 계획의 선언 상태다.
-- **과거 증거**: recorded CID와 현재 tracked CID를 비교해 `MATCH`, `CHANGED`, `UNAVAILABLE`로
-  보여준다. 과거 PASS를 현재 코드의 실행 증거로 바꾸지 않는다.
+- **프로필**: 개발 도구, 참조 실행 모델, 연구 fixture, 과거 결정, journal, Rust, Lean, 보관된 저장 연구,
+  전체 목록, 철학 경계, 개념 주장의 11개 검증 범위를 각각 유지한다. OS 설계·계획·VM·보관 VM 관찰
+  프로필은 2026-11-21에 CHU_OS로 넘겼다.
+- **계획·과거 증거**: 이 저장소는 더 이상 투영하지 않는다. `plan#T…` ID는 보관된 Linux 연구 결정에
+  IRI로 남아 있으며 재발급하지 않았다. 계획 소속 검사와 VM 증거 현재성 비교는 CHU_OS가 한다.
 
 [`ontology.ttl`](ontology.ttl)은 속성의 방향·domain/range·의미를, [`shapes.ttl`](shapes.ttl)은
 cardinality와 endpoint 계약을 정의한다. 메타데이터는 `engineering#inventory` named graph에
@@ -70,7 +65,9 @@ RDF 파일의 파싱 성공은 그 안의 주장이나 주석 전체가 검증�
 [PROV-O](https://www.w3.org/TR/prov-o/)다. CHU 로컬 어휘는 이 위에 정의하며, 공유 KG의
 스키마나 OS 전체에 대한 표준 적합성 인증을 주장하지 않는다.
 
-## 이번 검토와 보완
+## 2026-10-02 검토 기록 (당시 관측)
+
+아래 번호 목록은 분리 전 관측이다. 계획 검증기·VM 실행·증거 질의에 관한 항목은 현재 CHU_OS에 해당한다.
 
 시작 시점 추적 파일 244개를 대상으로 경로·내용 해시·파일 유형·프로필 연결을 전수 점검했다.
 최종 개수는 새 파일까지 포함한 `repo status`에서 구한다. JSON/TOML/Python/SPARQL/RDF는
@@ -93,8 +90,8 @@ reference-style 링크, 외부 URL과 형제 저장소 링크는 이 링크 검�
 
 ## 남겨둔 작업과 경계
 
-`repo query gaps`는 영속 커널, OS 수명주기, HSWM 통합, 보관 증거, 과거 어휘, 연구 검증의
-여섯 열린 항목과 관련 계획 작업을 반환한다. 구현되지 않은 것을 목록 생성으로 완료 처리하지 않는다.
+`repo query gaps`는 과거 어휘와 연구 검증의 두 열린 항목을 반환한다. 영속 커널, OS 수명주기, HSWM 통합,
+보관 증거의 열린 항목은 CHU_OS의 목록으로 넘겼다. 구현되지 않은 것을 목록 생성으로 완료 처리하지 않는다.
 guest JS/systemd 실행은 일반 CI의 host-side Python 테스트와 구별하며 새 VM 실행도 하지 않았다.
 과거 raw source·finding·journal·boot evidence를 재작성하거나 공유 KG에 발행하지 않았다.
 

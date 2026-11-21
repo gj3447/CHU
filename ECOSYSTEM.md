@@ -1,6 +1,6 @@
 # CHU · HSWM · USL — 하나의 하이퍼그래프 생태계
 
-2026-10-13 범위 반영 · [CHU / CHU_OS 원문과 해석](canon/CHU_AND_CHU_OS.md). 모든 것을 하이퍼그래프로 보는 사용자 관점에서 계산가능한 것은 모두 CHU이며 인지는 필수조건이 아니다. CHU_OS는 그 범위 안의 특정 컴퓨터 기반 운영체제 구현이다. 우주도 월드모델 CHU라는 관점은 사용자에게 귀속한다. 아래 기존 관계 지도는 이 구분으로 읽는다. 실행·통합 완료 여부는 [current engineering view](engineering/README.md)와 [`os/README.md`](os/README.md)의 증거 범위로 확인한다.
+2026-10-13 범위 반영 · [CHU / CHU_OS 원문과 해석](canon/CHU_AND_CHU_OS.md). 모든 것을 하이퍼그래프로 보는 사용자 관점에서 계산가능한 것은 모두 CHU이며 인지는 필수조건이 아니다. CHU_OS는 그 범위 안의 특정 컴퓨터 기반 운영체제 구현이다. 우주도 월드모델 CHU라는 관점은 사용자에게 귀속한다. 아래 기존 관계 지도는 이 구분으로 읽는다. 실행·통합 완료 여부는 [current engineering view](engineering/README.md)와 [`os/README.md`](https://github.com/gj3447/CHU_OS/blob/main/os/README.md)의 증거 범위로 확인한다.
 
 | 저장소 | 한 줄 정체성 | 권위 |
 |---|---|---|
@@ -40,4 +40,4 @@ flowchart TB
 - **공통 에이전트 규칙**: 세 저장소의 `AGENTS.md`에 같은 `usl-workspace-linking` 블록.
 - **공통 라이선스**: 세 저장소 모두 AGPL-3.0-or-later 또는 별도 상용 라이선스, © Ra Gyeongjun ([LICENSING.md](LICENSING.md)).
 - **로컬 배치**: `~/CD/{CHU,HSWM,USL}`은 개발자의 한 작업공간 투영이다. 자원 정체성이나 통합 완료 증거가 아니며, 상대 링크는 그 배치에서만 해석된다.
-- **CHU OS 계획과의 연결**: [계획](plan/CHU_OS_PLAN.md)의 T31(링크 추출)·T42(에이전트 포트)·T52(분산 백엔드)는 USL 바인딩과 HSWM 실행 경로를 재사용한다.
+- **CHU OS 계획과의 연결**: [계획](https://github.com/gj3447/CHU_OS/blob/main/plan/CHU_OS_PLAN.md)의 T31(링크 추출)·T42(에이전트 포트)·T52(분산 백엔드)는 USL 바인딩과 HSWM 실행 경로를 재사용한다.

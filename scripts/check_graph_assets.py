@@ -3,6 +3,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import re
 
 from pyshacl import validate
 from rdflib import Graph
@@ -40,8 +41,8 @@ def main():
     stored = Graph().parse(ROOT / "research/linux_os/findings.ttl")
     assert isomorphic(stored, findings.build()), "findings source and archived RDF differ"
     assert validate(stored, shacl_graph=Graph().parse(data=findings.SHAPES, format="turtle"))[0]
-    plan = json.loads((ROOT / "plan/chu_os_plan.graph.json").read_text())
-    assert {t for _, ts in findings.DECISIONS.values() for t in ts} <= {n["id"] for n in plan["nodes"]}
+    # Decisions keep their plan#T… IRIs; the plan itself and its membership check live in CHU_OS.
+    assert all(re.fullmatch(r"T\d{2}", t) for _, ts in findings.DECISIONS.values() for t in ts)
     session = load("journal/2026-09-29/session_graph.py")
     archived = Graph().parse(ROOT / "journal/2026-09-29/session.ttl")
     assert validate(archived, shacl_graph=Graph().parse(data=session.SHAPES, format="turtle"))[0]

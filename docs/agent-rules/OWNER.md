@@ -6,7 +6,7 @@
 [현재 구분](../../canon/CHU_AND_CHU_OS.md)과
 [최신 사용자 원문](../../canon/sources/USER_PRIMARY_CHU_UNIVERSAL_SCOPE_2026-10-12.txt)을 보존한다.
 우주도 월드모델 CHU라는 관점은 사용자에게 귀속하며 실험 결과로 승격하지 않는다.
-새 OS 개발의 정본은 별도 gj3447/CHU_OS 저장소다. 이 CHU checkout의 기존 OS 경로는 소비자 이관 중 호환용으로 보존한다. CHU는 철학·사용자 원문·Lean의 정본을 유지한다. 실제 이관 상태는 docs/CHU_CHU_OS_REPOSITORY_SPLIT.md를 따른다. 아래 OS 구조 규칙은 CHU_OS 구현에 적용한다.
+OS 개발의 정본은 별도 gj3447/CHU_OS 저장소다. 2026-11-21에 이 CHU checkout에서 OS 전용 경로(`os/`, `plan/`, VM 도구, 저장 실험 코드)를 제거했다. 이론 검사가 쓰는 Rust 프로토타입과 분리 시점 기준 참조용 `spec/`만 남긴다. CHU는 철학·사용자 원문·Lean의 정본을 유지한다. 실제 이관 상태는 docs/CHU_CHU_OS_REPOSITORY_SPLIT.md를 따른다. 아래 OS 구조 규칙은 CHU_OS 구현에 적용한다.
 
 **2026-09-29의 OS 구현 목표:** 작업환경 전체가 하이퍼그래프 위에서 동작한다.
 
@@ -17,7 +17,7 @@
 - 목표는 복잡한 계층 구조가 아니라 **깔끔한** 하이퍼그래프. 새 설계가 트리/계층을 정본으로
   도입하면 거부 사유다(트리는 호환용 뷰로만 허용).
 - 기존 이론 자산(`axiom CHU : Type`, JaebaeMan, `chu_core.rs`의 4 포트·StateStore·Univalent)은
-  이 OS의 **커널 이론/프로토타입**으로 재배치한다. 작업계획: [`plan/CHU_OS_PLAN.md`](../../plan/CHU_OS_PLAN.md).
+  이 OS의 **커널 이론/프로토타입**으로 재배치한다. 작업계획: [`plan/CHU_OS_PLAN.md`](https://github.com/gj3447/CHU_OS/blob/main/plan/CHU_OS_PLAN.md).
 
 ## AI native 3대원칙 (사용자 원문 2026-09-27, 정본: [`canon/AI_NATIVE_THREE_PRINCIPLES.md`](../../canon/AI_NATIVE_THREE_PRINCIPLES.md))
 

@@ -251,9 +251,7 @@ def main():
     p = sub.add_parser("tool", help="Run a pinned binary from repository root; preserve upstream output/exit code")
     p.add_argument("name", choices=sorted(binary_specs()))
     p.add_argument("argv", nargs=argparse.REMAINDER, help="Upstream arguments after -- (no shell)")
-    p = sub.add_parser("model", help="CHU executable specification: demo/export/check/roadmap")
-    p.add_argument("argv", nargs=argparse.REMAINDER)
-    p = sub.add_parser("vm", help="Boot and verify the CHU OS substrate in offline QEMU")
+    p = sub.add_parser("model", help="CHU executable specification: demo/export/check")
     p.add_argument("argv", nargs=argparse.REMAINDER)
     p = sub.add_parser("repo", add_help=False,
                        help="Discover repository artifacts, graph profiles, plan and evidence boundaries")
@@ -285,9 +283,6 @@ def main():
         if args.command == "repo":
             from chu_repo import main as repo_main
             return repo_main(["--help"] if args.repo_help else args.argv)
-        if args.command == "vm":
-            from chu_vm import main as vm_main
-            return vm_main(args.argv)
         if args.command == "model":
             from chu_model import main as model_main
             return model_main(args.argv)
