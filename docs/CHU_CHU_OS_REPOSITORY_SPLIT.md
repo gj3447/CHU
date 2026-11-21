@@ -9,10 +9,12 @@
 기준 관측은 현재 `gj3447/CHU`의 `236d5395600f4d2e8dc2509d71e276940b31973f`다.
 개념·Lean·OS 명세·Python 모델·Rust 프로토타입·VM 도구가 한 저장소에 있다.
 이 기준 관측 이후 상태는 이 문서의 후속 이관 기록으로 구분한다.
+아래 표의 CHU 범위는 2026-10-12 후속 [계산가능성 범위 원문](../canon/sources/USER_PRIMARY_CHU_COMPUTABLE_SCOPE_2026-10-12.txt)에 맞춰
+2026-11-21에 정정했다. 이전 문구는 CHU를 “인지능력체·월드모델의 개념”으로 좁혀 적었다.
 
 | 목표 저장소 | 주된 소유 범위 | 현재 경로와 분리 방식 |
 |---|---|---|
-| CHU | 인지능력체·월드모델의 개념, 사용자 원문, 형식 이론 | `canon/`, `lean/`, `SOURCES.md`와 개별 이론 문서를 검토해 보유 |
+| CHU | 계산가능한 것을 모두 포함하는 Computable Hyper Universe의 철학 개념(컴퓨터·뇌·우주는 그 사례), 사용자 원문, 형식 이론 | `canon/`, `lean/`, `SOURCES.md`와 개별 이론 문서를 검토해 보유 |
 | CHU_OS | 컴퓨터 기반 구현, 실행 계약과 검증 | `os/`, `spec/`, `plan/`, `chu_core_prototype/`, `scripts/`, `tests/`, 개발 환경·CI·OS 실험 |
 | 원소유자에 남길 자료 | 과거 연구와 실행 관측 | `journal/`, `research/`, `_findings/`, `PROM_*`는 개별 출처·주제에 따라 참조; 일괄 이동 금지 |
 
