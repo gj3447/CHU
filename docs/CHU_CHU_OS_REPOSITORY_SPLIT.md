@@ -158,6 +158,11 @@ USL 연결은 9/11 표류가 생겨 CHU `0871ce0`·CHU_OS `61990a0`으로 다시
 CHU_OS `801c545`). DGX는 aarch64이고 기본 DNS가 응답하지 않는다. OMC 세션은 DGX CI 범위 확장을 보류했다. 이유는
 그 예외가 HOH·HOH-Engine에만 승인됐고, DGX가 METAHUMO 권한 장비이며, CHU 세션에서 받은 요청을 OMC 범위 승인으로 쓸 수 없다는 것이다.
 사용자가 OMC 세션에서 CHU·CHU_OS의 DGX CI 추가와 권한 구분을 명시하면 풀린다. 그 전까지 aarch64 전체 실행은 관측되지 않았다.
+
+2026-11-22 후속. 사용자가 OMC 세션에서 범위 확대를 승인했고, OMC가 CHU·CHU_OS를 같은 격리 계정(omc-hoh-ci)의
+DGX CI에 추가했다(OMC `697e147`~`40fb91d`, OMC 세션 통보 기준). CHU `b41c83d`는 aarch64에서 등록 검사 **34개 전부
+PASS**였다(run `chu-dgx-20261122-04`, 보고서 `ok=true`·`sources_unchanged=true`를 이 세션이 dev-01의 OMC 사본에서
+직접 확인). CHU_OS `a1b0cdb`는 39/41이었고 원인은 플랫폼 차이였다. 그 후속 수정과 재실행은 CHU_OS 기록에 둔다.
 같은 날 x86_64 로컬에서 CHU_OS `./chu check` 등록 검사 41개가 모두 통과했다(36개는 한 번의 전체 실행에서,
 도구 미설치로 실패한 5개는 도구를 설치한 뒤 재실행에서). 이 과정에서 `python-tests` 제한(180초)이 실제 실행 시간(약 5분)보다
 짧아 전체 실행이 항상 시간 초과되던 결함을 고쳤다(CHU_OS `a1b0cdb`).
